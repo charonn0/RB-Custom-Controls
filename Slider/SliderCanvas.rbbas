@@ -277,8 +277,10 @@ Inherits Canvas
 		#tag EndGetter
 		#tag Setter
 			Set
-			  mEnableSlider = value
-			  Refresh()
+			  If drawingBuffer <> Nil Then
+			    mEnableSlider = value
+			    Refresh()
+			  End If
 			End Set
 		#tag EndSetter
 		EnableSlider As Boolean
@@ -500,6 +502,7 @@ Inherits Canvas
 			Name="barColor"
 			Visible=true
 			Group="Behavior"
+			InitialValue="&c000000"
 			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -538,7 +541,9 @@ Inherits Canvas
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="EnableSlider"
+			Visible=true
 			Group="Behavior"
+			InitialValue="True"
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty

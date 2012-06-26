@@ -35,7 +35,7 @@ Begin Window SliderWindow
       boxColor        =   0
       DoubleBuffer    =   False
       Enabled         =   True
-      EnableSlider    =   ""
+      EnableSlider    =   True
       EraseBackground =   False
       Gradient        =   True
       gradientEnd     =   39758
