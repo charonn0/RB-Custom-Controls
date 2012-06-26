@@ -26,7 +26,7 @@ Begin Window SliderWindow
    Width           =   486
    Begin SliderCanvas Slider1
       AcceptFocus     =   True
-      AcceptTabs      =   ""
+      AcceptTabs      =   True
       AutoDeactivate  =   True
       Backdrop        =   ""
       barColor        =   65280
@@ -82,7 +82,6 @@ Begin Window SliderWindow
       Scope           =   0
       TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   65
       Visible         =   True
       Width           =   24
@@ -106,7 +105,6 @@ Begin Window SliderWindow
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   103
       Visible         =   True
       Width           =   24
@@ -133,7 +131,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Box Color"
       TextAlign       =   0
       TextColor       =   0
@@ -168,7 +165,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Bar Color"
       TextAlign       =   0
       TextColor       =   0
@@ -264,7 +260,6 @@ Begin Window SliderWindow
       Scope           =   0
       TabIndex        =   14
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   143
       Visible         =   True
       Width           =   24
@@ -291,7 +286,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   15
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Barwell"
       TextAlign       =   0
       TextColor       =   0
@@ -323,7 +317,6 @@ Begin Window SliderWindow
       Scope           =   0
       TabIndex        =   32
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   103
       Visible         =   True
       Width           =   24
@@ -350,7 +343,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   33
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Gradient End"
       TextAlign       =   0
       TextColor       =   0
@@ -382,7 +374,6 @@ Begin Window SliderWindow
       Scope           =   0
       TabIndex        =   36
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   67
       Visible         =   True
       Width           =   24
@@ -409,7 +400,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   37
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Thumb Color"
       TextAlign       =   0
       TextColor       =   0
@@ -473,7 +463,6 @@ Begin Window SliderWindow
       Scope           =   0
       TabIndex        =   39
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   141
       Visible         =   True
       Width           =   24
@@ -500,7 +489,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   40
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Tick Color"
       TextAlign       =   0
       TextColor       =   0
@@ -578,7 +566,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   42
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Slider Maximum"
       TextAlign       =   0
       TextColor       =   0
@@ -613,7 +600,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   43
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   0
       TextAlign       =   0
       TextColor       =   0
@@ -648,7 +634,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   44
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Current Value:"
       TextAlign       =   0
       TextColor       =   0

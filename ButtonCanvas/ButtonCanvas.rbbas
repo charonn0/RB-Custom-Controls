@@ -193,10 +193,10 @@ Inherits Canvas
 		  next
 		  buffer.Graphics.ForeColor = endColor
 		  buffer.Graphics.DrawLine(0, 0, buffer.Width, 0)
-		  If isHovering Then 
+		  If isHovering Then
 		    highlight(buffer)
 		  Else
-		    buffer.Graphics.ForeColor = &c000000  
+		    buffer.Graphics.ForeColor = &c000000
 		    buffer.Graphics.DrawLine(0, 0, 0, Me.Height)
 		    buffer.Graphics.DrawLine(0, 0, Me.Width, 0)
 		    buffer.Graphics.DrawLine(Me.Width - 1, Me.Height - 1, Me.Width -1, 1)
