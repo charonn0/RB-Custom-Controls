@@ -7,7 +7,7 @@ Begin Window Window1
    Frame           =   0
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   42
+   Height          =   6.3e+1
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -23,7 +23,7 @@ Begin Window Window1
    Resizeable      =   False
    Title           =   "Controls Test Window"
    Visible         =   True
-   Width           =   600
+   Width           =   6.0e+2
    Begin PushButton PushButton1
       AutoDeactivate  =   True
       Bold            =   ""
@@ -272,6 +272,37 @@ Begin Window Window1
       Visible         =   True
       Width           =   148
    End
+   Begin PushButton PushButton9
+      AutoDeactivate  =   True
+      Bold            =   ""
+      ButtonStyle     =   0
+      Cancel          =   ""
+      Caption         =   "HistoryField Test Window"
+      Default         =   ""
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   0
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   8
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   42
+      Underline       =   ""
+      Visible         =   True
+      Width           =   148
+   End
 End
 #tag EndWindow
 
@@ -331,6 +362,13 @@ End
 	#tag Event
 		Sub Action()
 		  ButtonWindow.Show
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PushButton9
+	#tag Event
+		Sub Action()
+		  HistoryFieldWindow.Show
 		End Sub
 	#tag EndEvent
 #tag EndEvents
