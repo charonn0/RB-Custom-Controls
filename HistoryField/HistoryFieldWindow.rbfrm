@@ -7,7 +7,7 @@ Begin Window HistoryFieldWindow
    Frame           =   0
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   6.4e+1
+   Height          =   7.5e+1
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
