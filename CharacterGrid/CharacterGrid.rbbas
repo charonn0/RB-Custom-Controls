@@ -70,9 +70,17 @@ Inherits Canvas
 		  Case &h08 //Backspace
 		    If CaretPosition > 0 Then Characters.Remove(CaretPosition)
 		    CaretPosition = CaretPosition - 1
+		    Refresh(False)
 		  Case &h7F //Delete
 		    If CaretPosition < UBound(Characters) Then Characters.Remove(CaretPosition + 1)
 		    CaretPosition = CaretPosition
+		    Refresh(False)
+		  Case &h1D //Left arrow
+		    If CaretPosition < UBound(Characters) Then CaretPosition = CaretPosition + 1
+		    Refresh(False)
+		  Case &h1C //Left arrow
+		    If CaretPosition > 0 Then CaretPosition = CaretPosition - 1
+		    Refresh(False)
 		  Else
 		    Dim char As New Character(Key)
 		    char.BackColor = Me.BackgroundColor
