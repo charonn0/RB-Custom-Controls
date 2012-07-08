@@ -138,8 +138,16 @@ Inherits Canvas
 
 
 	#tag Method, Flags = &h0
-		Sub AppendText(Text As String)
-		  Me.Text = Me.Text + Text
+		Sub AppendChar(NewChar As String)
+		  Dim char As New Character(Newchar)
+		  char.BackColor = Me.BackgroundColor
+		  char.ForeColor = Me.TextColor
+		  char.TextFont = Me.TextFont
+		  char.TextSize = Me.TextSize
+		  Characters.Append(char)
+		  ClearSelection()
+		  CaretPosition = UBound(Characters)
+		  Refresh(False)
 		End Sub
 	#tag EndMethod
 
@@ -295,7 +303,11 @@ Inherits Canvas
 			  ReDim Characters(-1)
 			  Dim bs As New BinaryStream(value)
 			  While Not bs.EOF
-			    Dim char As New Character(Chr(bs.ReadByte))
+			    Dim thebyte As String = Chr(bs.ReadByte)
+			    If bs.Position <= UBound(Characters) Then
+			      If thebyte = Characters(bs.Position - 1).Char Then Continue
+			    End If
+			    Dim char As New Character(thebyte)
 			    char.BackColor = Me.BackgroundColor
 			    char.ForeColor = Me.TextColor
 			    char.TextFont = Me.TextFont

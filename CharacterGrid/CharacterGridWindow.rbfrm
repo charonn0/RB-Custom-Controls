@@ -111,8 +111,8 @@ End
 
 #tag Events TextArea1
 	#tag Event
-		Sub TextChange()
-		  CharacterGrid1.Text = Me.Text
+		Sub KeyUp(Key As String)
+		  CharacterGrid1.AppendChar(Key)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

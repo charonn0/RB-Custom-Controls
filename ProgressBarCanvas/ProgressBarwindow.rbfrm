@@ -70,6 +70,7 @@ Begin Window ProgressBarwindow
       Width           =   483
    End
    Begin Timer Timer1
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   523
@@ -81,6 +82,7 @@ Begin Window ProgressBarwindow
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   60
+      Visible         =   True
       Width           =   32
    End
    Begin Oval BoxColor

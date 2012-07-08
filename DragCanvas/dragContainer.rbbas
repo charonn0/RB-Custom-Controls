@@ -5,7 +5,7 @@ Inherits Canvas
 		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
 		  #pragma Unused X
 		  #pragma Unused Y
-		  If currentObject > -1 Then 
+		  If currentObject > -1 Then
 		    Return RaiseEvent ItemCreateContextMenu(objects(CurrentObject), base)
 		  Else
 		    Return RaiseEvent ItemCreateContextMenu(Nil, base)
@@ -17,7 +17,7 @@ Inherits Canvas
 		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
 		  Dim ret As Boolean
 		  
-		  If currentObject > -1 Then 
+		  If currentObject > -1 Then
 		    ret = RaiseEvent ItemContextMenuAction(objects(currentObject), hitItem)
 		  Else
 		    ret = RaiseEvent ItemContextMenuAction(Nil, hitItem)

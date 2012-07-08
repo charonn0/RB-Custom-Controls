@@ -61,7 +61,7 @@ Protected Class Character
 		#tag Setter
 			Set
 			  mBackColor = value
-			  Me.Pic = charPic(Me.Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
+			  Me.Pic = Nil
 			End Set
 		#tag EndSetter
 		BackColor As Color
@@ -76,7 +76,7 @@ Protected Class Character
 		#tag Setter
 			Set
 			  mBold = value
-			  Me.Pic = charPic(Me.Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
+			  Me.Pic = Nil
 			End Set
 		#tag EndSetter
 		Bold As Boolean
@@ -95,7 +95,7 @@ Protected Class Character
 		#tag Setter
 			Set
 			  mForeColor = value
-			  Me.Pic = charPic(Me.Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
+			  Me.Pic = Nil
 			End Set
 		#tag EndSetter
 		ForeColor As Color
@@ -110,7 +110,7 @@ Protected Class Character
 		#tag Setter
 			Set
 			  mItalic = value
-			  Me.Pic = charPic(Me.Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
+			  Me.Pic = Nil
 			  
 			  
 			End Set
@@ -135,6 +135,10 @@ Protected Class Character
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
+		Private mPic As Picture
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
 		Private mTextFont As String
 	#tag EndProperty
 
@@ -146,9 +150,20 @@ Protected Class Character
 		Private mUnderline As Boolean
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  If mPic = Nil Then mPic = charPic(Me.Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
+			  return mPic
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mPic = value
+			End Set
+		#tag EndSetter
 		Pic As Picture
-	#tag EndProperty
+	#tag EndComputedProperty
 
 	#tag Property, Flags = &h0
 		Selected As Boolean
@@ -163,7 +178,7 @@ Protected Class Character
 		#tag Setter
 			Set
 			  mTextFont = value
-			  Me.Pic = charPic(Me.Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
+			  Me.Pic = Nil
 			End Set
 		#tag EndSetter
 		TextFont As String
@@ -178,7 +193,7 @@ Protected Class Character
 		#tag Setter
 			Set
 			  mTextSize = value
-			  Me.Pic = charPic(Me.Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
+			  Me.Pic = Nil
 			End Set
 		#tag EndSetter
 		TextSize As Single
@@ -193,7 +208,7 @@ Protected Class Character
 		#tag Setter
 			Set
 			  mUnderline = value
-			  Me.Pic = charPic(Me.Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
+			  Me.Pic = Nil
 			End Set
 		#tag EndSetter
 		Underline As Boolean
@@ -210,10 +225,27 @@ Protected Class Character
 
 	#tag ViewBehavior
 		#tag ViewProperty
+			Name="BackColor"
+			Group="Behavior"
+			InitialValue="&c000000"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Bold"
+			Group="Behavior"
+			Type="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="Char"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ForeColor"
+			Group="Behavior"
+			InitialValue="&c000000"
+			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -221,6 +253,11 @@ Protected Class Character
 			Group="ID"
 			InitialValue="-2147483648"
 			InheritedFrom="Object"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Italic"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -252,11 +289,26 @@ Protected Class Character
 			InheritedFrom="Object"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="TextFont"
+			Group="Behavior"
+			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="TextSize"
+			Group="Behavior"
+			Type="Single"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="Top"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
 			InheritedFrom="Object"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Underline"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="X"

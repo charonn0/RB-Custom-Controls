@@ -91,7 +91,7 @@ Inherits Canvas
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub LinkPoints(x1 As Integer , y1 As Integer , x2 As Integer, y2 As Integer)
+		Sub LinkPoints(x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
 		  y2 = (Me.Height - y2)
 		  
 		  If PreviousY.Ubound > Me.Width Or buffer = Nil Then
@@ -105,7 +105,7 @@ Inherits Canvas
 		  
 		  buffer.Graphics.ForeColor = graphColor
 		  buffer.Graphics.DrawLine(x1, y1, x2, y2)
-		   
+		  
 		  LastX = x1
 		  LastY = y1
 		  LastX = x2
