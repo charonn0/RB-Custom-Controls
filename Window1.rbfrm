@@ -303,6 +303,37 @@ Begin Window Window1
       Visible         =   True
       Width           =   148
    End
+   Begin PushButton PushButton10
+      AutoDeactivate  =   True
+      Bold            =   ""
+      ButtonStyle     =   0
+      Cancel          =   ""
+      Caption         =   "CharacterGrid Test Window"
+      Default         =   ""
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   151
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   9
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   42
+      Underline       =   ""
+      Visible         =   True
+      Width           =   148
+   End
 End
 #tag EndWindow
 
@@ -369,6 +400,13 @@ End
 	#tag Event
 		Sub Action()
 		  HistoryFieldWindow.Show
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PushButton10
+	#tag Event
+		Sub Action()
+		  CharacterGridWindow.Show
 		End Sub
 	#tag EndEvent
 #tag EndEvents
