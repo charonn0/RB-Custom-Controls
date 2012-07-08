@@ -6,13 +6,12 @@ Inherits Canvas
 		  #pragma Unused x
 		  #pragma Unused y
 		  
-		  Dim cp As New MenuItem("Copy")
-		  Dim pst As New MenuItem("Paste")
-		  Dim ct As New MenuItem("Cut")
-		  
-		  Base.Append(cp)
-		  Base.Append(pst)
-		  Base.Append(ct)
+		  Base.Append(New MenuItem("Copy"))
+		  Base.Append(New MenuItem("Cut"))
+		  Base.Append(New MenuItem("Paste"))
+		  Base.Append(New MenuItem("Bold"))
+		  Base.Append(New MenuItem("Italic"))
+		  Base.Append(New MenuItem("Underline"))
 		End Function
 	#tag EndEvent
 
@@ -44,7 +43,24 @@ Inherits Canvas
 		      r = s.Mid(CaretPosition, s.Len)
 		      Me.Text = l + cp.Text + r
 		    End If
+		    
+		  Case "Bold"
+		    For i As Integer = 0 To UBound(Characters)
+		      If Characters(i).Selected Then Characters(i).Bold = Not Characters(i).Bold
+		    Next
+		    
+		  Case "Italic"
+		    For i As Integer = 0 To UBound(Characters)
+		      If Characters(i).Selected Then Characters(i).Italic = Not Characters(i).Italic
+		    Next
+		    
+		  Case "Underline"
+		    For i As Integer = 0 To UBound(Characters)
+		      If Characters(i).Selected Then Characters(i).Underline = Not Characters(i).Underline
+		    Next
 		  End Select
+		  
+		  ClearSelection()
 		End Function
 	#tag EndEvent
 
@@ -131,6 +147,7 @@ Inherits Canvas
 		Sub ClearSelection()
 		  For Each char As Character In Characters
 		    char.Selected = False
+		    char.BackColor = Me.BackgroundColor
 		  Next
 		  Refresh(False)
 		End Sub
