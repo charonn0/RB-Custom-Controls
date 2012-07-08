@@ -65,6 +65,31 @@ Inherits Canvas
 	#tag EndEvent
 
 	#tag Event
+		Sub KeyUp(Key As String)
+		  Select Case Asc(Key)
+		  Case &h08 //Backspace
+		    If CaretPosition > 0 Then Characters.Remove(CaretPosition)
+		    CaretPosition = CaretPosition - 1
+		  Case &h7F //Delete
+		    If CaretPosition < UBound(Characters) Then Characters.Remove(CaretPosition + 1)
+		    CaretPosition = CaretPosition
+		  Else
+		    Dim char As New Character(Key)
+		    char.BackColor = Me.BackgroundColor
+		    char.ForeColor = Me.TextColor
+		    char.TextFont = Me.TextFont
+		    char.TextSize = Me.TextSize
+		    If CaretPosition = UBound(Characters) Then
+		      Characters.Append(char)
+		    Else
+		      Characters.Insert(CaretPosition, char)
+		    End If
+		    CaretPosition = CaretPosition + 1
+		  End Select
+		End Sub
+	#tag EndEvent
+
+	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
 		  If Not IsContextualClick Then
 		    ClearSelection()
@@ -118,10 +143,19 @@ Inherits Canvas
 		  Dim x, y As Integer
 		  
 		  For i As Integer = 0 To UBound(Characters)
-		    If Characters(i).Selected Or (i = CaretPosition And Microseconds Mod 2 = 0) Then
+		    If Characters(i).Selected Then
 		      Characters(i).BackColor = Me.SelectionColor
 		    End If
-		    tmp.Graphics.DrawPicture((Characters(i).Pic, x, y))
+		    If i = CaretPosition Then
+		      Dim tch As New Character(Characters(i).Char)
+		      tch.BackColor = Me.TextColor
+		      tch.ForeColor = Me.BackgroundColor
+		      tch.TextFont = Me.TextFont
+		      tch.TextSize = Me.TextSize
+		      tmp.Graphics.DrawPicture(tch.Pic, x, y)
+		    Else
+		      tmp.Graphics.DrawPicture((Characters(i).Pic, x, y))
+		    End If
 		    If x + Characters(i).Pic.Width + 4 > tmp.Width Or Characters(i).Char = Chr(&h0D) Then
 		      x = 0
 		      y = y + Characters(i).Pic.Height

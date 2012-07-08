@@ -25,8 +25,8 @@ Begin Window CharacterGridWindow
    Visible         =   True
    Width           =   648
    Begin CharacterGrid CharacterGrid1
-      AcceptFocus     =   ""
-      AcceptTabs      =   ""
+      AcceptFocus     =   True
+      AcceptTabs      =   True
       AutoDeactivate  =   True
       Backdrop        =   ""
       BackgroundColor =   0
@@ -34,7 +34,7 @@ Begin Window CharacterGridWindow
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
-      Height          =   241
+      Height          =   363
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -58,61 +58,9 @@ Begin Window CharacterGridWindow
       Visible         =   True
       Width           =   648
    End
-   Begin TextArea TextArea1
-      AcceptTabs      =   ""
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   True
-      BackColor       =   16777215
-      Bold            =   ""
-      Border          =   True
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      Height          =   118
-      HelpTag         =   ""
-      HideSelection   =   True
-      Index           =   -2147483648
-      Italic          =   ""
-      Left            =   0
-      LimitText       =   0
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   False
-      Mask            =   ""
-      Multiline       =   True
-      ReadOnly        =   ""
-      Scope           =   0
-      ScrollbarHorizontal=   ""
-      ScrollbarVertical=   True
-      Styled          =   True
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   0
-      TextFont        =   "System"
-      TextSize        =   0
-      TextUnit        =   0
-      Top             =   245
-      Underline       =   ""
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   648
-   End
 End
 #tag EndWindow
 
 #tag WindowCode
 #tag EndWindowCode
 
-#tag Events TextArea1
-	#tag Event
-		Sub KeyUp(Key As String)
-		  CharacterGrid1.AppendChar(Key)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
