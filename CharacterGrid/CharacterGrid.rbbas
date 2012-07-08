@@ -90,10 +90,6 @@ Inherits Canvas
 
 	#tag Event
 		Sub Open()
-		  CursorTimer = New Timer
-		  CursorTimer.Period = 500
-		  AddHandler CursorTimer.Action, AddressOf CursorHandler
-		  CursorTimer.Mode = Timer.ModeMultiple
 		  Me.Text = Me.Text
 		End Sub
 	#tag EndEvent
@@ -106,13 +102,11 @@ Inherits Canvas
 		  Dim x, y As Integer
 		  
 		  For i As Integer = 0 To UBound(Characters)
-		    Dim chrpic As Picture = Characters(i).Pic
 		    If Characters(i).Selected Or (i = CaretPosition And Microseconds Mod 2 = 0) Then
-		      chrpic = CharPic(Characters(i).Char, Me.TextColor, Me.SelectionColor, Me.TextFont, Me.TextSize)
+		      Characters(i).BackColor = Me.SelectionColor
 		    End If
-		    tmp.Graphics.DrawPicture((chrpic, x, y))
+		    tmp.Graphics.DrawPicture((Characters(i).Pic, x, y))
 		    If x + Characters(i).Pic.Width + 4 > tmp.Width Or Characters(i).Char = Chr(&h0D) Then
-		      If Characters(i).Char = Chr(&h0A) Then Break
 		      x = 0
 		      y = y + Characters(i).Pic.Height
 		    Else
@@ -128,40 +122,9 @@ Inherits Canvas
 
 
 	#tag Method, Flags = &h0
-		 Shared Function CharPic(Char As String, TextColor As Color, BackColor As Color, Font As String, FontSize As Single) As Picture
-		  //Similar to TextToPicture but meant for single characters
-		  Dim tmp As New Picture(50, 50, 32)
-		  tmp.Graphics.ForeColor = BackColor
-		  tmp.Graphics.FillRect(0, 0, tmp.Width, tmp.Height)
-		  tmp.Graphics.ForeColor = TextColor
-		  tmp.Graphics.TextFont = Font
-		  tmp.Graphics.TextSize = FontSize
-		  
-		  Dim reqWidth, reqHeight As Integer
-		  reqWidth = tmp.Graphics.StringWidth(Char)
-		  reqHeight = tmp.Graphics.StringHeight(Char, reqWidth)
-		  #pragma BreakOnExceptions Off
-		  Try
-		    tmp = New Picture(reqWidth, reqHeight, 32)
-		  Catch OutOfBoundsException
-		    reqWidth = tmp.Graphics.StringWidth(Chr(&h20))
-		    reqHeight = tmp.Graphics.StringHeight(Chr(&h20), reqWidth)
-		    tmp = New Picture(reqWidth, reqHeight, 32)
-		  End Try
-		  #pragma BreakOnExceptions On
-		  
-		  tmp.Graphics.ForeColor = BackColor
-		  tmp.Graphics.FillRect(0, 0, tmp.Width, tmp.Height)
-		  tmp.Graphics.ForeColor = TextColor
-		  tmp.Graphics.TextFont = Font
-		  tmp.Graphics.TextSize = FontSize
-		  tmp.Graphics.DrawString(Char, 0, reqHeight * 0.75)
-		  
-		  Return tmp
-		  
-		Exception OutOfBoundsException
-		  Return Nil
-		End Function
+		Sub AppendText(Text As String)
+		  Me.Text = Me.Text + Text
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -170,16 +133,6 @@ Inherits Canvas
 		    char.Selected = False
 		  Next
 		  Refresh(False)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub CursorHandler(Sender As Timer)
-		  #pragma Unused Sender
-		  If CaretPosition <= UBound(Characters) And CaretPosition > -1 Then
-		    Characters(CaretPosition).Selected = Not Characters(CaretPosition).Selected
-		    Me.Refresh(False)
-		  End If
 		End Sub
 	#tag EndMethod
 
@@ -226,6 +179,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mBackgroundColor = value
+			  Refresh(False)
 			End Set
 		#tag EndSetter
 		BackgroundColor As Color
@@ -243,6 +197,7 @@ Inherits Canvas
 			    Characters(mCaretPosition).Selected = False
 			  End If
 			  mCaretPosition = value
+			  Refresh(False)
 			End Set
 		#tag EndSetter
 		CaretPosition As Integer
@@ -250,10 +205,6 @@ Inherits Canvas
 
 	#tag Property, Flags = &h0
 		Characters() As Character
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private CursorTimer As Timer
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -270,6 +221,10 @@ Inherits Canvas
 
 	#tag Property, Flags = &h21
 		Private mSelectionColor As Color
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mText As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -293,6 +248,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mSelectionColor = value
+			  Refresh(False)
 			End Set
 		#tag EndSetter
 		SelectionColor As Color
@@ -322,23 +278,13 @@ Inherits Canvas
 			  ReDim Characters(-1)
 			  Dim bs As New BinaryStream(value)
 			  While Not bs.EOF
-			    Dim char As String = Chr(bs.ReadByte)
-			    Dim charpic As Picture
+			    Dim char As New Character(Chr(bs.ReadByte))
+			    char.BackColor = Me.BackgroundColor
+			    char.ForeColor = Me.TextColor
+			    char.TextFont = Me.TextFont
+			    char.TextSize = Me.TextSize
 			    
-			    Select Case Asc(Char)
-			    Case &hD  //Carriage return 
-			      charpic = CharPic(char, Me.TextColor, Me.BackgroundColor, Me.TextFont, Me.TextSize)
-			      If bs.ReadByte <> &h0A And bs.Length > bs.Position Then
-			        bs.Position = bs.Position - 1
-			      End If
-			      
-			    Case &h20
-			      charpic = CharPic(char, Me.TextColor, Me.BackgroundColor, Me.TextFont, Me.TextSize)
-			    Else
-			      If char.Trim = "" Then Continue
-			      charpic = CharPic(char, Me.TextColor, Me.BackgroundColor, Me.TextFont, Me.TextSize)
-			    End Select
-			    Characters.Append(New Character(char, charpic))
+			    Characters.Append(char)
 			  Wend
 			  Me.Refresh(False)
 			End Set
@@ -355,6 +301,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mTextColor = value
+			  Refresh(False)
 			End Set
 		#tag EndSetter
 		TextColor As Color
@@ -369,6 +316,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mTextFont = value
+			  Refresh(False)
 			End Set
 		#tag EndSetter
 		TextFont As String
@@ -383,6 +331,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mTextSize = value
+			  Refresh(False)
 			End Set
 		#tag EndSetter
 		TextSize As Single

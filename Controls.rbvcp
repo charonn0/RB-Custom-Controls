@@ -36,6 +36,7 @@ Folder=HistoryField;HistoryField;&h428CAFFF;&h0;false
 Window=HistoryFieldWindow;HistoryField/HistoryFieldWindow.rbfrm;&h69781FFF;&h428CAFFF;false
 Class=HistoryField;HistoryField/HistoryField.rbbas;&h6D3467FF;&h428CAFFF;false
 Folder=CharacterGrid;CharacterGrid;&h1FED5FFF;&h0;false
+Module=CharacterGridHelpers;CharacterGrid/CharacterGridHelpers.rbbas;&h567E0FFF;&h1FED5FFF;false
 Class=Character;CharacterGrid/Character.rbbas;&h2C65FFF;&h1FED5FFF;false
 Class=CharacterGrid;CharacterGrid/CharacterGrid.rbbas;&h5AFFC7FF;&h1FED5FFF;false
 Window=CharacterGridWindow;CharacterGrid/CharacterGridWindow.rbfrm;&h591B37FF;&h1FED5FFF;false
