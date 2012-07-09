@@ -17,9 +17,10 @@ Inherits Canvas
 
 	#tag Event
 		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  Dim cp As New Clipboard
 		  Select Case hitItem.Text
 		  Case "Copy"
-		    Dim cp As New Clipboard
+		    cp.Text = ""
 		    For i As Integer = 0 To UBound(Characters)
 		      If Characters(i).Selected Then
 		        cp.Text = cp.Text + Characters(i).Char
@@ -27,15 +28,16 @@ Inherits Canvas
 		    Next
 		    
 		  Case "Cut"
+		    cp.Text = ""
 		    For i As Integer = UBound(Characters) DownTo 0
 		      If Characters(i).Selected Then
+		        cp.Text = cp.Text + Characters(i).Char
 		        Characters.Remove(i)
 		      End If
 		    Next
-		    Refresh(False)
+		    'Refresh(False)
 		    
 		  Case "Paste"
-		    Dim cp As New Clipboard
 		    If cp.TextAvailable Then
 		      Dim l, r, s As String
 		      s = Me.Text
@@ -61,6 +63,7 @@ Inherits Canvas
 		  End Select
 		  
 		  ClearSelection()
+		  Me.Refresh(False)
 		End Function
 	#tag EndEvent
 
@@ -70,17 +73,14 @@ Inherits Canvas
 		  Case &h08 //Backspace
 		    If CaretPosition > 0 Then Characters.Remove(CaretPosition)
 		    CaretPosition = CaretPosition - 1
-		    Refresh(False)
 		  Case &h7F //Delete
 		    If CaretPosition < UBound(Characters) Then Characters.Remove(CaretPosition + 1)
-		    CaretPosition = CaretPosition
-		    Refresh(False)
 		  Case &h1D //Left arrow
 		    If CaretPosition < UBound(Characters) Then CaretPosition = CaretPosition + 1
-		    Refresh(False)
 		  Case &h1C //Left arrow
 		    If CaretPosition > 0 Then CaretPosition = CaretPosition - 1
-		    Refresh(False)
+		  Case &h1B //Escape
+		    ClearSelection()
 		  Else
 		    Dim char As New Character(Key)
 		    char.BackColor = Me.BackgroundColor
@@ -94,14 +94,14 @@ Inherits Canvas
 		    End If
 		    CaretPosition = CaretPosition + 1
 		  End Select
+		  
+		  Refresh(False)
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
 		  If Not IsContextualClick Then
-		    ClearSelection()
-		    CaretPosition = HitpointToChar(X, Y)
 		    mDown = True
 		    StartX = X
 		    StartY = Y
@@ -116,6 +116,7 @@ Inherits Canvas
 		    Dim chars() As Integer = SelectionRectToChars(StartX, StartY, X, Y)
 		    
 		    For Each char As Integer In Chars
+		      If char > UBound(Characters) Then Continue
 		      If char > -1 Then Characters(char).Selected = True
 		    Next
 		    Refresh(False)
@@ -138,43 +139,46 @@ Inherits Canvas
 	#tag EndEvent
 
 	#tag Event
-		Sub Open()
-		  Me.Text = Me.Text
-		End Sub
-	#tag EndEvent
-
-	#tag Event
 		Sub Paint(g As Graphics)
-		  Dim tmp As New Picture(g.Width, g.Height, 32)
-		  tmp.Graphics.ForeColor = Me.BackgroundColor
-		  tmp.Graphics.FillRect(0, 0, tmp.Width, tmp.Height)
+		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Or mDown Then
+		    buffer = New Picture(g.Width, g.Height, 32)
+		    Buffer.Graphics.ForeColor = Me.BackgroundColor
+		    Buffer.Graphics.FillRect(0, 0, Buffer.Width, Buffer.Height)
+		  End If
 		  Dim x, y As Integer
 		  
 		  For i As Integer = 0 To UBound(Characters)
-		    If Characters(i).Selected Then
-		      Characters(i).BackColor = Me.SelectionColor
-		    End If
-		    If i = CaretPosition Then
-		      Dim tch As New Character(Characters(i).Char)
-		      tch.BackColor = Me.TextColor
-		      tch.ForeColor = Me.BackgroundColor
-		      tch.TextFont = Me.TextFont
-		      tch.TextSize = Me.TextSize
-		      tmp.Graphics.DrawPicture(tch.Pic, x, y)
+		    If Characters(i).Dirty Then
+		      If Characters(i).Selected Then
+		        Characters(i).BackColor = Me.SelectionColor
+		      End If
+		      If i = CaretPosition Then
+		        Dim tch As New Character(Characters(i).Char)
+		        tch.BackColor = Me.TextColor
+		        tch.ForeColor = Me.BackgroundColor
+		        tch.TextFont = Me.TextFont
+		        tch.TextSize = Me.TextSize
+		        Buffer.Graphics.DrawPicture(tch.Pic, x, y)
+		      Else
+		        Buffer.Graphics.DrawPicture((Characters(i).Pic, x, y))
+		      End If
+		      If x + Characters(i).Pic.Width + 4 > Buffer.Width Or Characters(i).Char = Chr(&h0D) Then
+		        x = 0
+		        y = y + Characters(i).Pic.Height
+		      Else
+		        x = x + Characters(i).Pic.Width
+		      End If
+		      Characters(i).Dirty = False
+		      Characters(i).X = x - Characters(i).Pic.Width
+		      Characters(i).Y = y
 		    Else
-		      tmp.Graphics.DrawPicture((Characters(i).Pic, x, y))
+		      Characters(i).X = x - Characters(i).Pic.Width
+		      Characters(i).Y = y
 		    End If
-		    If x + Characters(i).Pic.Width + 4 > tmp.Width Or Characters(i).Char = Chr(&h0D) Then
-		      x = 0
-		      y = y + Characters(i).Pic.Height
-		    Else
-		      x = x + Characters(i).Pic.Width
-		    End If
-		    Characters(i).X = x
-		    Characters(i).Y = y
 		  Next
 		  
-		  g.DrawPicture(tmp, 0, 0)
+		  
+		  g.DrawPicture(Buffer, 0, 0)
 		End Sub
 	#tag EndEvent
 
@@ -187,9 +191,7 @@ Inherits Canvas
 		  char.TextFont = Me.TextFont
 		  char.TextSize = Me.TextSize
 		  Characters.Append(char)
-		  ClearSelection()
 		  CaretPosition = UBound(Characters)
-		  Refresh(False)
 		End Sub
 	#tag EndMethod
 
@@ -199,7 +201,6 @@ Inherits Canvas
 		    char.Selected = False
 		    char.BackColor = Me.BackgroundColor
 		  Next
-		  Refresh(False)
 		End Sub
 	#tag EndMethod
 
@@ -246,11 +247,15 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mBackgroundColor = value
-			  Refresh(False)
+			  'Refresh(False)
 			End Set
 		#tag EndSetter
 		BackgroundColor As Color
 	#tag EndComputedProperty
+
+	#tag Property, Flags = &h21
+		Private Buffer As Picture
+	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
@@ -261,10 +266,15 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  If mCaretPosition > -1 And mCaretPosition >= UBound(Characters) Then
-			    Characters(mCaretPosition).Selected = False
+			    #pragma BreakOnExceptions Off
+			    Try
+			      Characters(mCaretPosition).Selected = False
+			    Catch OutOfBoundsException
+			      mCaretPosition = 0
+			    End Try
 			  End If
 			  mCaretPosition = value
-			  Refresh(False)
+			  'Refresh(False)
 			End Set
 		#tag EndSetter
 		CaretPosition As Integer
@@ -291,10 +301,6 @@ Inherits Canvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mText As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
 		Private mTextColor As Color
 	#tag EndProperty
 
@@ -315,7 +321,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mSelectionColor = value
-			  Refresh(False)
+			  'Refresh(False)
 			End Set
 		#tag EndSetter
 		SelectionColor As Color
@@ -357,7 +363,7 @@ Inherits Canvas
 			    
 			    Characters.Append(char)
 			  Wend
-			  Me.Refresh(False)
+			  
 			End Set
 		#tag EndSetter
 		Text As String
@@ -372,7 +378,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mTextColor = value
-			  Refresh(False)
+			  'Refresh(False)
 			End Set
 		#tag EndSetter
 		TextColor As Color
@@ -387,7 +393,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mTextFont = value
-			  Refresh(False)
+			  'Refresh(False)
 			End Set
 		#tag EndSetter
 		TextFont As String
@@ -402,7 +408,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mTextSize = value
-			  Refresh(False)
+			  'Refresh(False)
 			End Set
 		#tag EndSetter
 		TextSize As Single

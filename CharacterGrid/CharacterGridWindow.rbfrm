@@ -49,18 +49,57 @@ Begin Window CharacterGridWindow
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "When in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation."
+      Text            =   ""
       TextColor       =   65280
-      TextFont        =   "System"
-      TextSize        =   0
+      TextFont        =   "Veranda"
+      TextSize        =   25
       Top             =   0
       UseFocusRing    =   True
       Visible         =   True
       Width           =   648
    End
+   Begin Timer Timer1
+      Height          =   32
+      Index           =   -2147483648
+      Left            =   743
+      LockedInPosition=   False
+      Mode            =   2
+      Period          =   100
+      Scope           =   0
+      TabPanelIndex   =   0
+      Top             =   -24
+      Width           =   32
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Open()
+		  'CharacterGrid1.Text = "drgnlsikdjurnglksjdrgbnlksjdrglskzjedrbtlgksjzdrblgkjszdrbglkzjxdrbglkxzjdbrglkxjdrbgxlkdjrbglxkdjrbgxlkdjrbgxlkdjrbg"
+		End Sub
+	#tag EndEvent
+
+
 #tag EndWindowCode
 
+#tag Events Timer1
+	#tag Event
+		Sub Action()
+		  
+		  Static chars() As String
+		  If UBound(Chars) = -1 Then
+		    chars = SplitB("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut " + _
+		    "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea " + _
+		    "commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. " + _
+		    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "")
+		  End If
+		  
+		  CharacterGrid1.AppendChar(chars(0))
+		  CharacterGrid1.Refresh(False)
+		  chars.Remove(0)
+		  
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents

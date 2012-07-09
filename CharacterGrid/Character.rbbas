@@ -62,6 +62,7 @@ Protected Class Character
 			Set
 			  mBackColor = value
 			  Me.Pic = Nil
+			  Dirty = True
 			End Set
 		#tag EndSetter
 		BackColor As Color
@@ -77,6 +78,7 @@ Protected Class Character
 			Set
 			  mBold = value
 			  Me.Pic = Nil
+			  Dirty = True
 			End Set
 		#tag EndSetter
 		Bold As Boolean
@@ -84,6 +86,10 @@ Protected Class Character
 
 	#tag Property, Flags = &h0
 		Char As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		Dirty As Boolean
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -96,6 +102,7 @@ Protected Class Character
 			Set
 			  mForeColor = value
 			  Me.Pic = Nil
+			  Dirty = True
 			End Set
 		#tag EndSetter
 		ForeColor As Color
@@ -111,8 +118,7 @@ Protected Class Character
 			Set
 			  mItalic = value
 			  Me.Pic = Nil
-			  
-			  
+			  Dirty = True
 			End Set
 		#tag EndSetter
 		Italic As Boolean
@@ -150,6 +156,14 @@ Protected Class Character
 		Private mUnderline As Boolean
 	#tag EndProperty
 
+	#tag Property, Flags = &h21
+		Private mX As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mY As Integer
+	#tag EndProperty
+
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
@@ -160,6 +174,7 @@ Protected Class Character
 		#tag Setter
 			Set
 			  mPic = value
+			  Dirty = True
 			End Set
 		#tag EndSetter
 		Pic As Picture
@@ -179,6 +194,7 @@ Protected Class Character
 			Set
 			  mTextFont = value
 			  Me.Pic = Nil
+			  Dirty = True
 			End Set
 		#tag EndSetter
 		TextFont As String
@@ -194,6 +210,7 @@ Protected Class Character
 			Set
 			  mTextSize = value
 			  Me.Pic = Nil
+			  Dirty = True
 			End Set
 		#tag EndSetter
 		TextSize As Single
@@ -209,18 +226,41 @@ Protected Class Character
 			Set
 			  mUnderline = value
 			  Me.Pic = Nil
+			  Dirty = True
 			End Set
 		#tag EndSetter
 		Underline As Boolean
 	#tag EndComputedProperty
 
-	#tag Property, Flags = &h0
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mX
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mX = value
+			  Dirty = True
+			End Set
+		#tag EndSetter
 		X As Integer
-	#tag EndProperty
+	#tag EndComputedProperty
 
-	#tag Property, Flags = &h0
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mY
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mY = value
+			  Dirty = True
+			End Set
+		#tag EndSetter
 		Y As Integer
-	#tag EndProperty
+	#tag EndComputedProperty
 
 
 	#tag ViewBehavior
@@ -292,6 +332,7 @@ Protected Class Character
 			Name="TextFont"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TextSize"

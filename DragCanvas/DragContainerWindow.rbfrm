@@ -89,17 +89,7 @@ End
 #tag WindowCode
 	#tag Event
 		Sub Open()
-		  Dim p As Picture = TextToPicture( _
-		  "This control is a DragContainer Canvas which will display " + EndOfLine + _
-		  "any object which implements the DragObject interface." + EndOfLine + _
-		  "Implementors of the DragObject Interface are 100% responsible " + EndOfLine + _
-		  "for their own images. The DragContainer class merely draws the " + EndOfLine + _
-		  "provided image at the proper coordinates and notifies via events " + EndOfLine + _
-		  "of various actions (ItemClicked, ItemContextualMenuAction, etc.)")
-		  
-		  Dim dragable As DragObject = New dragPicture(p)
-		  dragContainer1.addObject(dragable)
-		  
+		  Dim dragable As DragObject
 		  Dim f As FolderItem = SpecialFolder.Pictures
 		  
 		  For i As Integer = 1 To f.Count
@@ -113,6 +103,17 @@ End
 		    If i = 5 Then Exit For
 		  Next
 		  
+		  
+		  Dim p As Picture = TextToPicture( _
+		  "This control is a DragContainer Canvas which will display " + EndOfLine + _
+		  "any object which implements the DragObject interface." + EndOfLine + _
+		  "Implementors of the DragObject Interface are 100% responsible " + EndOfLine + _
+		  "for their own images. The DragContainer class merely draws the " + EndOfLine + _
+		  "provided image at the proper coordinates and notifies via events " + EndOfLine + _
+		  "of various actions (ItemClicked, ItemContextualMenuAction, etc.)")
+		  
+		  dragable = New dragPicture(p)
+		  dragContainer1.addObject(dragable)
 		  
 		Exception
 		  Return
