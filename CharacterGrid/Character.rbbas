@@ -46,7 +46,6 @@ Protected Class Character
 		Sub Constructor(NewChar As String)
 		  If Asc(NewChar) >= 0 And Asc(NewChar) <= 31 Then NewChar = ""
 		  Me.Char = NewChar
-		  Me.Pic = charPic(Me.Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
 		  
 		End Sub
 	#tag EndMethod
@@ -60,9 +59,9 @@ Protected Class Character
 		#tag EndGetter
 		#tag Setter
 			Set
+			  Dirty = (mBackColor <> value)
 			  mBackColor = value
-			  Me.Pic = Nil
-			  Dirty = True
+			  
 			End Set
 		#tag EndSetter
 		BackColor As Color
@@ -76,9 +75,8 @@ Protected Class Character
 		#tag EndGetter
 		#tag Setter
 			Set
+			  Dirty = (mBold <> value)
 			  mBold = value
-			  Me.Pic = Nil
-			  Dirty = True
 			End Set
 		#tag EndSetter
 		Bold As Boolean
@@ -100,9 +98,8 @@ Protected Class Character
 		#tag EndGetter
 		#tag Setter
 			Set
+			  Dirty = (mForeColor <> value)
 			  mForeColor = value
-			  Me.Pic = Nil
-			  Dirty = True
 			End Set
 		#tag EndSetter
 		ForeColor As Color
@@ -116,9 +113,8 @@ Protected Class Character
 		#tag EndGetter
 		#tag Setter
 			Set
+			  Dirty = (mItalic <> value)
 			  mItalic = value
-			  Me.Pic = Nil
-			  Dirty = True
 			End Set
 		#tag EndSetter
 		Italic As Boolean
@@ -145,6 +141,10 @@ Protected Class Character
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
+		Private mSelected As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
 		Private mTextFont As String
 	#tag EndProperty
 
@@ -159,22 +159,36 @@ Protected Class Character
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  If mPic = Nil Then mPic = charPic(Me.Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
+			  If Dirty Then 
+			    mPic = charPic(Me.Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
+			  End If
+			  Dirty = False
 			  return mPic
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
+			  Dirty = (mPic <> value)
 			  mPic = value
-			  Dirty = True
 			End Set
 		#tag EndSetter
 		Pic As Picture
 	#tag EndComputedProperty
 
-	#tag Property, Flags = &h0
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mSelected
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  Dirty = (mSelected <> value)
+			  mSelected = value
+			End Set
+		#tag EndSetter
 		Selected As Boolean
-	#tag EndProperty
+	#tag EndComputedProperty
 
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
@@ -184,9 +198,8 @@ Protected Class Character
 		#tag EndGetter
 		#tag Setter
 			Set
+			  Dirty = (mTextFont <> value)
 			  mTextFont = value
-			  Me.Pic = Nil
-			  Dirty = True
 			End Set
 		#tag EndSetter
 		TextFont As String
@@ -200,9 +213,8 @@ Protected Class Character
 		#tag EndGetter
 		#tag Setter
 			Set
+			  Dirty = (mTextSize <> value)
 			  mTextSize = value
-			  Me.Pic = Nil
-			  Dirty = True
 			End Set
 		#tag EndSetter
 		TextSize As Single
@@ -216,9 +228,8 @@ Protected Class Character
 		#tag EndGetter
 		#tag Setter
 			Set
+			  Dirty = (mUnderline <> value)
 			  mUnderline = value
-			  Me.Pic = Nil
-			  Dirty = True
 			End Set
 		#tag EndSetter
 		Underline As Boolean

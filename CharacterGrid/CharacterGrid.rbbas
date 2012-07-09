@@ -144,7 +144,6 @@ Inherits Canvas
 		    buffer = New Picture(g.Width, g.Height, 32)
 		    Buffer.Graphics.ForeColor = Me.BackgroundColor
 		    Buffer.Graphics.FillRect(0, 0, Buffer.Width, Buffer.Height)
-		    Update(True)
 		  End If
 		  
 		  For i As Integer = 0 To UBound(Characters)
@@ -160,14 +159,15 @@ Inherits Canvas
 		    End If
 		  Next
 		  Update()
-		  
 		  g.DrawPicture(Buffer, 0, 0)
+		  
 		End Sub
 	#tag EndEvent
 
 
 	#tag Method, Flags = &h0
 		Sub AppendChar(NewChar As String)
+		  If NewChar = "" Then Return
 		  Dim char As New Character(Newchar)
 		  char.BackColor = Me.BackgroundColor
 		  char.ForeColor = Me.TextColor
@@ -221,12 +221,10 @@ Inherits Canvas
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
-		Private Sub Update(Force As Boolean = False)
+		Private Sub Update()
 		  Dim x, y As Integer
 		  For i As Integer = 0 To UBound(Characters)
-		    If Characters(i).Dirty Or Force Then
-		      Buffer.Graphics.DrawPicture((Characters(i).Pic, x, y))
-		    End If
+		    Buffer.Graphics.DrawPicture((Characters(i).Pic, x, y))
 		    If x + Characters(i).Pic.Width + 4 > Buffer.Width Or Characters(i).Char = Chr(&h0D) Then
 		      x = 0
 		      y = y + Characters(i).Pic.Height
@@ -235,7 +233,6 @@ Inherits Canvas
 		    End If
 		    Characters(i).X = x - Characters(i).Pic.Width
 		    Characters(i).Y = y
-		    Characters(i).Dirty = False
 		  Next
 		  
 		  '
