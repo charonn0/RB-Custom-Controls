@@ -282,6 +282,11 @@ Protected Class Character
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="Dirty"
+			Group="Behavior"
+			Type="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="ForeColor"
 			Group="Behavior"
 			InitialValue="&c000000"
