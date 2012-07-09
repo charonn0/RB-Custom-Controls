@@ -89,7 +89,7 @@ Protected Class Character
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		Dirty As Boolean
+		Dirty As Boolean = True
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -154,14 +154,6 @@ Protected Class Character
 
 	#tag Property, Flags = &h21
 		Private mUnderline As Boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mX As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mY As Integer
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -232,35 +224,13 @@ Protected Class Character
 		Underline As Boolean
 	#tag EndComputedProperty
 
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
-			  return mX
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mX = value
-			  Dirty = True
-			End Set
-		#tag EndSetter
+	#tag Property, Flags = &h0
 		X As Integer
-	#tag EndComputedProperty
+	#tag EndProperty
 
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
-			  return mY
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mY = value
-			  Dirty = True
-			End Set
-		#tag EndSetter
+	#tag Property, Flags = &h0
 		Y As Integer
-	#tag EndComputedProperty
+	#tag EndProperty
 
 
 	#tag ViewBehavior

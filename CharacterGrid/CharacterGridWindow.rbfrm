@@ -64,7 +64,7 @@ Begin Window CharacterGridWindow
       Left            =   743
       LockedInPosition=   False
       Mode            =   2
-      Period          =   100
+      Period          =   75
       Scope           =   0
       TabPanelIndex   =   0
       Top             =   -24

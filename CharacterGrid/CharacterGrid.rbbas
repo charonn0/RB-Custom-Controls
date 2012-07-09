@@ -144,39 +144,22 @@ Inherits Canvas
 		    buffer = New Picture(g.Width, g.Height, 32)
 		    Buffer.Graphics.ForeColor = Me.BackgroundColor
 		    Buffer.Graphics.FillRect(0, 0, Buffer.Width, Buffer.Height)
+		    Update(True)
 		  End If
-		  Dim x, y As Integer
 		  
 		  For i As Integer = 0 To UBound(Characters)
-		    If Characters(i).Dirty Then
-		      If Characters(i).Selected Then
-		        Characters(i).BackColor = Me.SelectionColor
-		      End If
-		      If i = CaretPosition Then
-		        Dim tch As New Character(Characters(i).Char)
-		        tch.BackColor = Me.TextColor
-		        tch.ForeColor = Me.BackgroundColor
-		        tch.TextFont = Me.TextFont
-		        tch.TextSize = Me.TextSize
-		        Buffer.Graphics.DrawPicture(tch.Pic, x, y)
-		      Else
-		        Buffer.Graphics.DrawPicture((Characters(i).Pic, x, y))
-		      End If
-		      If x + Characters(i).Pic.Width + 4 > Buffer.Width Or Characters(i).Char = Chr(&h0D) Then
-		        x = 0
-		        y = y + Characters(i).Pic.Height
-		      Else
-		        x = x + Characters(i).Pic.Width
-		      End If
-		      Characters(i).Dirty = False
-		      Characters(i).X = x - Characters(i).Pic.Width
-		      Characters(i).Y = y
+		    If Characters(i).Selected Then 
+		      Characters(i).BackColor = Me.SelectionColor
 		    Else
-		      Characters(i).X = x - Characters(i).Pic.Width
-		      Characters(i).Y = y
+		      If Characters(i).BackColor <> Me.BackgroundColor Then Characters(i).BackColor = Me.BackgroundColor
+		    End If
+		    If Characters(i).ForeColor <> Me.TextColor Then Characters(i).ForeColor = Me.TextColor
+		    If i = CaretPosition Then
+		      Characters(i).BackColor = Me.TextColor
+		      Characters(i).ForeColor = Me.BackgroundColor
 		    End If
 		  Next
-		  
+		  Update()
 		  
 		  g.DrawPicture(Buffer, 0, 0)
 		End Sub
@@ -235,6 +218,28 @@ Inherits Canvas
 		  Next
 		  Return ret
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Sub Update(Force As Boolean = False)
+		  Dim x, y As Integer
+		  For i As Integer = 0 To UBound(Characters)
+		    If Characters(i).Dirty Or Force Then
+		      Buffer.Graphics.DrawPicture((Characters(i).Pic, x, y))
+		    End If
+		    If x + Characters(i).Pic.Width + 4 > Buffer.Width Or Characters(i).Char = Chr(&h0D) Then
+		      x = 0
+		      y = y + Characters(i).Pic.Height
+		    Else
+		      x = x + Characters(i).Pic.Width
+		    End If
+		    Characters(i).X = x - Characters(i).Pic.Width
+		    Characters(i).Y = y
+		    Characters(i).Dirty = False
+		  Next
+		  
+		  '
+		End Sub
 	#tag EndMethod
 
 
