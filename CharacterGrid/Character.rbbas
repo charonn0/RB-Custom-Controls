@@ -160,7 +160,7 @@ Protected Class Character
 		#tag Getter
 			Get
 			  If Dirty Then 
-			    mPic = charPic(Me.Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
+			    mPic = charPic(Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
 			  End If
 			  Dirty = False
 			  return mPic

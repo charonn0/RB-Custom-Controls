@@ -218,13 +218,6 @@ Inherits Canvas
 	#tag EndHook
 
 
-	#tag Note, Name = About ButtonCanvas
-		Copyright (c)2011 Andrew Lambert
-		
-		You may use this class in your projects under the terms of the Creative Commons Attribution-Share Alike license.
-	#tag EndNote
-
-
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
