@@ -74,13 +74,6 @@ End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Event
-		Sub Open()
-		  'CharacterGrid1.Text = "drgnlsikdjurnglksjdrgbnlksjdrglskzjedrbtlgksjzdrblgkjszdrbglkzjxdrbglkxzjdbrglkxjdrbgxlkdjrbglxkdjrbgxlkdjrbgxlkdjrbg"
-		End Sub
-	#tag EndEvent
-
-
 #tag EndWindowCode
 
 #tag Events Timer1

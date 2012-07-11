@@ -227,6 +227,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mBold = value
+			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
 			  reset()
 			  Me.Refresh(False)
@@ -248,6 +249,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mCaption = value
+			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
 			  reset()
 			  Me.Refresh(False)
@@ -265,6 +267,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mFont = value
+			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
 			  reset()
 			  Me.Refresh(False)
@@ -282,6 +285,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mFontColor = value
+			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
 			  reset()
 			  Me.Refresh(False)
@@ -299,6 +303,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mFontSize = value
+			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
 			  reset()
 			  Me.Refresh(False)
@@ -316,6 +321,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mhilightBorder = value
+			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
 			  reset()
 			  Me.Refresh(False)
@@ -333,6 +339,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mhilightColor = value
+			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
 			  reset()
 			  Me.Refresh(False)
@@ -350,6 +357,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mIsDown = value
+			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  If value Then
 			    invert(buffer)
 			  Else
@@ -371,6 +379,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mEnabled = value
+			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  reset()
 			  Me.Refresh(False)
 			End Set
@@ -409,6 +418,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mItalic = value
+			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
 			  reset()
 			  Me.Refresh(False)
@@ -474,6 +484,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mUnderline = value
+			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
 			  reset()
 			  Me.Refresh(False)
