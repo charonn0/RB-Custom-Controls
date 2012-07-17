@@ -334,6 +334,37 @@ Begin Window Window1
       Visible         =   True
       Width           =   148
    End
+   Begin PushButton TileGridButton
+      AutoDeactivate  =   True
+      Bold            =   ""
+      ButtonStyle     =   0
+      Cancel          =   ""
+      Caption         =   "TileGrid Test Window"
+      Default         =   ""
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   302
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   10
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   43
+      Underline       =   ""
+      Visible         =   True
+      Width           =   148
+   End
 End
 #tag EndWindow
 
@@ -355,7 +386,6 @@ End
 		IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
 		WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 		SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-		
 	#tag EndNote
 
 
@@ -428,6 +458,13 @@ End
 	#tag Event
 		Sub Action()
 		  CharacterGridWindow.Show
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events TileGridButton
+	#tag Event
+		Sub Action()
+		  TileGridWindow.Show
 		End Sub
 	#tag EndEvent
 #tag EndEvents
