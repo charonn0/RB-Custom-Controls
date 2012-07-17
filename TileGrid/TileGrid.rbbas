@@ -140,6 +140,24 @@ Inherits Canvas
 	#tag EndHook
 
 
+	#tag Note, Name = About This Class
+		This class is intended to be the basis of other Canvas-based controls. It provides a simple grid of Rectangles
+		with the specified number of columns and rows.
+		
+		Whenever a Rectangle is about to be re-painted, the TilePaint event is raised. The TilePaint event specifies the Row and Column
+		of the rect as well as a reference to the GridTile object representing that rectangle.
+		
+		The GridTile Class provides two properties and one method. The Avatar property can be assigned any Picture object you want to display
+		in the Rectangle. The Avatar is automatically scaled to fit.
+		
+		The Rect property provides direct access to a Graphics object representing the rectangle. You can draw directly to the Rect property.
+		If you do any drawing or set the Avatar then return True from the TilePaint event.
+		
+		The TileClick, TileMouseEnter, and TileMouseExit events have the same parameters and return conditions as the TilePaint event. The 
+		purposed of these event should be obvious.
+	#tag EndNote
+
+
 	#tag Property, Flags = &h21
 		Private Buffer As Picture
 	#tag EndProperty
