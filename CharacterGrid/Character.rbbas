@@ -105,6 +105,10 @@ Protected Class Character
 		ForeColor As Color
 	#tag EndComputedProperty
 
+	#tag Property, Flags = &h0
+		Invert As Boolean
+	#tag EndProperty
+
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
@@ -159,8 +163,12 @@ Protected Class Character
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  If Dirty Then 
-			    mPic = charPic(Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
+			  If Dirty  Or mPic = Nil Then
+			    If Invert Then
+			      mPic = charPic(Char, BackColor, ForeColor, TextFont, TextSize, Bold, Italic, Underline)
+			    Else
+			      mPic = charPic(Char, ForeColor, BackColor, TextFont, TextSize, Bold, Italic, Underline)
+			    End If
 			  End If
 			  Dirty = False
 			  return mPic
@@ -265,6 +273,7 @@ Protected Class Character
 		#tag ViewProperty
 			Name="Dirty"
 			Group="Behavior"
+			InitialValue="True"
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty

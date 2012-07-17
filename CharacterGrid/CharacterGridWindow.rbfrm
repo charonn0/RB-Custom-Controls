@@ -29,7 +29,7 @@ Begin Window CharacterGridWindow
       AcceptTabs      =   True
       AutoDeactivate  =   True
       Backdrop        =   ""
-      BackgroundColor =   0
+      BackgroundColor =   &h00FFFFFF
       CaretPosition   =   0
       DoubleBuffer    =   False
       Enabled         =   True
@@ -45,12 +45,12 @@ Begin Window CharacterGridWindow
       LockRight       =   True
       LockTop         =   True
       Scope           =   0
-      SelectionColor  =   16776960
+      SelectionColor  =   &h000000FF
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      TextColor       =   65280
+      TextColor       =   &h00000000
       TextFont        =   "Veranda"
       TextSize        =   25
       Top             =   0
@@ -91,8 +91,7 @@ End
 		  CharacterGrid1.AppendChar(chars(0))
 		  CharacterGrid1.Refresh(False)
 		  chars.Remove(0)
-		  
-		  
+		  If UBound(Chars) = -1 Then Me.Mode = Timer.ModeOff
 		End Sub
 	#tag EndEvent
 #tag EndEvents

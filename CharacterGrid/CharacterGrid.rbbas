@@ -12,6 +12,7 @@ Inherits Canvas
 		  Base.Append(New MenuItem("Bold"))
 		  Base.Append(New MenuItem("Italic"))
 		  Base.Append(New MenuItem("Underline"))
+		  Base.Append(New MenuItem("Color"))
 		End Function
 	#tag EndEvent
 
@@ -60,6 +61,16 @@ Inherits Canvas
 		    For i As Integer = 0 To UBound(Characters)
 		      If Characters(i).Selected Then Characters(i).Underline = Not Characters(i).Underline
 		    Next
+		    
+		  Case "Color"
+		    Dim c As Color
+		    If SelectColor(c, "Select a text color") Then
+		      For i As Integer = 0 To UBound(Characters)
+		        If Characters(i).Selected Then
+		          Characters(i).ForeColor = c
+		        End If
+		      Next
+		    End If
 		  End Select
 		  
 		  ClearSelection()
@@ -141,23 +152,25 @@ Inherits Canvas
 	#tag Event
 		Sub Paint(g As Graphics)
 		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Or mDown Then
-		    buffer = New Picture(g.Width, g.Height, 32)
-		    Buffer.Graphics.ForeColor = Me.BackgroundColor
-		    Buffer.Graphics.FillRect(0, 0, Buffer.Width, Buffer.Height)
+		    #If RBVersion >= 2011.04 Then
+		      buffer = New Picture(g.Width, g.Height)
+		    #Else
+		      buffer = New Picture(g.Width, g.Height, 32)
+		      Buffer.Graphics.ForeColor = Me.BackgroundColor
+		      Buffer.Graphics.FillRect(0, 0, Buffer.Width, Buffer.Height)
+		      Buffer.Graphics.ForeColor = Me.TextColor
+		    #endif
 		  End If
 		  
 		  For i As Integer = 0 To UBound(Characters)
-		    If Characters(i).Selected Then 
+		    If Characters(i).Selected Then
 		      Characters(i).BackColor = Me.SelectionColor
 		    Else
-		      If Characters(i).BackColor <> Me.BackgroundColor Then Characters(i).BackColor = Me.BackgroundColor
+		      Characters(i).BackColor = Me.BackgroundColor
 		    End If
-		    If Characters(i).ForeColor <> Me.TextColor Then Characters(i).ForeColor = Me.TextColor
-		    If i = CaretPosition Then
-		      Characters(i).BackColor = Me.TextColor
-		      Characters(i).ForeColor = Me.BackgroundColor
-		    End If
+		    Characters(i).Invert = (i = CaretPosition)
 		  Next
+		  
 		  Update()
 		  g.DrawPicture(Buffer, 0, 0)
 		  
@@ -181,6 +194,7 @@ Inherits Canvas
 	#tag Method, Flags = &h0
 		Sub ClearSelection()
 		  For Each char As Character In Characters
+		    If Not char.Selected Then Continue
 		    char.Selected = False
 		    char.BackColor = Me.BackgroundColor
 		  Next

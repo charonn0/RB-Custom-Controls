@@ -44,6 +44,7 @@ Begin Window DragContainerWindow
       LockRight       =   True
       LockTop         =   True
       Scope           =   0
+      SelectionColor  =   "&c0080FF"
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
