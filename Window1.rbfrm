@@ -365,6 +365,37 @@ Begin Window Window1
       Visible         =   True
       Width           =   148
    End
+   Begin PushButton TileGridButton1
+      AutoDeactivate  =   True
+      Bold            =   ""
+      ButtonStyle     =   0
+      Cancel          =   ""
+      Caption         =   "DirViewListEx Test Window"
+      Default         =   ""
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   452
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   11
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   42
+      Underline       =   ""
+      Visible         =   True
+      Width           =   148
+   End
 End
 #tag EndWindow
 
@@ -465,6 +496,13 @@ End
 	#tag Event
 		Sub Action()
 		  TileGridWindow.Show
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events TileGridButton1
+	#tag Event
+		Sub Action()
+		  DirViewListExWindow.Show
 		End Sub
 	#tag EndEvent
 #tag EndEvents
