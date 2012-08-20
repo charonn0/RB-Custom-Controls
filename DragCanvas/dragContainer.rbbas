@@ -178,16 +178,12 @@ Inherits Canvas
 
 	#tag Event
 		Sub Paint(g As Graphics)
-		  #pragma Unused g
-		  Static lastWidth, lastHeight As Integer
-		  
 		  If lastWidth <> Me.Width Or lastHeight <> Me.Height Then
 		    buffer = New Picture(Me.Width, Me.Height, 24)
 		    lastWidth = Me.Width
 		    lastHeight = Me.Height
 		    update()
 		  End If
-		  'update()
 		  
 		  g.DrawPicture(buffer, 0, 0)
 		End Sub
@@ -385,6 +381,14 @@ Inherits Canvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
+		Private LastHeight As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private LastWidth As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
 		Private lastX As Integer
 	#tag EndProperty
 
@@ -534,12 +538,6 @@ Inherits Canvas
 			Group="ID"
 			Type="String"
 			InheritedFrom="Canvas"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="SelectionColor"
-			Group="Behavior"
-			InitialValue="&c000000"
-			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
