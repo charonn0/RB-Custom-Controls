@@ -109,7 +109,11 @@ End
 	#tag Event
 		Sub Action()
 		  If HintTextField1.HasText Then
-		    MsgBox("You said: " + HintTextField1.Text)
+		    If HintTextField1.Text = "anything at all" Then
+		      MsgBox("Don't be a smartass.")
+		    Else
+		      MsgBox("You said: " + HintTextField1.Text)
+		    End If
 		  Else
 		    MsgBox("Please enter some text")
 		  End If
