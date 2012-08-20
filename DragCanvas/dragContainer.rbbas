@@ -57,13 +57,6 @@ Inherits Canvas
 	#tag EndEvent
 
 	#tag Event
-		Sub GotFocus()
-		  'dirty = True
-		  'Refresh(False)
-		End Sub
-	#tag EndEvent
-
-	#tag Event
 		Function KeyDown(Key As String) As Boolean
 		  If currentObject > -1 Then
 		    Return RaiseEvent ItemKeyDown(Objects(currentObject), Key)
@@ -99,7 +92,6 @@ Inherits Canvas
 	#tag Event
 		Sub MouseDrag(X As Integer, Y As Integer)
 		  If currentObject > -1 Then
-		    'Static t As Byte
 		    Dim obj As DragObject = objects(currentObject)
 		    Dim objX As Integer = x - lastx
 		    Dim objY As Integer = y - lasty
@@ -145,14 +137,6 @@ Inherits Canvas
 	#tag EndEvent
 
 	#tag Event
-		Sub MouseUp(X As Integer, Y As Integer)
-		  #pragma Unused X
-		  #pragma Unused Y
-		  'Refresh(False)
-		End Sub
-	#tag EndEvent
-
-	#tag Event
 		Function MouseWheel(X As Integer, Y As Integer, deltaX as Integer, deltaY as Integer) As Boolean
 		  Dim i As Integer = HitpointToObject(X, Y)
 		  If i > 0 Then
@@ -179,6 +163,7 @@ Inherits Canvas
 	#tag Event
 		Sub Paint(g As Graphics)
 		  If lastWidth <> Me.Width Or lastHeight <> Me.Height Then
+		    //The canvas has been resized, so we need to regen the buffer
 		    buffer = New Picture(Me.Width, Me.Height, 24)
 		    lastWidth = Me.Width
 		    lastHeight = Me.Height
@@ -251,6 +236,7 @@ Inherits Canvas
 	#tag Method, Flags = &h21
 		Private Sub HoverHandler(Sender As Timer)
 		  #pragma Unused Sender
+		  //Handles the HoverTimer.Action event.
 		  Dim obj As Integer = HitPointToObject(Me.MouseX, Me.MouseY)
 		  
 		  If obj > -1 And obj <= Objects.Ubound Then
@@ -264,6 +250,7 @@ Inherits Canvas
 	#tag Method, Flags = &h21
 		Private Sub RefreshHandler(Sender As Timer)
 		  #pragma Unused Sender
+		  //Handles the RefreshTimer.Action event.
 		  Dim obj As Integer = HitPointToObject(Me.TrueWindow.MouseX, Me.TrueWindow.MouseY)
 		  
 		  If obj > -1 And obj <= Objects.Ubound Then

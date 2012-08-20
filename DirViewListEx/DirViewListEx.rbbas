@@ -109,7 +109,7 @@ Inherits Listbox
 		  if not fi.directory then return
 		  
 		  me.addfolder fi.name
-		  if displayFinderIcons then 
+		  if displayFinderIcons then
 		    #if hasMBS then
 		      me.rowPicture(me.lastIndex)=fi.iconMBS(16)
 		    #else
@@ -126,7 +126,7 @@ Inherits Listbox
 		Protected Sub addItem(fi as folderItem)
 		  me.addrow fi.name
 		  
-		  if displayFinderIcons then 
+		  if displayFinderIcons then
 		    #If TargetWin32 Then
 		      me.rowPicture(me.lastIndex) = DefaultIconForFileType(NthField(fi.Name, ".", CountFields(fi.Name, ".")))
 		    #Else
@@ -276,8 +276,6 @@ Inherits Listbox
 		
 		Use in whatever way you like... at your own risk :P
 		let me know if you find it useful.
-		
-		
 	#tag EndNote
 
 
@@ -285,7 +283,7 @@ Inherits Listbox
 		Protected baseDir As folderItem
 	#tag EndProperty
 
-	#tag Property, Flags = &h4
+	#tag Property, Flags = &h0
 		displayFinderIcons As boolean
 	#tag EndProperty
 
