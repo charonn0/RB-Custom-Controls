@@ -247,22 +247,6 @@ Inherits Canvas
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h21
-		Private Sub RefreshHandler(Sender As Timer)
-		  #pragma Unused Sender
-		  //Handles the RefreshTimer.Action event.
-		  Dim obj As Integer = HitPointToObject(Me.TrueWindow.MouseX, Me.TrueWindow.MouseY)
-		  
-		  If obj > -1 And obj <= Objects.Ubound Then
-		    If RaiseEvent ItemHover(objects(obj)) Then update()
-		  Else
-		    If RaiseEvent ItemHover(Nil) Then update()
-		  End If
-		  
-		  Refresh(False)
-		End Sub
-	#tag EndMethod
-
 	#tag Method, Flags = &h0
 		Sub removeObject(obj As dragObject)
 		  Dim index As Integer = hitpointToObject(obj.CoordX + 1, obj.CoordY + 1)
@@ -389,10 +373,6 @@ Inherits Canvas
 
 	#tag Property, Flags = &h21
 		Private Objects() As DragObject
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private RefreshTimer As Timer
 	#tag EndProperty
 
 
