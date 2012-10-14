@@ -3,6 +3,7 @@ Protected Class DirViewListEx
 Inherits Listbox
 	#tag Event
 		Function CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
+		  #pragma Unused row
 		  //fill the selected column with a light gray
 		  if column=lastPressedHeader then
 		    g.foreColor=&cEFEFEF
@@ -54,7 +55,7 @@ Inherits Listbox
 	#tag EndEvent
 
 	#tag Event
-		Function KeyDown(key As String) As Boolean
+		Function KeyDown(Key As String) As Boolean
 		  //find an item
 		  dim fi as folderItem
 		  
@@ -177,7 +178,7 @@ Inherits Listbox
 	#tag Method, Flags = &h1
 		Protected Function dirIcon() As picture
 		  if _dirIcon=nil then
-		    _dirIcon=newpicture(16,16,32)
+		    _dirIcon=new picture(16,16,32)
 		    _dirIcon.mask.graphics.drawPicture dirMask,0,0
 		    _dirIcon.graphics.drawPicture dir,0,0
 		  end if
@@ -189,7 +190,7 @@ Inherits Listbox
 	#tag Method, Flags = &h1
 		Protected Function docIcon() As picture
 		  if _docIcon=nil then
-		    _docIcon=newpicture(16,16,32)
+		    _docIcon=new picture(16,16,32)
 		    _docIcon.mask.graphics.drawPicture docMask,0,0
 		    _docIcon.graphics.drawPicture doc,0,0
 		  end if
@@ -201,8 +202,8 @@ Inherits Listbox
 	#tag Method, Flags = &h1
 		Protected Sub scan(dir as folderItem)
 		  dim i,cnt as integer
-		  dim stamp as double
-		  dim key as string
+		  'dim stamp as double
+		  'dim key as string
 		  
 		  if dir.directory then
 		    cnt=dir.count

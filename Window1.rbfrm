@@ -334,12 +334,12 @@ Begin Window Window1
       Visible         =   True
       Width           =   148
    End
-   Begin PushButton TileGridButton
+   Begin PushButton PointMapButton
       AutoDeactivate  =   True
       Bold            =   ""
       ButtonStyle     =   0
       Cancel          =   ""
-      Caption         =   "TileGrid Test Window"
+      Caption         =   "PointMap Test Window"
       Default         =   ""
       Enabled         =   True
       Height          =   22
@@ -492,10 +492,10 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events TileGridButton
+#tag Events PointMapButton
 	#tag Event
 		Sub Action()
-		  TileGridWindow.Show
+		  PointMapTestWindow.Show
 		End Sub
 	#tag EndEvent
 #tag EndEvents
