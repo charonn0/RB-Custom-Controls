@@ -41,7 +41,7 @@ Inherits Canvas
 		    If RaiseEvent ItemDoubleClicked(objects(currentobject)) Then update()
 		  End If
 		  
-		  Refresh(False)
+		  Invalidate(False)
 		End Sub
 	#tag EndEvent
 
@@ -82,7 +82,7 @@ Inherits Canvas
 		    End If
 		  End If
 		  update()
-		  Refresh(False)
+		  Invalidate(False)
 		  lastX = X
 		  lastY = Y
 		  Return True
@@ -100,7 +100,7 @@ Inherits Canvas
 		    obj.CoordX = obj.CoordX + objX
 		    obj.CoordY = obj.CoordY + objY
 		    update()
-		    Refresh(False)
+		    Invalidate(False)
 		    
 		  End If
 		End Sub
@@ -131,8 +131,6 @@ Inherits Canvas
 		  Else
 		    HoverTimer.Mode = Timer.ModeOff
 		  End If
-		  
-		  Refresh(False)
 		End Sub
 	#tag EndEvent
 
@@ -140,7 +138,7 @@ Inherits Canvas
 		Function MouseWheel(X As Integer, Y As Integer, deltaX as Integer, deltaY as Integer) As Boolean
 		  Dim i As Integer = HitpointToObject(X, Y)
 		  If i > 0 Then
-		    If RaiseEvent ItemScrolled(Objects(i), deltaX, deltaY) Then Refresh(False)
+		    If RaiseEvent ItemScrolled(Objects(i), deltaX, deltaY) Then Invalidate(False)
 		  End If
 		End Function
 	#tag EndEvent
