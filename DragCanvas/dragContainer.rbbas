@@ -100,7 +100,7 @@ Inherits Canvas
 		    obj.CoordX = obj.CoordX + objX
 		    obj.CoordY = obj.CoordY + objY
 		    update()
-		    Invalidate(False)
+		    Refresh(False)
 		    
 		  End If
 		End Sub
