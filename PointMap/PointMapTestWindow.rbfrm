@@ -134,6 +134,8 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub PointPaint(g As Graphics, X As Integer, Y As Integer)
+		  #pragma Unused X
+		  #pragma Unused Y
 		  g.ForeColor = &cFF000000
 		  g.PenHeight = 3
 		  g.PenWidth = 3

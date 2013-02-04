@@ -90,7 +90,7 @@ Inherits Canvas
 
 	#tag Method, Flags = &h1
 		Protected Function FindPoint(ByRef X As Integer, ByRef Y As Integer) As Boolean
-		  //Finds the point containing X,Y, if any, and modifies X and Y to correspond with the center of that point. Returns true if X and/or Y 
+		  //Finds the point containing X,Y, if any, and modifies X and Y to correspond with the center of that point. Returns true if X and/or Y
 		  //were modified, which also means a point was found.
 		  For x1 As Integer = X - PointWidth \ 2 To X + PointWidth \ 2
 		    For y1 As Integer = Y - PointHeight \ 2 To Y + PointHeight \ 2

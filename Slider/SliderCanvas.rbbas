@@ -37,7 +37,7 @@ Inherits Canvas
 	#tag Event
 		Sub MouseDrag(X As Integer, Y As Integer)
 		  #pragma Unused Y
-		  If Not EnableSlider Then
+		  If Not Enabled Then
 		    Refresh()
 		    Return
 		  End If
@@ -66,7 +66,7 @@ Inherits Canvas
 		  Static myHeight As Integer
 		  Static mywidth As Integer
 		  
-		  If mywidth <> Me.Width Or myHeight <> Me.Height Then
+		  If mywidth <> Me.Width Or myHeight <> Me.Height Or (PrevEnabled <> Me.Enabled) Then
 		    drawingBuffer = New Picture(Me.Width, Me.Height, 32)
 		    drawingBuffer.Transparent = 1
 		    Me.Value = mvalue
@@ -77,6 +77,7 @@ Inherits Canvas
 		      Me.value = 0
 		    End If
 		  End If
+		  PrevEnabled = Me.Enabled
 		  mywidth = Me.Width
 		  myHeight = Me.Height
 		  'Me.Enabled = EnableSlider
@@ -104,7 +105,7 @@ Inherits Canvas
 		    End If
 		    drawingBuffer.Graphics.DrawLine(0, i, filledWidth, i)
 		  next
-		  If Not EnableSlider Then GreyScale(drawingBuffer)  //FIXME?
+		  
 		End Sub
 	#tag EndMethod
 
@@ -272,23 +273,6 @@ Inherits Canvas
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mEnableSlider
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  If drawingBuffer <> Nil Then
-			    mEnableSlider = value
-			    Refresh()
-			  End If
-			End Set
-		#tag EndSetter
-		EnableSlider As Boolean
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
 			  return mhasGradient
 			End Get
 		#tag EndGetter
@@ -348,10 +332,6 @@ Inherits Canvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mEnableSlider As Boolean = True
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
 		Private mgradientEnd As Color
 	#tag EndProperty
 
@@ -381,6 +361,10 @@ Inherits Canvas
 
 	#tag Property, Flags = &h21
 		Private mvalue As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private PrevEnabled As Boolean
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -455,9 +439,9 @@ Inherits Canvas
 			  drawBar(filledWidth)
 			  If Border Then drawBox()
 			  drawThumb(FilledWidth)
-			  'If Me.Graphics <> Nil Then
-			  'Me.Graphics.DrawPicture(drawingBuffer, 0, 0)
-			  'End If
+			  If Not Me.Enabled Then
+			    GreyScale(drawingBuffer)
+			  End If
 			  
 			  Refresh(False)
 			  ValueChanged()

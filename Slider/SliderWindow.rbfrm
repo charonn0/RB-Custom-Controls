@@ -891,7 +891,7 @@ End
 #tag Events CheckBox1
 	#tag Event
 		Sub Action()
-		  Slider1.EnableSlider = Me.Value
+		  Slider1.Enabled = Me.Value
 		  Slider1.Refresh(True)
 		End Sub
 	#tag EndEvent
