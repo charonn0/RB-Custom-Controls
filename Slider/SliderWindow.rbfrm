@@ -43,6 +43,7 @@ Begin Window SliderWindow
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   3
+      LiveScroll      =   False
       LockBottom      =   ""
       LockedInPosition=   False
       LockLeft        =   True
@@ -677,6 +678,38 @@ Begin Window SliderWindow
       Visible         =   True
       Width           =   100
    End
+   Begin CheckBox LiveScroll
+      AutoDeactivate  =   True
+      Bold            =   ""
+      Caption         =   "Live Scroll"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   43
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   46
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   11
+      TextUnit        =   0
+      Top             =   33
+      Underline       =   ""
+      Value           =   False
+      Visible         =   True
+      Width           =   80
+   End
 End
 #tag EndWindow
 
@@ -695,6 +728,7 @@ End
 		  maximum.Text = Str(Slider1.maximum)
 		  sliderval.Text = Str(Slider1.value)
 		  HasTicks.Value = Slider1.Ticks
+		  LiveScroll.Value = Slider1.LiveScroll
 		End Sub
 	#tag EndEvent
 
@@ -877,6 +911,13 @@ End
 		Sub Action()
 		  Slider1.Enabled = Me.Value
 		  Slider1.Refresh(True)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events LiveScroll
+	#tag Event
+		Sub Action()
+		  Slider1.LiveScroll = Me.Value
 		End Sub
 	#tag EndEvent
 #tag EndEvents
