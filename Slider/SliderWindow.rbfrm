@@ -29,16 +29,15 @@ Begin Window SliderWindow
       AcceptTabs      =   True
       AutoDeactivate  =   True
       Backdrop        =   ""
-      barColor        =   65280
-      barWell         =   12632256
+      BarColor        =   65280
+      BarWell         =   12632256
       Border          =   True
-      boxColor        =   0
+      BoxColor        =   0
       DoubleBuffer    =   False
       Enabled         =   True
-      EnableSlider    =   True
       EraseBackground =   False
-      Gradient        =   True
-      gradientEnd     =   39758
+      Gradated        =   True
+      GradientEnd     =   39758
       Height          =   16
       HelpTag         =   ""
       Index           =   -2147483648
@@ -49,7 +48,7 @@ Begin Window SliderWindow
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
-      maximum         =   100
+      Maximum         =   100
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
@@ -59,7 +58,7 @@ Begin Window SliderWindow
       Ticks           =   True
       Top             =   5
       UseFocusRing    =   True
-      value           =   0
+      Value           =   0
       Visible         =   True
       Width           =   480
    End
@@ -82,7 +81,6 @@ Begin Window SliderWindow
       Scope           =   0
       TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   65
       Visible         =   True
       Width           =   24
@@ -106,7 +104,6 @@ Begin Window SliderWindow
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   103
       Visible         =   True
       Width           =   24
@@ -133,7 +130,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Box Color"
       TextAlign       =   0
       TextColor       =   0
@@ -168,7 +164,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Bar Color"
       TextAlign       =   0
       TextColor       =   0
@@ -264,7 +259,6 @@ Begin Window SliderWindow
       Scope           =   0
       TabIndex        =   14
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   143
       Visible         =   True
       Width           =   24
@@ -291,7 +285,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   15
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Barwell"
       TextAlign       =   0
       TextColor       =   0
@@ -323,7 +316,6 @@ Begin Window SliderWindow
       Scope           =   0
       TabIndex        =   32
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   103
       Visible         =   True
       Width           =   24
@@ -350,7 +342,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   33
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Gradient End"
       TextAlign       =   0
       TextColor       =   0
@@ -382,7 +373,6 @@ Begin Window SliderWindow
       Scope           =   0
       TabIndex        =   36
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   67
       Visible         =   True
       Width           =   24
@@ -409,7 +399,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   37
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Thumb Color"
       TextAlign       =   0
       TextColor       =   0
@@ -473,7 +462,6 @@ Begin Window SliderWindow
       Scope           =   0
       TabIndex        =   39
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   141
       Visible         =   True
       Width           =   24
@@ -500,7 +488,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   40
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Tick Color"
       TextAlign       =   0
       TextColor       =   0
@@ -578,7 +565,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   42
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Slider Maximum"
       TextAlign       =   0
       TextColor       =   0
@@ -613,7 +599,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   43
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   0
       TextAlign       =   0
       TextColor       =   0
@@ -648,7 +633,6 @@ Begin Window SliderWindow
       Selectable      =   False
       TabIndex        =   44
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Current Value:"
       TextAlign       =   0
       TextColor       =   0
@@ -707,7 +691,7 @@ End
 		  gradientColor.FillColor = Slider1.gradientEnd
 		  
 		  Border.Value = Slider1.Border
-		  hasGradient.Value = Slider1.Gradient
+		  hasGradient.Value = Slider1.Gradated
 		  maximum.Text = Str(Slider1.maximum)
 		  sliderval.Text = Str(Slider1.value)
 		  HasTicks.Value = Slider1.Ticks
@@ -779,7 +763,7 @@ End
 #tag Events hasGradient
 	#tag Event
 		Sub Action()
-		  Slider1.Gradient = Me.Value
+		  Slider1.Gradated = Me.Value
 		End Sub
 	#tag EndEvent
 #tag EndEvents

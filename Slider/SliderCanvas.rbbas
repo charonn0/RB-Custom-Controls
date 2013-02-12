@@ -21,16 +21,15 @@ Inherits Canvas
 		    Return True
 		  End If
 		  
-		  Return False
+		  Return RaiseEvent KeyDown(Key)
 		End Function
 	#tag EndEvent
 
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  #pragma Unused X
-		  #pragma Unused Y
-		  
-		  Return True
+		  If Not RaiseEvent MouseDown(X, Y) Then
+		    Return True
+		  End If
 		End Function
 	#tag EndEvent
 
@@ -38,10 +37,10 @@ Inherits Canvas
 		Sub MouseDrag(X As Integer, Y As Integer)
 		  #pragma Unused Y
 		  If Not Enabled Then
-		    Refresh()
 		    Return
 		  End If
 		  Me.value = (x * Me.maximum \ Me.Width)
+		  
 		End Sub
 	#tag EndEvent
 
@@ -59,147 +58,133 @@ Inherits Canvas
 
 	#tag Event
 		Sub Paint(g As Graphics)
-		  //Repaints the canvas
-		  //This event fires whenever the control has been painted by something other than itself
-		  //calculates and draws a new buffer with val=0 or recalculates the old buffer and paints it, or simply repaints the old buffer
-		  
-		  Static myHeight As Integer
-		  Static mywidth As Integer
-		  
-		  If mywidth <> Me.Width Or myHeight <> Me.Height Or (PrevEnabled <> Me.Enabled) Then
-		    drawingBuffer = New Picture(Me.Width, Me.Height, 32)
-		    drawingBuffer.Transparent = 1
-		    Me.Value = mvalue
-		  Else
-		    If drawingBuffer <> Nil Then
-		      g.DrawPicture(drawingBuffer, 0, 0)
-		    Else
-		      Me.value = 0
-		    End If
-		  End If
-		  PrevEnabled = Me.Enabled
-		  mywidth = Me.Width
-		  myHeight = Me.Height
-		  'Me.Enabled = EnableSlider
+		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Then Update(False)
+		  g.DrawPicture(Buffer, 0, 0)
 		End Sub
 	#tag EndEvent
 
 
 	#tag Method, Flags = &h21
-		Private Sub drawBar(filledWidth As Integer)
-		  //Draws the actual progress bar part of the control
+		Private Sub Update(Invalidate As Boolean = True)
+		  #pragma BreakOnExceptions Off 'We might get and OoBE if Height or height <= 0
+		  #if RBVersion >= 2011.04 Then
+		    Buffer = New Picture(Me.Width, Me.Height)
+		  #else
+		    Buffer = New Picture(Me.Width, Me.Height, 32)
+		  #endif
+		  #pragma BreakOnExceptions On
 		  
-		  Dim myHeight, myWidth As Integer
-		  myHeight = Me.Height
-		  myWidth = Me.Width
+		  Dim FilledWidth As Integer = (Me.Value * 100 / Me.Maximum) * (Me.Width / 100)
+		  'BarWell
+		  Buffer.Graphics.ForeColor = barWell
+		  Buffer.Graphics.FillRect(0, 0, Buffer.Width, Buffer.Height)
 		  
-		  Dim ratio, endratio as Double
-		  For i As Integer = 5 To drawingBuffer.Height - 5
-		    If Gradient Then
-		      ratio = ((drawingBuffer.Height - i) / drawingBuffer.Height)
-		      endratio = (i / drawingBuffer.Height)
-		      drawingBuffer.Graphics.ForeColor = RGB(gradientEnd.Red * endratio + barColor.Red * ratio, gradientEnd.Green * endratio + barColor.Green * ratio, _
-		      gradientEnd.Blue * endratio + barColor.Blue * ratio)
-		    Else
-		      drawingBuffer.Graphics.ForeColor = barColor
-		    End If
-		    drawingBuffer.Graphics.DrawLine(0, i, filledWidth, i)
-		  next
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub drawBarwell()
-		  //Draws the background of the control
-		  
-		  Dim myHeight, myWidth As Integer
-		  myHeight = Me.Height
-		  myWidth = Me.Width
-		  
-		  If barWell = &cFFFFFF Then
-		    drawingBuffer.Graphics.ForeColor = &cFFFFFE
-		  Else
-		    drawingBuffer.Graphics.ForeColor = barWell
+		  'ticks
+		  If Ticks Then
+		    Dim markStep As Integer = Buffer.Width \ 20
+		    For i As Integer = 0 To Buffer.Width Step markStep
+		      Buffer.Graphics.ForeColor = TickColor
+		      Buffer.Graphics.DrawLine(i, Buffer.Height - Buffer.Height \ 4, i, Buffer.Height)
+		    Next
 		  End If
 		  
 		  
-		  drawingBuffer.Graphics.FillRect(0, 0, myWidth, myHeight)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub drawBox()
-		  //Draws the outline of the control if Border = True
-		  Dim myHeight, myWidth As Integer
-		  myHeight = Me.Height
-		  myWidth = Me.Width
-		  drawingBuffer.Graphics.ForeColor = boxColor
-		  drawingBuffer.Graphics.DrawRect(0, 0, myWidth, myHeight)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub drawThumb(point As Integer)
+		  'bar
+		  Dim ratio, endratio as Double
+		  Dim w As Integer = Max(0.25 * Buffer.Height, 5)
+		  For i As Integer = w To Buffer.Height - w
+		    If Gradated Then
+		      ratio = ((Buffer.Height - i) / Buffer.Height)
+		      endratio = (i / Buffer.Height)
+		      Buffer.Graphics.ForeColor = RGB(GradientEnd.Red * endratio + barColor.Red * ratio, GradientEnd.Green * endratio + barColor.Green * ratio, _
+		      GradientEnd.Blue * endratio + barColor.Blue * ratio)
+		    Else
+		      Buffer.Graphics.ForeColor = barColor
+		    End If
+		    Buffer.Graphics.DrawLine(0, i, filledWidth, i)
+		  next
 		  
-		  Dim thumb As New Picture(Me.Height \ 3, Me.Height, 32)
-		  thumb.Transparent = 1
+		  'Thumb
+		  #pragma BreakOnExceptions Off 'We might get and OoBE if Height\4 <= 0
+		  Dim thumb As New Picture(Buffer.Height \ 4, Buffer.Height)', 32)
+		  #pragma BreakOnExceptions On
+		  thumb.Graphics.ForeColor = &cFFFFFFFF
+		  thumb.Graphics.FillRect(0, 0, thumb.Width, thumb.Height)
+		  'thumb.Transparent = 1
 		  thumb.Graphics.ForeColor = ThumbColor
 		  thumb.Graphics.FillRect(0, 0, thumb.Width, thumb.Height)
 		  thumb.Graphics.ForeColor = ThumbColor
-		  thumb.Graphics.FillRoundRect(0, 0, thumb.Width, thumb.Height, 5, 5)
-		  If point <= 0 Then
-		    drawingBuffer.Graphics.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
-		  ElseIf point >= Me.Width Then
-		    drawingBuffer.Graphics.DrawPicture(thumb, Me.Width - (thumb.Width \ 2), 0)
+		  thumb.Graphics.DrawOval(8, 8, thumb.Width - 16, thumb.Height - 16)', 10, 10)
+		  If FilledWidth <= 0 Then
+		    Buffer.Graphics.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
+		  ElseIf FilledWidth >= Buffer.Width Then
+		    Buffer.Graphics.DrawPicture(thumb, Buffer.Width - (thumb.Width \ 2), 0)
 		  Else
-		    drawingBuffer.Graphics.DrawPicture(thumb, point - (thumb.Width \ 2), 0)
+		    Buffer.Graphics.DrawPicture(thumb, FilledWidth - (thumb.Width \ 2), 0)
 		  End If
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub drawTicks()
-		  If Not Ticks Then Return
-		  Dim markStep As Integer = Me.Width \ 20
-		  For i As Integer = 0 To Me.Width Step markStep
-		    drawingBuffer.Graphics.ForeColor = TickColor
-		    drawingBuffer.Graphics.DrawLine(i, Me.Height - Me.Height \ 4, i, Me.Height)
-		  Next
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub GreyScale(p As Picture)
-		  //Converts the passed Picture to greyscale.
-		  //Can take a few seconds on very large Pictures
-		  //This function was *greatly* optimized by user 'doofus' on the RealSoftware forums:
-		  //http://forums.realsoftware.com/viewtopic.php?f=1&t=42327&sid=4e724091fc9dd70fd5705110098adf67
 		  
-		  If p = Nil Then Raise New NilObjectException
-		  Dim w As Integer = p.Width
-		  Dim h As Integer = p.Height
-		  Dim surf As RGBSurface = p.RGBSurface
-		  
-		  If surf = Nil Then Raise New NilObjectException
-		  
-		  Dim greyColor(255) As Color //precompute the 256 grey colors
-		  For i As Integer = 0 To 255
-		    greyColor(i) = RGB(i, i, i)
-		  Next
-		  
-		  Dim X, Y, intensity As Integer, c As Color
-		  For X = 0 To w
-		    For Y = 0 To h
-		      c = surf.Pixel(X, Y)
-		      intensity = c.Red * 0.30 + c.Green * 0.59 + c.Blue * 0.11
-		      surf.Pixel(X, Y) = greyColor(intensity) //lookup grey
+		  If Not Me.Enabled Then
+		    //Converts the passed Picture to greyscale.
+		    //Can take a few seconds on very large Pictures
+		    //This function was *greatly* optimized by user 'doofus' on the RealSoftware forums:
+		    //http://forums.realsoftware.com/viewtopic.php?f=1&t=42327&sid=4e724091fc9dd70fd5705110098adf67
+		    
+		    Dim surf As RGBSurface = Buffer.RGBSurface
+		    
+		    Dim greyColor(255) As Color //precompute the 256 grey colors
+		    For i As Integer = 0 To 255
+		      greyColor(i) = RGB(i, i, i)
 		    Next
-		  Next
-		  'Break
+		    
+		    Dim X, Y, intensity As Integer, c As Color
+		    For X = 0 To Buffer.Width
+		      For Y = 0 To Buffer.Height
+		        c = surf.Pixel(X, Y)
+		        intensity = c.Red * 0.30 + c.Green * 0.59 + c.Blue * 0.11
+		        surf.Pixel(X, Y) = greyColor(intensity) //lookup grey
+		      Next
+		    Next
+		    
+		  End If
+		  
+		  'border
+		  If Me.Border Then
+		    Buffer.Graphics.ForeColor = boxColor
+		    Buffer.Graphics.DrawRect(0, 0, Buffer.Width, Buffer.Height)
+		  End If
+		  
+		  
+		  If Invalidate Then
+		    Me.Invalidate(False)
+		  End If
+		  
+		  
+		Exception OutOfBoundsException
+		  Buffer = New Picture(Max(1, Me.Width), Max(1, Me.Height))
+		  
 		End Sub
 	#tag EndMethod
 
+
+	#tag Hook, Flags = &h0
+		Event KeyDown(Key As String) As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event MouseDown(X As Integer, Y As Integer) As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event MouseDrag(X As Integer, Y As Integer)
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event MouseEnter()
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event MouseExit()
+	#tag EndHook
 
 	#tag Hook, Flags = &h0
 		Event ValueChanged()
@@ -209,13 +194,13 @@ Inherits Canvas
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mbarColor
+			  return mBarColor
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
-			  mbarColor = value
-			  Me.Value = Me.Value
+			  mBarColor = value
+			  Update()
 			End Set
 		#tag EndSetter
 		BarColor As Color
@@ -224,16 +209,16 @@ Inherits Canvas
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mbarWell
+			  return mBarwell
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
-			  mbarWell = value
-			  Me.Value = Me.Value
+			  mBarwell = value
+			  Update()
 			End Set
 		#tag EndSetter
-		BarWell As Color
+		Barwell As Color
 	#tag EndComputedProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -245,7 +230,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mBorder = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		Border As Boolean
@@ -254,73 +239,92 @@ Inherits Canvas
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mboxColor
+			  return mBoxColor
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
-			  mboxColor = value
-			  Me.Value = Me.Value
+			  mBoxColor = value
+			  Update()
 			End Set
 		#tag EndSetter
 		BoxColor As Color
 	#tag EndComputedProperty
 
 	#tag Property, Flags = &h21
-		Private drawingBuffer As Picture
+		Private Buffer As Picture
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mhasGradient
+			  Return RectControl(Self).Enabled
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
-			  mhasGradient = value
-			  Me.Value = Me.Value
+			  RectControl(Self).Enabled = value
+			  Update()
 			End Set
 		#tag EndSetter
-		Gradient As Boolean
+		Enabled As Boolean
 	#tag EndComputedProperty
 
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mgradientEnd
+			  return mGradated
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
-			  mgradientEnd = value
-			  Me.Value = Me.Value
+			  mGradated = value
+			  Update()
+			End Set
+		#tag EndSetter
+		Gradated As Boolean
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mGradientEnd
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mGradientEnd = value
+			  Update()
 			End Set
 		#tag EndSetter
 		GradientEnd As Color
 	#tag EndComputedProperty
 
+	#tag Property, Flags = &h0
+		LiveScroll As Boolean = False
+	#tag EndProperty
+
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mmaximum
+			  return mMaximum
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
-			  mmaximum = value
-			  Me.Value = Me.Value
+			  mMaximum = value
+			  Update()
 			End Set
 		#tag EndSetter
 		Maximum As Integer
 	#tag EndComputedProperty
 
 	#tag Property, Flags = &h21
-		Private mbarColor As Color = &c808080
+		Private mBarColor As Color = &c808080
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mbarWell As Color
+		Private mBarwell As Color = &c000000
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -328,43 +332,35 @@ Inherits Canvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mboxColor As Color = &c808080
+		Private mBoxColor As Color = &c808080
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mgradientEnd As Color
+		Private mGradated As Boolean = True
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mhasGradient As Boolean
+		Private mGradientEnd As Color = &c000000
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mHasTicks As Boolean
+		Private mMaximum As Integer = 100
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mMaximum As Integer
+		Private mThumbColor As Color = &c000000
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mtextColor As Color
+		Private mTickColor As Color = &c000000
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mThumbColor As Color
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mTickColor As Color
+		Private mTicks As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private mvalue As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private PrevEnabled As Boolean
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -376,7 +372,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mThumbColor = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		ThumbColor As Color
@@ -391,7 +387,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mTickColor = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		TickColor As Color
@@ -400,13 +396,13 @@ Inherits Canvas
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mHasTicks
+			  return mTicks
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
-			  mHasTicks = value
-			  Me.Value = Me.Value
+			  mTicks = value
+			  Update()
 			End Set
 		#tag EndSetter
 		Ticks As Boolean
@@ -415,37 +411,17 @@ Inherits Canvas
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mvalue
+			  return mValue
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
-			  //Calculates x, where x/Control.Width = val/maximum
-			  //Invokes the drawing methods
-			  mvalue = value
-			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
-			  If mvalue > maximum Then mvalue = maximum
-			  If mvalue < 0 Then mvalue = 0
-			  Dim filledWidth As Integer = (((value * 100) / maximum) * (Me.Width / 100))
-			  
-			  If drawingBuffer = Nil Then
-			    drawingBuffer = New Picture(Me.Width, Me.Height, 32)
-			    drawingBuffer.Transparent = 1
-			    drawingBuffer.Graphics.ForeColor = &cFFFFFF
-			    drawingBuffer.Graphics.FillRect(0, 0, drawingBuffer.Width, drawingBuffer.Height)
-			  End If
-			  drawBarwell()
-			  drawTicks()
-			  drawBar(filledWidth)
-			  If Border Then drawBox()
-			  drawThumb(FilledWidth)
-			  If Not Me.Enabled Then
-			    GreyScale(drawingBuffer)
-			  End If
-			  
-			  Refresh(False)
+			  mValue = value
+			  Update()
 			  ValueChanged()
-			  
+			  If LiveScroll Then
+			    Refresh(False) 
+			  End If
 			End Set
 		#tag EndSetter
 		Value As Integer
@@ -477,33 +453,35 @@ Inherits Canvas
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Backdrop"
+			Visible=true
 			Group="Appearance"
 			Type="Picture"
 			EditorType="Picture"
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="barColor"
+			Name="BarColor"
 			Visible=true
 			Group="Behavior"
-			InitialValue="&c000000"
+			InitialValue="&cCC0000"
 			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="barWell"
+			Name="BarWell"
 			Visible=true
 			Group="Behavior"
-			InitialValue="&cC0C0C0"
+			InitialValue="&cCCCCCC"
 			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Border"
 			Visible=true
 			Group="Behavior"
+			InitialValue="True"
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="boxColor"
+			Name="BoxColor"
 			Visible=true
 			Group="Behavior"
 			InitialValue="&c000000"
@@ -524,36 +502,30 @@ Inherits Canvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="EnableSlider"
-			Visible=true
-			Group="Behavior"
-			InitialValue="True"
-			Type="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="EraseBackground"
 			Group="Behavior"
 			Type="Boolean"
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Gradient"
+			Name="Gradated"
 			Visible=true
 			Group="Behavior"
+			InitialValue="True"
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="gradientEnd"
+			Name="GradientEnd"
 			Visible=true
 			Group="Behavior"
-			InitialValue="&c009B4E"
+			InitialValue="&cFF0000"
 			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Height"
 			Visible=true
 			Group="Position"
-			InitialValue="25"
+			InitialValue="100"
 			Type="Integer"
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
@@ -613,7 +585,7 @@ Inherits Canvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="maximum"
+			Name="Maximum"
 			Visible=true
 			Group="Behavior"
 			InitialValue="100"
@@ -649,7 +621,9 @@ Inherits Canvas
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TabStop"
+			Visible=true
 			Group="Position"
+			InitialValue="True"
 			Type="Boolean"
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
@@ -689,7 +663,7 @@ Inherits Canvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="value"
+			Name="Value"
 			Visible=true
 			Group="Behavior"
 			Type="Integer"
