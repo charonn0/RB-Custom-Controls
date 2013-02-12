@@ -416,11 +416,12 @@ Inherits Canvas
 		#tag EndGetter
 		#tag Setter
 			Set
+			  If value > Me.Maximum Or value < 0 Then Return
 			  mValue = value
 			  Update()
 			  ValueChanged()
 			  If LiveScroll Then
-			    Refresh(False) 
+			    Refresh(False)
 			  End If
 			End Set
 		#tag EndSetter
