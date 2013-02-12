@@ -41,8 +41,8 @@ Inherits Label
 
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  If Not IsContextualClick Then
-		    Return RaiseEvent MouseDown(X, Y) Or True
+		  If Not IsContextualClick And Not RaiseEvent MouseDown(X, Y) Then
+		    Return True
 		  Else
 		    Return False
 		  End If
@@ -79,9 +79,12 @@ Inherits Label
 	#tag Event
 		Sub MouseEnter()
 		  HoverTimer.Mode = Timer.ModeSingle
-		  Me.HelpTag = AltText
-		  'Me.mousecursor = System.Cursors.FingerPointer
-		  Me.Underline = True
+		  If Me.Enabled Then
+		    Me.HelpTag = AltText
+		    Me.PreviousCursor = Me.MouseCursor
+		    Me.mousecursor = System.Cursors.FingerPointer
+		    Me.Underline = True
+		  End If
 		  RaiseEvent MouseEnter
 		End Sub
 	#tag EndEvent
@@ -89,7 +92,7 @@ Inherits Label
 	#tag Event
 		Sub MouseExit()
 		  HoverTimer.Mode = Timer.ModeOff
-		  'Me.mousecursor = System.Cursors.StandardPointer
+		  Me.mousecursor = Me.PreviousCursor
 		  Me.Underline = False
 		  RaiseEvent MouseExit
 		End Sub
@@ -327,6 +330,10 @@ Inherits Label
 
 	#tag Property, Flags = &h21
 		Private mAltText As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private PreviousCursor As MouseCursor
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

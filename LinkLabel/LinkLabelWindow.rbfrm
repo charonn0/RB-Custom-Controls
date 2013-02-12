@@ -31,7 +31,7 @@ Begin Window LinkLabelWindow
       Bold            =   False
       DataField       =   ""
       DataSource      =   ""
-      Draggable       =   True
+      Draggable       =   False
       Enabled         =   True
       Height          =   22
       HelpTag         =   ""
@@ -52,7 +52,6 @@ Begin Window LinkLabelWindow
       Selectable      =   False
       TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Boredom Software"
       TextAlign       =   1
       TextColor       =   255
@@ -88,7 +87,6 @@ Begin Window LinkLabelWindow
       Selectable      =   False
       TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Not Hovering"
       TextAlign       =   1
       TextColor       =   0
