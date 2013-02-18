@@ -3,99 +3,77 @@ Protected Class ProgBar
 Inherits Canvas
 	#tag Event
 		Sub Paint(g As Graphics)
-		  //Repaints the canvas
-		  //This event fires whenever the control has been painted by something other than itself
-		  //calculates and draws a new buffer with val=0 or recalculates the old buffer and paints it, or simply repaints the old buffer
-		  
-		  Static myHeight As Integer
-		  Static mywidth As Integer
-		  
-		  If mywidth <> Me.Width Or myHeight <> Me.Height Then
-		    drawingBuffer = New Picture(Me.Width, Me.Height, 24)
-		    Me.Value = mvalue
-		  Else
-		    If drawingBuffer <> Nil Then
-		      g.DrawPicture(drawingBuffer, 0, 0)
-		    Else
-		      Me.value = 0
-		    End If
-		  End If
-		  mywidth = Me.Width
-		  myHeight = Me.Height
+		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Then Update(False)
+		  g.DrawPicture(Buffer, 0, 0)
 		End Sub
 	#tag EndEvent
 
 
-	#tag Method, Flags = &h21
-		Private Sub drawBar(filledWidth As Integer)
-		  //Draws the actual progress bar part of the control
+	#tag Method, Flags = &h1
+		Protected Sub Update(Invalidate As Boolean = True)
+		  #pragma BreakOnExceptions Off
+		  Dim filledWidth As Integer = (((value * 100) / maximum) * (Me.Width / 100))
+		  #If RBVersion >= 2011.04 Then
+		    Buffer = New Picture(Me.Width, Me.Height)
+		  #Else
+		    Buffer = New Picture(Me.Width, Me.Height, 32)
+		  #endif
 		  
-		  Dim myHeight, myWidth As Integer
-		  myHeight = Me.Height
-		  myWidth = Me.Width
+		  'barWell
+		  Dim H, W As Integer
+		  H = Buffer.Height
+		  W = Buffer.Width
+		  Buffer.Graphics.ForeColor = barWell
+		  Buffer.Graphics.FillRect(0, 0, W, H)
 		  
+		  
+		  'bar
 		  If hasGradient Then
 		    Dim ratio, endratio as Double
-		    For i As Integer = 0 To drawingBuffer.Height
-		      ratio = ((drawingBuffer.Height - i) / drawingBuffer.Height)
-		      endratio = (i / drawingBuffer.Height)
-		      drawingBuffer.Graphics.ForeColor = RGB(gradientEnd.Red * endratio + barColor.Red * ratio, gradientEnd.Green * endratio + barColor.Green * ratio, _
+		    For i As Integer = 0 To Buffer.Height
+		      ratio = ((Buffer.Height - i) / Buffer.Height)
+		      endratio = (i / Buffer.Height)
+		      Buffer.Graphics.ForeColor = RGB(gradientEnd.Red * endratio + barColor.Red * ratio, gradientEnd.Green * endratio + barColor.Green * ratio, _
 		      gradientEnd.Blue * endratio + barColor.Blue * ratio)
-		      drawingBuffer.Graphics.DrawLine(0, i, filledWidth, i)
+		      Buffer.Graphics.DrawLine(0, i, filledWidth, i)
 		    next
-		    drawingBuffer.Graphics.ForeColor = barColor
-		    drawingBuffer.Graphics.DrawLine(0, 0, filledWidth, 0)
+		    Buffer.Graphics.ForeColor = barColor
+		    Buffer.Graphics.DrawLine(0, 0, filledWidth, 0)
 		  Else
-		    drawingBuffer.Graphics.ForeColor = barColor
-		    drawingBuffer.Graphics.FillRect(0, 0, filledWidth, myHeight)
-		  End If
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub drawBarwell()
-		  //Draws the background of the control
-		  
-		  Dim myHeight, myWidth As Integer
-		  myHeight = Me.Height
-		  myWidth = Me.Width
-		  If barWell = &cFFFFFF Then
-		    drawingBuffer.Graphics.ForeColor = &cFFFFFE
-		  Else
-		    drawingBuffer.Graphics.ForeColor = barWell
+		    Buffer.Graphics.ForeColor = barColor
+		    Buffer.Graphics.FillRect(0, 0, filledWidth, H)
 		  End If
 		  
-		  drawingBuffer.Graphics.FillRect(0, 0, myWidth, myHeight)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub drawBox()
-		  //Draws the outline of the control if hasBox = True
-		  Dim myHeight, myWidth As Integer
-		  myHeight = Me.Height
-		  myWidth = Me.Width
-		  drawingBuffer.Graphics.ForeColor = boxColor
-		  drawingBuffer.Graphics.DrawRect(0, 0, myWidth, myHeight)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub drawText()
-		  //Draws the text, if hasText = True
-		  Dim percStr As String
-		  drawingBuffer.Graphics.TextSize = 10
-		  percStr = PreText + " " + Format((Me.Value*100) / Me.maximum, textFormat) + OverrideText
-		  drawingBuffer.Graphics.Bold = bold
-		  drawingBuffer.Graphics.Italic = italic
-		  drawingBuffer.Graphics.Underline = underline
-		  drawingBuffer.Graphics.TextFont = textFont
-		  drawingBuffer.Graphics.ForeColor= textColor
-		  drawingBuffer.Graphics.TextSize = textSize
-		  Dim strWidth, strHeight As Integer
-		  strWidth = drawingBuffer.Graphics.StringWidth(percStr)
-		  strHeight = drawingBuffer.Graphics.StringHeight(percStr, Me.Width)
-		  drawingBuffer.Graphics.DrawString(percStr, (Me.Width/2) - (strWidth/2), ((Me.Height/2) + (strHeight/4)))
+		  'box
+		  If hasBox Then 
+		    Buffer.Graphics.ForeColor = boxColor
+		    Buffer.Graphics.DrawRect(0, 0, W, H)
+		  End If
+		  
+		  'text
+		  If hasText Then 
+		    Dim percStr As String
+		    Buffer.Graphics.TextSize = 10
+		    percStr = PreText + " " + Format((Me.Value*100) / Me.maximum, textFormat) + OverrideText
+		    Buffer.Graphics.Bold = bold
+		    Buffer.Graphics.Italic = italic
+		    Buffer.Graphics.Underline = underline
+		    Buffer.Graphics.TextFont = textFont
+		    Buffer.Graphics.ForeColor= textColor
+		    Buffer.Graphics.TextSize = textSize
+		    Dim strWidth, strHeight As Integer
+		    strWidth = Buffer.Graphics.StringWidth(percStr)
+		    strHeight = Buffer.Graphics.StringHeight(percStr, Me.Width)
+		    Buffer.Graphics.DrawString(percStr, (Me.Width/2) - (strWidth/2), ((Me.Height/2) + (strHeight/4)))
+		  End If
+		  
+		  If Invalidate Then
+		    Me.Invalidate(False)
+		  End If
+		  
+		  
+		Exception Err As OutOfBoundsException
+		  Buffer = Nil
 		End Sub
 	#tag EndMethod
 
@@ -189,7 +167,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mbarColor = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		barColor As Color
@@ -204,7 +182,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mbarWell = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		barWell As Color
@@ -219,7 +197,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mbold = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		bold As Boolean
@@ -234,14 +212,14 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mboxColor = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		boxColor As Color
 	#tag EndComputedProperty
 
 	#tag Property, Flags = &h21
-		Private drawingBuffer As Picture
+		Private Buffer As Picture
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -253,7 +231,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mgradientEnd = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		gradientEnd As Color
@@ -268,7 +246,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mhasBox = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		hasBox As Boolean
@@ -283,7 +261,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mhasGradient = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		hasGradient As Boolean
@@ -298,7 +276,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mhasText = value
-			  Me.value = Me.value
+			  Update()
 			End Set
 		#tag EndSetter
 		hasText As Boolean
@@ -313,7 +291,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mitalic = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		italic As Boolean
@@ -328,7 +306,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mmaximum = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		maximum As Integer
@@ -419,7 +397,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mtextColor = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		textColor As Color
@@ -434,7 +412,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mtextFont = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		textFont As String
@@ -450,7 +428,7 @@ Inherits Canvas
 			Set
 			  mtextFormat = value
 			  If Me.Width = 0 And Me.Height = 0 Then Return
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		textFormat As String
@@ -465,7 +443,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mtextSize = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		textSize As Integer
@@ -480,7 +458,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  munderline = value
-			  Me.Value = Me.Value
+			  Update()
 			End Set
 		#tag EndSetter
 		underline As Boolean
@@ -497,65 +475,10 @@ Inherits Canvas
 			  //Calculates x, where x/Control.Width = val/maximum
 			  //Invokes the drawing methods
 			  mvalue = value
-			  If mvalue > maximum Then mvalue = maximum
-			  Dim filledWidth As Integer = (((value * 100) / maximum) * (Me.Width / 100))
-			  If drawingBuffer = Nil Then
-			    If Me.Width = 0 Or Me.Height = 0 Then Return
-			    drawingBuffer = New Picture(Me.Width, Me.Height, 24)
-			  End If
-			  drawBarwell()
-			  drawBar(filledWidth)
-			  If hasBox Then drawBox()
-			  If hasText Then drawText()
-			  
-			  Refresh(False)
+			  Update()
 			End Set
 		#tag EndSetter
 		value As Double
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
-			  return mvalue1
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  //Calculates x, where x/Control.Width = val/maximum
-			  //Invokes the drawing methods
-			  If Not ShowValue1 Then Return
-			  mvalue1 = value1
-			  If mvalue1 > maximum Then mvalue1 = maximum
-			  Dim filledWidth As Integer = (((value * 100) / maximum) * (Me.Width / 100))
-			  
-			  If drawingBuffer = Nil Then
-			    Me.value = mvalue
-			  End If
-			  Dim myHeight, myWidth As Integer
-			  myHeight = drawingBuffer.Height
-			  myWidth = drawingBuffer.Width
-			  Dim barcolor, gradientEnd As Color
-			  'Dim perc As Integer = width * 100 / drawingBuffer.Width
-			  
-			  barcolor = &c0000FF  //Blue
-			  gradientEnd = &c0000FF
-			  
-			  Dim ratio, endratio as Double
-			  For i As Integer = 0.85 * drawingBuffer.Height To drawingBuffer.Height
-			    ratio = 0.85 *((drawingBuffer.Graphics.Height - i) / drawingBuffer.Graphics.Height)
-			    endratio = (i / drawingBuffer.Graphics.Height)
-			    drawingBuffer.Graphics.ForeColor = RGB(gradientEnd.Red * endratio + barColor.Red * ratio, gradientEnd.Green * endratio + barColor.Green * ratio, _
-			    gradientEnd.Blue * endratio + barColor.Blue * ratio)
-			    drawingBuffer.Graphics.DrawLine(0, i, filledWidth, i)
-			  next
-			  drawingBuffer.Graphics.ForeColor = &c800000
-			  drawingBuffer.Graphics.DrawLine(0, 0, Width, 0)
-			  'drawText()
-			  Refresh(False)
-			End Set
-		#tag EndSetter
-		value1 As Double
 	#tag EndComputedProperty
 
 
