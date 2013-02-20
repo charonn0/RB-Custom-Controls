@@ -34,8 +34,8 @@ Inherits Canvas
 		Sub MouseDrag(X As Integer, Y As Integer)
 		  if x<0 or y<0 or x>me.width or y>me.height then
 		    //Outside the button
-		    isHovering = False
-		    Update()
+		    misHovering = False
+		    Update(False)
 		  end
 		End Sub
 	#tag EndEvent
