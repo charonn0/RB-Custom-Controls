@@ -63,14 +63,7 @@ Inherits Canvas
 
 	#tag Event
 		Sub Paint(g As Graphics)
-		  Static lastWidth, lastHeight As Integer
-		  If (lastWidth <> Me.Width Or lastHeight <> Me.Height) And (Me.Width > 1 And Me.Height > 1) Then   //Can't have negative dimensions
-		    buffer = New Picture(Me.Width, Me.Height, 24)
-		    lastWidth = Me.Width
-		    lastHeight = Me.Height
-		    Update()
-		  End If
-		  
+		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Then Update(False)
 		  g.DrawPicture(buffer, 0, 0)
 		  
 		End Sub
