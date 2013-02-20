@@ -115,6 +115,12 @@ Inherits Canvas
 		      Buffer.Graphics.DrawLine(1, 1, Me.Width - 1, 1)
 		      Buffer.Graphics.DrawLine(Me.Width - 2, Me.Height - 2, Me.Width -2, 2)
 		      Buffer.Graphics.DrawLine(Me.Width - 2, Me.Height - 2, 2, Me.Height - 2)
+		    Else
+		      buffer.Graphics.ForeColor = &c000000
+		      buffer.Graphics.DrawLine(0, 0, 0, Me.Height)
+		      buffer.Graphics.DrawLine(0, 0, Me.Width, 0)
+		      buffer.Graphics.DrawLine(Me.Width - 1, Me.Height - 1, Me.Width -1, 1)
+		      buffer.Graphics.DrawLine(Me.Width - 1, Me.Height - 1, 1, Me.Height - 1)
 		    End If
 		  Else
 		    buffer.Graphics.ForeColor = &c000000
