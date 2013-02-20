@@ -106,22 +106,65 @@ Inherits Canvas
 		  
 		  'Thumb
 		  #pragma BreakOnExceptions Off 'We might get and OoBE if Height\4 <= 0
-		  Dim thumb As New Picture(Buffer.Height \ 4, Buffer.Height)', 32)
+		  
 		  #pragma BreakOnExceptions On
-		  thumb.Graphics.ForeColor = &cFFFFFFFF
-		  thumb.Graphics.FillRect(0, 0, thumb.Width, thumb.Height)
-		  'thumb.Transparent = 1
-		  thumb.Graphics.ForeColor = ThumbColor
-		  thumb.Graphics.FillRect(0, 0, thumb.Width, thumb.Height)
-		  thumb.Graphics.ForeColor = ThumbColor
-		  thumb.Graphics.DrawOval(8, 8, thumb.Width - 16, thumb.Height - 16)', 10, 10)
-		  If FilledWidth <= 0 Then
-		    Buffer.Graphics.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
-		  ElseIf FilledWidth >= Buffer.Width Then
-		    Buffer.Graphics.DrawPicture(thumb, Buffer.Width - (thumb.Width \ 2), 0)
-		  Else
-		    Buffer.Graphics.DrawPicture(thumb, FilledWidth - (thumb.Width \ 2), 0)
-		  End If
+		  Select Case Me.ThumbStyle
+		  Case 0
+		    Dim thumb As New Picture(Buffer.Height \ 4, Buffer.Height)', 32)
+		    thumb.Graphics.ForeColor = &cFFFFFFFF
+		    thumb.Graphics.FillRect(0, 0, thumb.Width, thumb.Height)
+		    thumb.Graphics.ForeColor = ThumbColor
+		    thumb.Graphics.FillRect(0, 0, thumb.Width, thumb.Height)
+		    If FilledWidth <= 0 Then
+		      Buffer.Graphics.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
+		    ElseIf FilledWidth >= Buffer.Width Then
+		      Buffer.Graphics.DrawPicture(thumb, Buffer.Width - (thumb.Width \ 2), 0)
+		    Else
+		      Buffer.Graphics.DrawPicture(thumb, FilledWidth - (thumb.Width \ 2), 0)
+		    End If
+		  Case 1
+		    Dim thumb As New Picture(Buffer.Height, Buffer.Height)', 32)
+		    thumb.Graphics.ForeColor = &cFFFFFFFF
+		    thumb.Graphics.FillRect(0, 0, thumb.Width, thumb.Height)
+		    thumb.Graphics.ForeColor = ThumbColor
+		    thumb.Graphics.FillRect(0, 0, thumb.Width, thumb.Height)
+		    If FilledWidth <= 0 Then
+		      Buffer.Graphics.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
+		    ElseIf FilledWidth >= Buffer.Width Then
+		      Buffer.Graphics.DrawPicture(thumb, Buffer.Width - (thumb.Width \ 2), 0)
+		    Else
+		      Buffer.Graphics.DrawPicture(thumb, FilledWidth - (thumb.Width \ 2), 0)
+		    End If
+		  Case 2
+		    Dim thumb As New Picture(Buffer.Height \ 4, Buffer.Height)', 32)
+		    thumb.Graphics.ForeColor = &cFFFFFFFF
+		    thumb.Graphics.FillRect(0, 0, thumb.Width, thumb.Height)
+		    thumb.Graphics.ForeColor = ThumbColor
+		    thumb.Graphics.FillOval(0, 0, thumb.Width, thumb.Height)
+		    If FilledWidth <= 0 Then
+		      Buffer.Graphics.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
+		    ElseIf FilledWidth >= Buffer.Width Then
+		      Buffer.Graphics.DrawPicture(thumb, Buffer.Width - (thumb.Width \ 2), 0)
+		    Else
+		      Buffer.Graphics.DrawPicture(thumb, FilledWidth - (thumb.Width \ 2), 0)
+		    End If
+		  Case 3
+		    Dim thumb As New Picture(Buffer.Height, Buffer.Height)', 32)
+		    thumb.Graphics.ForeColor = &cFFFFFFFF
+		    thumb.Graphics.FillRect(0, 0, thumb.Width, thumb.Height)
+		    thumb.Graphics.ForeColor = ThumbColor
+		    thumb.Graphics.FillOval(0, 0, thumb.Width, thumb.Height)
+		    If FilledWidth <= 0 Then
+		      Buffer.Graphics.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
+		    ElseIf FilledWidth >= Buffer.Width Then
+		      Buffer.Graphics.DrawPicture(thumb, Buffer.Width - (thumb.Width \ 2), 0)
+		    Else
+		      Buffer.Graphics.DrawPicture(thumb, FilledWidth - (thumb.Width \ 2), 0)
+		    End If
+		  End Select
+		  
+		  
+		  
 		  
 		  If Not Me.Enabled Then
 		    //Converts the passed Picture to greyscale.
@@ -352,6 +395,10 @@ Inherits Canvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
+		Private mThumbStyle As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
 		Private mTickColor As Color = &c000000
 	#tag EndProperty
 
@@ -376,6 +423,21 @@ Inherits Canvas
 			End Set
 		#tag EndSetter
 		ThumbColor As Color
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mThumbStyle
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mThumbStyle = value
+			  Update()
+			End Set
+		#tag EndSetter
+		ThumbStyle As Integer
 	#tag EndComputedProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -641,6 +703,19 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="&c000000"
 			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ThumbStyle"
+			Visible=true
+			Group="Behavior"
+			Type="Integer"
+			EditorType="Enum"
+			#tag EnumValues
+				"0 - SmallRect"
+				"1 - BigRect"
+				"2 - SmallOval"
+				"3 - BigOval"
+			#tag EndEnumValues
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TickColor"

@@ -44,7 +44,7 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Left            =   3
       LiveScroll      =   False
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
@@ -55,6 +55,7 @@ Begin Window SliderWindow
       TabPanelIndex   =   0
       TabStop         =   True
       ThumbColor      =   0
+      ThumbStyle      =   2
       TickColor       =   0
       Ticks           =   True
       Top             =   5
@@ -74,11 +75,11 @@ Begin Window SliderWindow
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   127
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   1
       TabPanelIndex   =   0
@@ -97,11 +98,11 @@ Begin Window SliderWindow
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   127
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
@@ -121,11 +122,11 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Italic          =   ""
       Left            =   154
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
@@ -155,11 +156,11 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Italic          =   ""
       Left            =   156
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
@@ -190,11 +191,11 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Italic          =   ""
       Left            =   207
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       State           =   0
       TabIndex        =   5
@@ -222,11 +223,11 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Italic          =   ""
       Left            =   283
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       State           =   0
       TabIndex        =   7
@@ -252,11 +253,11 @@ Begin Window SliderWindow
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   127
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   14
       TabPanelIndex   =   0
@@ -276,11 +277,11 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Italic          =   ""
       Left            =   155
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
@@ -309,11 +310,11 @@ Begin Window SliderWindow
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   245
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   32
       TabPanelIndex   =   0
@@ -333,11 +334,11 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Italic          =   ""
       Left            =   273
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
@@ -366,11 +367,11 @@ Begin Window SliderWindow
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   245
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   36
       TabPanelIndex   =   0
@@ -390,11 +391,11 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Italic          =   ""
       Left            =   273
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
@@ -425,11 +426,11 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Italic          =   ""
       Left            =   127
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       State           =   0
       TabIndex        =   38
@@ -455,11 +456,11 @@ Begin Window SliderWindow
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   245
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   39
       TabPanelIndex   =   0
@@ -479,11 +480,11 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Italic          =   ""
       Left            =   273
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
@@ -521,11 +522,11 @@ Begin Window SliderWindow
       Italic          =   ""
       Left            =   140
       LimitText       =   0
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Mask            =   ""
       Password        =   ""
       ReadOnly        =   ""
@@ -556,11 +557,11 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Italic          =   ""
       Left            =   43
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
@@ -590,11 +591,11 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Italic          =   ""
       Left            =   324
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
@@ -624,11 +625,11 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Italic          =   ""
       Left            =   242
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
@@ -659,11 +660,11 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Italic          =   ""
       Left            =   362
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       State           =   1
       TabIndex        =   45
@@ -691,11 +692,11 @@ Begin Window SliderWindow
       InitialParent   =   ""
       Italic          =   ""
       Left            =   43
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       State           =   0
       TabIndex        =   46
@@ -709,6 +710,38 @@ Begin Window SliderWindow
       Value           =   False
       Visible         =   True
       Width           =   80
+   End
+   Begin ComboBox ComboBox1
+      AutoComplete    =   False
+      AutoDeactivate  =   True
+      Bold            =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialValue    =   "SmallRect\r\nBigRect\r\nSmallOval\r\nBigOval"
+      Italic          =   ""
+      Left            =   362
+      ListIndex       =   0
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   47
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   65
+      Underline       =   ""
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   91
    End
 End
 #tag EndWindow
@@ -918,6 +951,13 @@ End
 	#tag Event
 		Sub Action()
 		  Slider1.LiveScroll = Me.Value
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events ComboBox1
+	#tag Event
+		Sub Change()
+		  Slider1.ThumbStyle = Me.ListIndex
 		End Sub
 	#tag EndEvent
 #tag EndEvents
