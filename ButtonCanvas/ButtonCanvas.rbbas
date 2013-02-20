@@ -3,7 +3,7 @@ Protected Class ButtonCanvas
 Inherits Canvas
 	#tag Event
 		Function KeyDown(Key As String) As Boolean
-		  If IsEnabled And key = " " Then
+		  If Enabled And key = " " Then
 		    IsDown = True
 		  End If
 		  Return True
@@ -23,7 +23,7 @@ Inherits Canvas
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
 		  #pragma Unused X
 		  #pragma Unused Y
-		  If IsEnabled Then
+		  If Enabled Then
 		    IsDown = True
 		  End If
 		  Return True
@@ -35,20 +35,20 @@ Inherits Canvas
 		  if x<0 or y<0 or x>me.width or y>me.height then
 		    //Outside the button
 		    isHovering = False
-		    reset()
+		    Update()
 		  end
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub MouseEnter()
-		  If IsEnabled Then isHovering = True
+		  If Enabled Then isHovering = True
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub MouseExit()
-		  If IsEnabled Then isHovering = False
+		  If Enabled Then isHovering = False
 		End Sub
 	#tag EndEvent
 
@@ -56,14 +56,8 @@ Inherits Canvas
 		Sub MouseUp(X As Integer, Y As Integer)
 		  #pragma Unused X
 		  #pragma Unused Y
-		  If IsEnabled Then IsDown = False
+		  If Enabled Then IsDown = False
 		  If isHovering Then Action()
-		End Sub
-	#tag EndEvent
-
-	#tag Event
-		Sub Open()
-		  Me.Refresh(False)
 		End Sub
 	#tag EndEvent
 
@@ -74,7 +68,7 @@ Inherits Canvas
 		    buffer = New Picture(Me.Width, Me.Height, 24)
 		    lastWidth = Me.Width
 		    lastHeight = Me.Height
-		    reset()
+		    Update()
 		  End If
 		  
 		  g.DrawPicture(buffer, 0, 0)
@@ -83,105 +77,11 @@ Inherits Canvas
 	#tag EndEvent
 
 
-	#tag Method, Flags = &h21
-		Private Sub drawText(ByRef buf As Picture)
-		  buf.Graphics.TextSize = FontSize
-		  If IsEnabled Then
-		    buf.Graphics.ForeColor = FontColor
-		  Else
-		    buf.Graphics.ForeColor = RGB(FontColor.Red + ((255 - FontColor.Red) / 2), FontColor.Green + ((255 - FontColor.Green) / 2), _
-		    FontColor.Blue + ((255 - FontColor.Blue) / 2))
-		  End If
-		  buffer.Graphics.Bold = bold
-		  buffer.Graphics.Italic = italic
-		  buffer.Graphics.Underline = underline
-		  buffer.Graphics.TextFont = Font
-		  buffer.Graphics.TextSize = FontSize
-		  Dim strWidth, strHeight As Integer
-		  strWidth = buf.Graphics.StringWidth(Me.Caption)
-		  strHeight = buf.Graphics.StringHeight(Me.Caption, Me.Width)
-		  buf.Graphics.DrawString(Me.Caption, (Me.Width/2) - (strWidth/2), ((Me.Height/2) + (strHeight/4)))
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub GreyScale(p As Picture)
-		  //Converts the passed Picture to greyscale.
-		  //Can take a few seconds on very large Pictures
-		  //This function was *greatly* optimized by user 'doofus' on the RealSoftware forums:
-		  //http://forums.realsoftware.com/viewtopic.php?f=1&t=42327&sid=4e724091fc9dd70fd5705110098adf67
-		  //This function should be cross-platform safe.
-		  
-		  If p = Nil Then Raise New NilObjectException
-		  Dim w As Integer = p.Width
-		  Dim h As Integer = p.Height
-		  Dim surf As RGBSurface = p.RGBSurface
-		  
-		  If surf = Nil Then Raise New NilObjectException
-		  
-		  Dim greyColor(255) As Color //precompute the 256 grey colors
-		  For i As Integer = 0 To 255
-		    greyColor(i) = RGB(i, i, i)
-		  Next
-		  
-		  Dim X, Y, intensity As Integer, c As Color
-		  For X = 0 To w
-		    For Y = 0 To h
-		      c = surf.Pixel(X, Y)
-		      intensity = c.Red * 0.30 + c.Green * 0.59 + c.Blue * 0.11
-		      surf.Pixel(X, Y) = greyColor(intensity) //lookup grey
-		    Next
-		  Next
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub highlight(ByRef buf As Picture)
-		  Dim map(255) As Integer
-		  For i as Integer = 255 DownTo 0
-		    map(i) = 255 + i + 15
-		  next
-		  buf.RGBSurface.Transform(map)
-		  
-		  If hilightBorder Then
-		    Dim middle1 As Color = RGB(hilightColor.Red * 0.75, hilightColor.Green * 0.75, hilightColor.Blue * 0.75)
-		    Dim inner As Color = RGB(hilightColor.Red * 0.50, hilightColor.Green * 0.50, hilightColor.Blue * 0.50)
-		    
-		    buf.Graphics.ForeColor = hilightColor
-		    buf.Graphics.DrawLine(0, 0, 0, Me.Height)
-		    buf.Graphics.DrawLine(0, 0, Me.Width, 0)
-		    buf.Graphics.DrawLine(Me.Width - 1, Me.Height - 1, Me.Width -1, 1)
-		    buf.Graphics.DrawLine(Me.Width - 1, Me.Height - 1, 1, Me.Height - 1)
-		    
-		    buf.Graphics.ForeColor = middle1
-		    buf.Graphics.DrawLine(1, 1, 1, Me.Height - 1)
-		    buf.Graphics.DrawLine(1, 1, Me.Width - 1, 1)
-		    buf.Graphics.DrawLine(Me.Width - 2, Me.Height - 2, Me.Width -2, 2)
-		    buf.Graphics.DrawLine(Me.Width - 2, Me.Height - 2, 2, Me.Height - 2)
-		  End If
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub invert(ByRef tmp As Picture)
-		  Dim map(255) As Integer
-		  For i as Integer = 0 to 255
-		    map(i) = 255 - i + 178
-		  next
-		  tmp.RGBSurface.Transform(map)
-		  highlight(tmp)
-		  drawText(tmp)
-		  Buffer.Graphics.DrawPicture(tmp, 0, 0)
-		  Me.Refresh(False)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub reset()
-		  #pragma BreakOnExceptions Off
+	#tag Method, Flags = &h1
+		Protected Sub Update(Invalidate As Boolean = True)
 		  Dim startColor As Color = &cC0C0C0 //FIXME make colors configurable
 		  Dim endColor As Color = &cE6E6E6
+		  buffer = New Picture(Me.Width, Me.Height, 32)
 		  
 		  Dim ratio, endratio as Double
 		  For i As Integer = 0 To buffer.Height
@@ -194,7 +94,28 @@ Inherits Canvas
 		  buffer.Graphics.ForeColor = endColor
 		  buffer.Graphics.DrawLine(0, 0, buffer.Width, 0)
 		  If isHovering Then
-		    highlight(buffer)
+		    Dim map(255) As Integer
+		    For i as Integer = 255 DownTo 0
+		      map(i) = 255 + i + 15
+		    next
+		    Buffer.RGBSurface.Transform(map)
+		    
+		    If hilightBorder Then
+		      Dim middle1 As Color = RGB(hilightColor.Red * 0.75, hilightColor.Green * 0.75, hilightColor.Blue * 0.75)
+		      Dim inner As Color = RGB(hilightColor.Red * 0.50, hilightColor.Green * 0.50, hilightColor.Blue * 0.50)
+		      
+		      Buffer.Graphics.ForeColor = hilightColor
+		      Buffer.Graphics.DrawLine(0, 0, 0, Me.Height)
+		      Buffer.Graphics.DrawLine(0, 0, Me.Width, 0)
+		      Buffer.Graphics.DrawLine(Me.Width - 1, Me.Height - 1, Me.Width -1, 1)
+		      Buffer.Graphics.DrawLine(Me.Width - 1, Me.Height - 1, 1, Me.Height - 1)
+		      
+		      Buffer.Graphics.ForeColor = middle1
+		      Buffer.Graphics.DrawLine(1, 1, 1, Me.Height - 1)
+		      Buffer.Graphics.DrawLine(1, 1, Me.Width - 1, 1)
+		      Buffer.Graphics.DrawLine(Me.Width - 2, Me.Height - 2, Me.Width -2, 2)
+		      Buffer.Graphics.DrawLine(Me.Width - 2, Me.Height - 2, 2, Me.Height - 2)
+		    End If
 		  Else
 		    buffer.Graphics.ForeColor = &c000000
 		    buffer.Graphics.DrawLine(0, 0, 0, Me.Height)
@@ -202,13 +123,62 @@ Inherits Canvas
 		    buffer.Graphics.DrawLine(Me.Width - 1, Me.Height - 1, Me.Width -1, 1)
 		    buffer.Graphics.DrawLine(Me.Width - 1, Me.Height - 1, 1, Me.Height - 1)
 		  End If
-		  drawText(buffer)
-		  If Not IsEnabled Then
-		    GreyScale(buffer)
+		  
+		  
+		  If Me.Value Then
+		    Dim map(255) As Integer
+		    For i as Integer = 0 to 255
+		      map(i) = 255 - i + 178
+		    next
+		    Buffer.RGBSurface.Transform(map)
 		  End If
-		Exception Err As NilObjectException
-		  //The button has not been fully created yet so there is no Graphics oobject yet
-		  Return
+		  
+		  
+		  Buffer.Graphics.TextSize = FontSize
+		  If Enabled Then
+		    Buffer.Graphics.ForeColor = FontColor
+		  Else
+		    Buffer.Graphics.ForeColor = RGB(FontColor.Red + ((255 - FontColor.Red) / 2), FontColor.Green + ((255 - FontColor.Green) / 2), _
+		    FontColor.Blue + ((255 - FontColor.Blue) / 2))
+		  End If
+		  buffer.Graphics.Bold = bold
+		  buffer.Graphics.Italic = italic
+		  buffer.Graphics.Underline = underline
+		  buffer.Graphics.TextFont = Font
+		  buffer.Graphics.TextSize = FontSize
+		  Dim strWidth, strHeight As Integer
+		  strWidth = Buffer.Graphics.StringWidth(Me.Caption)
+		  strHeight = Buffer.Graphics.StringHeight(Me.Caption, Me.Width)
+		  Buffer.Graphics.DrawString(Me.Caption, (Me.Width/2) - (strWidth/2), ((Me.Height/2) + (strHeight/4)))
+		  
+		  
+		  If Not Enabled Then
+		    Dim w As Integer = Buffer.Width
+		    Dim h As Integer = Buffer.Height
+		    Dim surf As RGBSurface = Buffer.RGBSurface
+		    
+		    If surf = Nil Then Raise New NilObjectException
+		    
+		    Dim greyColor(255) As Color //precompute the 256 grey colors
+		    For i As Integer = 0 To 255
+		      greyColor(i) = RGB(i, i, i)
+		    Next
+		    
+		    Dim X, Y, intensity As Integer, c As Color
+		    For X = 0 To w
+		      For Y = 0 To h
+		        c = surf.Pixel(X, Y)
+		        intensity = c.Red * 0.30 + c.Green * 0.59 + c.Blue * 0.11
+		        surf.Pixel(X, Y) = greyColor(intensity) //lookup grey
+		      Next
+		    Next
+		    
+		  End If
+		  
+		  
+		  If Invalidate Then
+		    Me.Invalidate(True)
+		  End If
 		End Sub
 	#tag EndMethod
 
@@ -229,8 +199,8 @@ Inherits Canvas
 			  mBold = value
 			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
-			  reset()
-			  Me.Refresh(False)
+			  Update()
+			  
 			End Set
 		#tag EndSetter
 		Bold As Boolean
@@ -251,11 +221,27 @@ Inherits Canvas
 			  mCaption = value
 			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
-			  reset()
-			  Me.Refresh(False)
+			  Update()
+			  
 			End Set
 		#tag EndSetter
 		Caption As String
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  Return RectControl(Me).Enabled
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  RectControl(Me).Enabled = value
+			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
+			  Update()
+			End Set
+		#tag EndSetter
+		Enabled As Boolean
 	#tag EndComputedProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -269,8 +255,8 @@ Inherits Canvas
 			  mFont = value
 			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
-			  reset()
-			  Me.Refresh(False)
+			  Update()
+			  
 			End Set
 		#tag EndSetter
 		Font As String
@@ -287,8 +273,8 @@ Inherits Canvas
 			  mFontColor = value
 			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
-			  reset()
-			  Me.Refresh(False)
+			  Update()
+			  
 			End Set
 		#tag EndSetter
 		FontColor As Color
@@ -305,8 +291,8 @@ Inherits Canvas
 			  mFontSize = value
 			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
-			  reset()
-			  Me.Refresh(False)
+			  Update()
+			  
 			End Set
 		#tag EndSetter
 		FontSize As Integer
@@ -323,8 +309,8 @@ Inherits Canvas
 			  mhilightBorder = value
 			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
-			  reset()
-			  Me.Refresh(False)
+			  Update()
+			  
 			End Set
 		#tag EndSetter
 		hilightBorder As Boolean
@@ -341,8 +327,8 @@ Inherits Canvas
 			  mhilightColor = value
 			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
-			  reset()
-			  Me.Refresh(False)
+			  Update()
+			  
 			End Set
 		#tag EndSetter
 		hilightColor As Color
@@ -358,33 +344,10 @@ Inherits Canvas
 			Set
 			  mIsDown = value
 			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
-			  If value Then
-			    invert(buffer)
-			  Else
-			    reset()
-			  End If
-			  
-			  Me.Refresh(False)
+			  Update()
 			End Set
 		#tag EndSetter
 		Private IsDown As Boolean
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
-			  return mEnabled
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mEnabled = value
-			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
-			  reset()
-			  Me.Refresh(False)
-			End Set
-		#tag EndSetter
-		IsEnabled As Boolean
 	#tag EndComputedProperty
 
 	#tag ComputedProperty, Flags = &h21
@@ -396,14 +359,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  misHovering = value
-			  
-			  If value Then
-			    highlight(buffer)
-			    drawText(buffer)
-			  Else
-			    reset()
-			  End If
-			  Me.Refresh(False)
+			  Update()
 			End Set
 		#tag EndSetter
 		Private isHovering As Boolean
@@ -420,8 +376,8 @@ Inherits Canvas
 			  mItalic = value
 			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
-			  reset()
-			  Me.Refresh(False)
+			  Update()
+			  
 			End Set
 		#tag EndSetter
 		Italic As Boolean
@@ -486,8 +442,8 @@ Inherits Canvas
 			  mUnderline = value
 			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  buffer = New Picture(Me.Width, Me.Height, 24)
-			  reset()
-			  Me.Refresh(False)
+			  Update()
+			  
 			End Set
 		#tag EndSetter
 		Underline As Boolean
@@ -629,12 +585,6 @@ Inherits Canvas
 			Name="InitialParent"
 			Group="Initial State"
 			InheritedFrom="Canvas"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="IsEnabled"
-			Visible=true
-			Group="Behavior"
-			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Italic"

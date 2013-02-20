@@ -390,7 +390,7 @@ End
 #tag Events CheckBox1
 	#tag Event
 		Sub Action()
-		  ButtonCanvas1.IsEnabled = Me.Value
+		  ButtonCanvas1.Enabled = Me.Value
 		End Sub
 	#tag EndEvent
 #tag EndEvents
