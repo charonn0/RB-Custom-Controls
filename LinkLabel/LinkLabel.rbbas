@@ -84,6 +84,9 @@ Inherits Label
 		    Me.PreviousCursor = Me.MouseCursor
 		    Me.mousecursor = System.Cursors.FingerPointer
 		    Me.Underline = True
+		    Dim c As Color = Me.HilightColor
+		    Me.HilightColor = Me.TextColor
+		    Me.TextColor = c
 		  End If
 		  RaiseEvent MouseEnter
 		End Sub
@@ -94,6 +97,10 @@ Inherits Label
 		  HoverTimer.Mode = Timer.ModeOff
 		  Me.mousecursor = Me.PreviousCursor
 		  Me.Underline = False
+		  Dim c As Color = Me.TextColor
+		  Me.TextColor = Me.HilightColor
+		  Me.HilightColor = c
+		  
 		  RaiseEvent MouseExit
 		End Sub
 	#tag EndEvent

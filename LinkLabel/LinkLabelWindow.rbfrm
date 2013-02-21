@@ -35,7 +35,7 @@ Begin Window LinkLabelWindow
       Enabled         =   True
       Height          =   22
       HelpTag         =   ""
-      HilightColor    =   65535
+      HilightColor    =   &h000080FF
       HoverPeriod     =   250
       Index           =   -2147483648
       InitialParent   =   ""
