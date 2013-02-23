@@ -1665,41 +1665,30 @@ End
 	#tag Method, Flags = &h21
 		Private Function MonthName(Month As Integer) As String
 		  Select Case Month
-		  Case 4
-		    Return April
-		    
-		  Case 6
-		    Return June
-		    
-		  Case 9
-		    Return September
-		    
-		  Case 11
-		    Return November
-		    
 		  Case 1
-		    Return January
-		    
-		  Case 3
-		    Return March
-		    
-		  Case 5
-		    Return May
-		    
-		  Case 7
-		    Return July
-		    
-		  Case 8
-		    Return August
-		    
-		  Case 10
-		    Return October
-		    
-		  Case 12
-		    Return December
-		    
+		    Return "January"
 		  Case 2
-		    Return February
+		    Return "February"
+		  Case 3
+		    Return "March"
+		  Case 4
+		    Return "April"
+		  Case 5
+		    Return "May"
+		  Case 6
+		    Return "June"
+		  Case 7
+		    Return "July"
+		  Case 8
+		    Return "August"
+		  Case 9
+		    Return "September"
+		  Case 10
+		    Return "October"
+		  Case 11
+		    Return "November"
+		  Case 12
+		    Return "December"
 		  End Select
 		End Function
 	#tag EndMethod
@@ -1751,67 +1740,6 @@ End
 	#tag Property, Flags = &h21
 		Private SelectedDate As Date
 	#tag EndProperty
-
-
-	#tag Constant, Name = April, Type = String, Dynamic = True, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = en, Definition  = \"April"
-		#Tag Instance, Platform = Any, Language = fr, Definition  = \"avril"
-	#tag EndConstant
-
-	#tag Constant, Name = August, Type = String, Dynamic = True, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = en, Definition  = \"August"
-		#Tag Instance, Platform = Any, Language = fr, Definition  = \"ao\xC3\xBBt"
-	#tag EndConstant
-
-	#tag Constant, Name = December, Type = String, Dynamic = True, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = en, Definition  = \"December"
-		#Tag Instance, Platform = Any, Language = fr, Definition  = \"d\xC3\xA9cembre"
-	#tag EndConstant
-
-	#tag Constant, Name = February, Type = String, Dynamic = True, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = en, Definition  = \"February"
-		#Tag Instance, Platform = Any, Language = fr, Definition  = \"f\xC3\xA9vrier"
-	#tag EndConstant
-
-	#tag Constant, Name = January, Type = String, Dynamic = True, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = en, Definition  = \"January"
-		#Tag Instance, Platform = Any, Language = fr, Definition  = \"janvier"
-	#tag EndConstant
-
-	#tag Constant, Name = July, Type = String, Dynamic = True, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = en, Definition  = \"July"
-		#Tag Instance, Platform = Any, Language = fr, Definition  = \"juillet"
-	#tag EndConstant
-
-	#tag Constant, Name = June, Type = String, Dynamic = True, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = en, Definition  = \"June"
-		#Tag Instance, Platform = Any, Language = fr, Definition  = \"juin"
-	#tag EndConstant
-
-	#tag Constant, Name = March, Type = String, Dynamic = True, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = en, Definition  = \"March"
-		#Tag Instance, Platform = Any, Language = fr, Definition  = \"mars"
-	#tag EndConstant
-
-	#tag Constant, Name = May, Type = String, Dynamic = True, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = en, Definition  = \"May"
-		#Tag Instance, Platform = Any, Language = fr, Definition  = \"mai"
-	#tag EndConstant
-
-	#tag Constant, Name = November, Type = String, Dynamic = True, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = en, Definition  = \"November"
-		#Tag Instance, Platform = Any, Language = fr, Definition  = \"novembre"
-	#tag EndConstant
-
-	#tag Constant, Name = October, Type = String, Dynamic = True, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = en, Definition  = \"October"
-		#Tag Instance, Platform = Any, Language = fr, Definition  = \"octobre"
-	#tag EndConstant
-
-	#tag Constant, Name = September, Type = String, Dynamic = True, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = en, Definition  = \"September"
-		#Tag Instance, Platform = Any, Language = fr, Definition  = \"septembre"
-	#tag EndConstant
 
 
 #tag EndWindowCode
