@@ -7,7 +7,7 @@ Begin Window Window1
    Frame           =   0
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   6.3e+1
+   Height          =   8.5e+1
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -396,6 +396,37 @@ Begin Window Window1
       Visible         =   True
       Width           =   148
    End
+   Begin PushButton PushButton11
+      AutoDeactivate  =   True
+      Bold            =   ""
+      ButtonStyle     =   0
+      Cancel          =   ""
+      Caption         =   "Date Picker"
+      Default         =   ""
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   0
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   12
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   63
+      Underline       =   ""
+      Visible         =   True
+      Width           =   148
+   End
 End
 #tag EndWindow
 
@@ -503,6 +534,16 @@ End
 	#tag Event
 		Sub Action()
 		  DirViewListExWindow.Show
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PushButton11
+	#tag Event
+		Sub Action()
+		  Dim d As Date = DatePicker.GetDate()
+		  If d <> Nil Then
+		    MsgBox(d.LongDate)
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -86,7 +86,16 @@ Inherits Canvas
 		  next
 		  buffer.Graphics.ForeColor = endColor
 		  buffer.Graphics.DrawLine(0, 0, buffer.Width, 0)
-		  If isHovering Then
+		  
+		  If Me.Value Then
+		    Dim map(255) As Integer
+		    For i as Integer = 0 to 255
+		      map(i) = 255 - i + 178
+		    next
+		    Buffer.RGBSurface.Transform(map)
+		  End If
+		  
+		  If isHovering Or Me.Value Then
 		    Dim map(255) As Integer
 		    For i as Integer = 255 DownTo 0
 		      map(i) = 255 + i + 15
@@ -124,13 +133,7 @@ Inherits Canvas
 		  End If
 		  
 		  
-		  If Me.Value Then
-		    Dim map(255) As Integer
-		    For i as Integer = 0 to 255
-		      map(i) = 255 - i + 178
-		    next
-		    Buffer.RGBSurface.Transform(map)
-		  End If
+		  
 		  
 		  
 		  Buffer.Graphics.TextSize = FontSize
@@ -454,6 +457,13 @@ Inherits Canvas
 			  return mIsDown
 			End Get
 		#tag EndGetter
+		#tag Setter
+			Set
+			  mIsDown = value
+			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
+			  Update()
+			End Set
+		#tag EndSetter
 		Value As Boolean
 	#tag EndComputedProperty
 

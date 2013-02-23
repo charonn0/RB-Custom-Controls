@@ -43,7 +43,6 @@ Begin Window ButtonWindow
       hilightColor    =   8454143
       Index           =   -2147483648
       InitialParent   =   ""
-      IsEnabled       =   True
       Italic          =   ""
       Left            =   11
       LockBottom      =   True
@@ -209,7 +208,6 @@ Begin Window ButtonWindow
       Scope           =   0
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   183
       Visible         =   True
       Width           =   24
@@ -327,7 +325,6 @@ Begin Window ButtonWindow
       Scope           =   0
       TabIndex        =   10
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   88
       Visible         =   True
       Width           =   24
