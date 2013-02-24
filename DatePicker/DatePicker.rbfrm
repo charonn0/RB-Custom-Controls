@@ -1368,7 +1368,6 @@ Begin Window DatePicker
       Selectable      =   True
       TabIndex        =   41
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "DECEMBER"
       TextAlign       =   1
       TextColor       =   255
@@ -1403,7 +1402,6 @@ Begin Window DatePicker
       Selectable      =   True
       TabIndex        =   42
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "YEAR"
       TextAlign       =   1
       TextColor       =   255
@@ -1771,7 +1769,20 @@ End
 #tag Events MonthLeft
 	#tag Event
 		Sub Action()
-		  SelectedDate.Month = SelectedDate.Month - 1
+		  Dim nd As Date
+		  
+		  If SelectedDate.Month = 1 Then
+		    nd = New Date(SelectedDate.Year - 1, 12)
+		  Else
+		    nd = New Date(SelectedDate.Year, SelectedDate.Month - 1)
+		  End If
+		  
+		  If SelectedDate.Day > DaysInMonth(nd) Then
+		    nd.Day = DaysInMonth(nd)
+		  Else
+		    nd.Day = SelectedDate.Day
+		  End If
+		  SelectedDate = nd
 		  UpdateDate()
 		End Sub
 	#tag EndEvent
@@ -1787,7 +1798,20 @@ End
 #tag Events MonthRight
 	#tag Event
 		Sub Action()
-		  SelectedDate.Month = SelectedDate.Month + 1
+		  Dim nd As Date
+		  
+		  If SelectedDate.Month = 12 Then
+		    nd = New Date(SelectedDate.Year + 1, 1)
+		  Else
+		    nd = New Date(SelectedDate.Year, SelectedDate.Month + 1)
+		  End If
+		  
+		  If SelectedDate.Day > DaysInMonth(nd) Then
+		    nd.Day = DaysInMonth(nd)
+		  Else
+		    nd.Day = SelectedDate.Day
+		  End If
+		  SelectedDate = nd
 		  UpdateDate()
 		End Sub
 	#tag EndEvent
