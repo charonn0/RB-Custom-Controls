@@ -4,7 +4,7 @@ Inherits Canvas
 	#tag Event
 		Function KeyDown(Key As String) As Boolean
 		  If Enabled And key = " " Then
-		    IsDown = True
+		    Me.Value = True
 		  End If
 		  Return True
 		End Function
@@ -12,8 +12,8 @@ Inherits Canvas
 
 	#tag Event
 		Sub KeyUp(Key As String)
-		  If IsDown And Key = " " Then
-		    IsDown = False
+		  If Me.Value And Key = " " Then
+		    Me.Value = False
 		    Action()
 		  End If
 		End Sub
@@ -24,7 +24,7 @@ Inherits Canvas
 		  #pragma Unused X
 		  #pragma Unused Y
 		  If Enabled Then
-		    IsDown = True
+		    Me.Value = True
 		  End If
 		  Return True
 		End Function
@@ -56,7 +56,7 @@ Inherits Canvas
 		Sub MouseUp(X As Integer, Y As Integer)
 		  #pragma Unused X
 		  #pragma Unused Y
-		  If Enabled Then IsDown = False
+		  If Enabled Then Me.Value = False
 		  If isHovering Then Action()
 		End Sub
 	#tag EndEvent
@@ -339,22 +339,6 @@ Inherits Canvas
 	#tag ComputedProperty, Flags = &h21
 		#tag Getter
 			Get
-			  return mIsDown
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mIsDown = value
-			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
-			  Update()
-			End Set
-		#tag EndSetter
-		Private IsDown As Boolean
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h21
-		#tag Getter
-			Get
 			  return misHovering
 			End Get
 		#tag EndGetter
@@ -418,10 +402,6 @@ Inherits Canvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mIsDown As Boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
 		Private misHovering As Boolean
 	#tag EndProperty
 
@@ -431,6 +411,10 @@ Inherits Canvas
 
 	#tag Property, Flags = &h21
 		Private mUnderline As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mValue As Boolean
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -454,12 +438,12 @@ Inherits Canvas
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mIsDown
+			  return mValue
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
-			  mIsDown = value
+			  mValue = value
 			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
 			  Update()
 			End Set
