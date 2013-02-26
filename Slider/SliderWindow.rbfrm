@@ -725,11 +725,11 @@ Begin Window SliderWindow
       Italic          =   ""
       Left            =   362
       ListIndex       =   0
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   47
       TabPanelIndex   =   0
