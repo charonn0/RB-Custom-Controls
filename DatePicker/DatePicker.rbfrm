@@ -1693,10 +1693,6 @@ End
 
 	#tag Method, Flags = &h21
 		Private Sub UpdateDate()
-		  For i As Integer = 0 To 36
-		    Day(i).Value = False
-		  Next
-		  
 		  Dim d As New Date(Me.SelectedDate)
 		  Dim i, x, maxdays As Integer
 		  d.Day = 1
@@ -1707,30 +1703,24 @@ End
 		  x = (maxdays + d.DayOfWeek - 1)
 		  
 		  For i = 0 To 36
-		    If i <= d.DayOfWeek - 2 Or i > maxdays + d.DayOfWeek Then
-		      Day(i).Visible = False
-		      Day(i).Caption = ""
-		    ElseIf i > d.DayOfWeek - 2 And i <= maxdays + d.DayOfWeek - 2 Then
+		    If i > d.DayOfWeek - 2 And i <= maxdays + d.DayOfWeek - 2 Then
 		      Day(i).Caption = Str(i - d.DayOfWeek + 2)
-		      Day(i).Visible = True
+		      If Not Day(i).Visible Then Day(i).Visible = True
 		      If i - d.DayOfWeek + 2 = SelectedDate.Day Then
 		        Day(i).Value = True
+		      ElseIf Day(i).Value Then
+		        Day(i).Value = False
 		      End If
 		      Dim dd As New Date(d.Year, d.Month, i - d.DayOfWeek + 2)
 		      Day(i).HelpTag = dd.LongDate
-		      
 		    Else
 		      Try
 		        Day(i).Visible = False
-		        Day(i).Caption = ""
-		        
 		      Catch Err As NilObjectException
 		        Continue
 		      End Try
 		    End If
 		  Next
-		  
-		  Self.Refresh(False)
 		End Sub
 	#tag EndMethod
 
@@ -1747,7 +1737,6 @@ End
 		Sub Action(index as Integer)
 		  SelectedDate.Day = Val(Day(index).Caption)
 		  UpdateDate()
-		  Self.Refresh(False)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
