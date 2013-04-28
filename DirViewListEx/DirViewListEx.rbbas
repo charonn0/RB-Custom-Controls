@@ -150,26 +150,33 @@ Inherits Listbox
 		  //If the specified file type doesn't have a default icon, this function returns Nil
 		  
 		  #If TargetWin32 Then
-		    Dim info As SHFILEINFO
-		    Declare Function SHGetFileInfo Lib "Shell32" Alias "SHGetFileInfoW" (FilePath As WString, Attribs As Integer, _
-		    ByRef info As SHFILEINFO, infoSize As Integer, flags As Integer) As Boolean
-		    Declare Function DrawIconEx Lib "User32" (hDC As Integer, xLeft As Integer, yTop As Integer, hIcon As Integer, _
-		    cxWidth As Integer, cyWidth As Integer, istepIfAniCur As Integer, hbrFlickerFreeDraw As Integer, diFlags As Integer) As Integer
-		    Declare Function DestroyIcon Lib "User32" (hIcon As Integer) As Integer
-		    Const FILE_ATTRIBUTE_NORMAL = &h00000080
-		    Const SHGFI_DISPLAYNAME = &h000000200
-		    Const SHGFI_ICON = &h000000100
-		    Const SHGFI_TYPENAME = &h000000400
-		    Const SHGFI_USEFILEATTRIBUTES = &h000000010
-		    If SHGetFileInfo("foo." + extension, FILE_ATTRIBUTE_NORMAL, info, info.Size, _
-		      SHGFI_DISPLAYNAME Or SHGFI_TYPENAME Or SHGFI_USEFILEATTRIBUTES Or SHGFI_ICON) Then
-		      Dim theIcon As Picture = New Picture(size, size, 32)
-		      theIcon.Transparent = 1
-		      Call DrawIconEx(theIcon.Graphics.Handle(1), 0, 0, info.hIcon, size, size, 0, 0, &h3)
-		      Call DestroyIcon(info.hIcon)
-		      Return theIcon
+		    Static icons As Dictionary
+		    If icons = Nil Then icons = New Dictionary
+		    If icons.HasKey(extension) Then
+		      Return icons.Value(extension)
 		    Else
-		      Return Nil
+		      Dim info As SHFILEINFO
+		      Declare Function SHGetFileInfo Lib "Shell32" Alias "SHGetFileInfoW" (FilePath As WString, Attribs As Integer, _
+		      ByRef info As SHFILEINFO, infoSize As Integer, flags As Integer) As Boolean
+		      Declare Function DrawIconEx Lib "User32" (hDC As Integer, xLeft As Integer, yTop As Integer, hIcon As Integer, _
+		      cxWidth As Integer, cyWidth As Integer, istepIfAniCur As Integer, hbrFlickerFreeDraw As Integer, diFlags As Integer) As Integer
+		      Declare Function DestroyIcon Lib "User32" (hIcon As Integer) As Integer
+		      Const FILE_ATTRIBUTE_NORMAL = &h00000080
+		      Const SHGFI_DISPLAYNAME = &h000000200
+		      Const SHGFI_ICON = &h000000100
+		      Const SHGFI_TYPENAME = &h000000400
+		      Const SHGFI_USEFILEATTRIBUTES = &h000000010
+		      If SHGetFileInfo("foo." + extension, FILE_ATTRIBUTE_NORMAL, info, info.Size, _
+		        SHGFI_DISPLAYNAME Or SHGFI_TYPENAME Or SHGFI_USEFILEATTRIBUTES Or SHGFI_ICON) Then
+		        Dim theIcon As Picture = New Picture(size, size, 32)
+		        theIcon.Transparent = 1
+		        Call DrawIconEx(theIcon.Graphics.Handle(1), 0, 0, info.hIcon, size, size, 0, 0, &h3)
+		        Call DestroyIcon(info.hIcon)
+		        icons.Value(extension) = theIcon
+		        Return theIcon
+		      Else
+		        Return Nil
+		      End If
 		    End If
 		  #endif
 		End Function
