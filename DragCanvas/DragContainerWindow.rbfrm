@@ -1,8 +1,9 @@
 #tag Window
 Begin Window DragContainerWindow
-   BackColor       =   43257
-   Backdrop        =   ""
+   BackColor       =   &c00A8F900
+   Backdrop        =   0
    CloseButton     =   True
+   Compatibility   =   ""
    Composite       =   False
    Frame           =   0
    FullScreen      =   False
@@ -25,10 +26,10 @@ Begin Window DragContainerWindow
    Visible         =   True
    Width           =   1015
    Begin dragContainer dragContainer1
-      AcceptFocus     =   ""
-      AcceptTabs      =   ""
+      AcceptFocus     =   False
+      AcceptTabs      =   False
       AutoDeactivate  =   True
-      Backdrop        =   ""
+      Backdrop        =   0
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   False
@@ -44,43 +45,43 @@ Begin Window DragContainerWindow
       LockRight       =   True
       LockTop         =   True
       Scope           =   0
-      SelectionColor  =   "&c0080FF"
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   0
+      Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
       Width           =   1015
    End
    Begin PushButton PushButton1
       AutoDeactivate  =   True
-      Bold            =   ""
-      ButtonStyle     =   0
+      Bold            =   False
+      ButtonStyle     =   "0"
       Cancel          =   True
       Caption         =   "Untitled"
-      Default         =   ""
+      Default         =   False
       Enabled         =   True
       Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   1076
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   -9
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   80
    End
@@ -198,7 +199,12 @@ End
 		    Dim pic As DragObject = Item
 		    If pic.file <> Nil Then
 		      Dim f As FolderItem = pic.file
-		      MsgBox(f.AbsolutePath)
+		      #If RBVersion >= 2012 Then 'areas() was added in RS2012 R1
+		        MsgBox(f.NativePath)
+		      #Else
+		        MsgBox(f.AbsolutePath)
+		      #endif
+		      
 		      Return True
 		    End If
 		  End If

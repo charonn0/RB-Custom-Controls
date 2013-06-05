@@ -57,7 +57,10 @@ Inherits Canvas
 	#tag EndEvent
 
 	#tag Event
-		Sub Paint(g As Graphics)
+		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		  #If RBVersion >= 2012 Then 'areas() was added in RS2012 R1
+		    #pragma Unused areas
+		  #endif
 		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Then Update(False)
 		  g.DrawPicture(Buffer, 0, 0)
 		End Sub
@@ -610,6 +613,7 @@ Inherits Canvas
 		#tag ViewProperty
 			Name="InitialParent"
 			Group="Initial State"
+			Type="String"
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -672,6 +676,7 @@ Inherits Canvas
 			Name="Super"
 			Visible=true
 			Group="ID"
+			Type="String"
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -735,6 +740,15 @@ Inherits Canvas
 			Visible=true
 			Group="Position"
 			Type="Integer"
+			InheritedFrom="Canvas"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Transparent"
+			Visible=true
+			Group="Behavior"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType="Boolean"
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty

@@ -48,7 +48,10 @@ Inherits Canvas
 	#tag EndEvent
 
 	#tag Event
-		Sub Paint(g As Graphics)
+		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		  #If RBVersion >= 2012 Then 'areas() was added in RS2012 R1
+		    #pragma Unused areas
+		  #endif
 		  Dim p As New Picture(g.Width, g.Height, 32)
 		  RaiseEvent Paint(p.Graphics)
 		  For Each Key As String In Points.Keys
@@ -297,6 +300,7 @@ Inherits Canvas
 		#tag ViewProperty
 			Name="InitialParent"
 			Group="Initial State"
+			Type="String"
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -359,6 +363,7 @@ Inherits Canvas
 			Name="Super"
 			Visible=true
 			Group="ID"
+			Type="String"
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -389,6 +394,15 @@ Inherits Canvas
 			Visible=true
 			Group="Position"
 			Type="Integer"
+			InheritedFrom="Canvas"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Transparent"
+			Visible=true
+			Group="Behavior"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType="Boolean"
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty

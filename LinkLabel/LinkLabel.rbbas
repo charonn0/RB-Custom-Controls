@@ -161,16 +161,25 @@ Inherits Label
 		    Dim scriptShell As New OLEObject("Wscript.shell")
 		    
 		    If scriptShell <> Nil then
-		      lnkObj = scriptShell.CreateShortcut(SpecialFolder.Temporary.AbsolutePath + ShortcutName + ".url")
+		      #If RBVersion >= 2012 Then 'areas() was added in RS2012 R1
+		        lnkObj = scriptShell.CreateShortcut(SpecialFolder.Temporary.NativePath + ShortcutName + ".url")
+		      #Else
+		        lnkObj = scriptShell.CreateShortcut(SpecialFolder.Temporary.AbsolutePath + ShortcutName + ".url")
+		      #endif
 		      If lnkObj <> Nil then
 		        lnkObj.TargetPath = URL
 		        lnkObj.Save
 		        
 		        Dim optionalparams As String
-		        
-		        If IconResource <> Nil Then optionalparams = "IconFile=" + IconResource.AbsolutePath + EndOfLine.Windows + _
-		        "IconIndex=" + Str(IconIndex) + EndOfLine
-		        
+		        If IconResource <> Nil Then 
+		          #If RBVersion >= 2012 Then 'areas() was added in RS2012 R1
+		            optionalparams = "IconFile=" + IconResource.NativePath + EndOfLine.Windows + _
+		            "IconIndex=" + Str(IconIndex) + EndOfLine
+		          #Else
+		            optionalparams = "IconFile=" + IconResource.AbsolutePath + EndOfLine.Windows + _
+		            "IconIndex=" + Str(IconIndex) + EndOfLine
+		          #endif
+		        End If
 		        If optionalparams.Trim <> "" Then
 		          Dim tos As TextOutputStream
 		          tos = tos.Append(SpecialFolder.Temporary.TrueChild(ShortcutName + ".url"))
@@ -452,6 +461,7 @@ Inherits Label
 		#tag ViewProperty
 			Name="InitialParent"
 			Group="Initial State"
+			Type="String"
 			InheritedFrom="Label"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -527,6 +537,7 @@ Inherits Label
 			Name="Super"
 			Visible=true
 			Group="ID"
+			Type="String"
 			InheritedFrom="Label"
 		#tag EndViewProperty
 		#tag ViewProperty

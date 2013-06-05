@@ -1,8 +1,9 @@
 #tag Window
 Begin Window ColorSelectorWindow
-   BackColor       =   16777215
-   Backdrop        =   ""
+   BackColor       =   &cFFFFFF00
+   Backdrop        =   0
    CloseButton     =   True
+   Compatibility   =   ""
    Composite       =   False
    Frame           =   0
    FullScreen      =   False
@@ -14,7 +15,7 @@ Begin Window ColorSelectorWindow
    MaxHeight       =   32000
    MaximizeButton  =   False
    MaxWidth        =   32000
-   MenuBar         =   ""
+   MenuBar         =   0
    MenuBarVisible  =   True
    MinHeight       =   64
    MinimizeButton  =   True
@@ -26,21 +27,21 @@ Begin Window ColorSelectorWindow
    Width           =   204
    Begin ColorSelector ColorSelector1
       AutoDeactivate  =   True
-      BorderColor     =   0
+      BorderColor     =   
       BorderWidth     =   1
       Enabled         =   True
-      FillColor       =   255
+      FillColor       =   
       Height          =   47
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   11
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
@@ -49,10 +50,10 @@ Begin Window ColorSelectorWindow
       Width           =   42
    End
    Begin Canvas Canvas1
-      AcceptFocus     =   ""
-      AcceptTabs      =   ""
+      AcceptFocus     =   False
+      AcceptTabs      =   False
       AutoDeactivate  =   True
-      Backdrop        =   ""
+      Backdrop        =   0
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
@@ -61,12 +62,12 @@ Begin Window ColorSelectorWindow
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   65
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
@@ -96,7 +97,10 @@ End
 #tag EndEvents
 #tag Events Canvas1
 	#tag Event
-		Sub Paint(g As Graphics)
+		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		  #If RBVersion >= 2012 Then 'areas() was added in RS2012 R1
+		    #pragma Unused areas
+		  #endif
 		  g.ForeColor = ColorSelector1.SelectedColor
 		  g.FillRect(0, 0, g.Width, g.Height)
 		End Sub

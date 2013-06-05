@@ -2,7 +2,10 @@
 Protected Class ProgBar
 Inherits Canvas
 	#tag Event
-		Sub Paint(g As Graphics)
+		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		  #If RBVersion >= 2012 Then 'areas() was added in RS2012 R1
+		    #pragma Unused areas
+		  #endif
 		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Then Update(False)
 		  g.DrawPicture(Buffer, 0, 0)
 		End Sub
@@ -45,13 +48,13 @@ Inherits Canvas
 		  End If
 		  
 		  'box
-		  If hasBox Then 
+		  If hasBox Then
 		    Buffer.Graphics.ForeColor = boxColor
 		    Buffer.Graphics.DrawRect(0, 0, W, H)
 		  End If
 		  
 		  'text
-		  If hasText Then 
+		  If hasText Then
 		    Dim percStr As String
 		    Buffer.Graphics.TextSize = 10
 		    percStr = PreText + " " + Format((Me.Value*100) / Me.maximum, textFormat) + OverrideText
@@ -614,6 +617,7 @@ Inherits Canvas
 		#tag ViewProperty
 			Name="InitialParent"
 			Group="Initial State"
+			Type="String"
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -688,6 +692,7 @@ Inherits Canvas
 			Name="Super"
 			Visible=true
 			Group="ID"
+			Type="String"
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -751,6 +756,15 @@ Inherits Canvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="Transparent"
+			Visible=true
+			Group="Behavior"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType="Boolean"
+			InheritedFrom="Canvas"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="underline"
 			Visible=true
 			Group="Behavior"
@@ -767,11 +781,6 @@ Inherits Canvas
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="value"
-			Group="Behavior"
-			Type="Double"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="value1"
 			Group="Behavior"
 			Type="Double"
 		#tag EndViewProperty
