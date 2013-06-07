@@ -272,6 +272,7 @@ Inherits Canvas
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="FalseText"
+			Visible=true
 			Group="Behavior"
 			InitialValue="Off"
 			Type="String"
@@ -431,6 +432,7 @@ Inherits Canvas
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TrueText"
+			Visible=true
 			Group="Behavior"
 			InitialValue="On"
 			Type="String"
