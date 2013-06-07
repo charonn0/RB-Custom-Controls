@@ -68,82 +68,72 @@ Inherits Canvas
 		  #endif
 		  g.AntiAlias = True
 		  Dim thumb As Integer = g.Height - 2
-		  
+		  Dim X, Y As Integer
 		  g.ForeColor = &cFFFFFFFF
 		  g.FillRect(0, 0, g.Width, g.Height)
 		  
+		  
+		  'draw background
 		  If Me.Value Then
 		    g.ForeColor = OnColor
-		    If Rounded Then
-		      g.FillRoundRect(0, 0, g.Width, g.Height, thumb, thumb)
-		    Else
-		      g.FillRect(0, 0, g.Width, g.Height)
-		    End If
-		    
+		  Else
+		    g.ForeColor = OffColor
+		  End If
+		  If Rounded Then
+		    g.FillRoundRect(0, 0, g.Width, g.Height, thumb, thumb)
+		  Else
+		    g.FillRect(0, 0, g.Width, g.Height)
+		  End If
+		  
+		  
+		  'draw border
+		  g.ForeColor = BorderColor
+		  If Rounded Then
+		    g.DrawRoundRect(0, 0, g.Width, g.Height, thumb, thumb)
+		  Else
+		    g.DrawRect(0, 0, g.Width, g.Height)
+		  End If
+		  
+		  'draw thumb
+		  g.ForeColor = ThumbColor
+		  If Me.Value Then
+		    X = g.Width - thumb - 1
+		  Else
+		    X = 1
+		  End If
+		  If Rounded Then
+		    g.FillOval(X, 1, thumb, thumb)
+		  Else
+		    g.FillRect(X, 1, thumb, thumb)
+		  End If
+		  
+		  
+		  'draw thumb border
+		  If Me.Value Then
 		    g.ForeColor = BorderColor
-		    If Rounded Then
-		      g.DrawRoundRect(0, 0, g.Width, g.Height, thumb, thumb)
-		    Else
-		      g.DrawRect(0, 0, g.Width, g.Height)
-		    End If
-		    
-		    g.ForeColor = ThumbColor
-		    If Rounded Then
-		      g.FillOval(g.Width - thumb - 1, 1, thumb, thumb)
-		    Else
-		      g.FillRect(g.Width - thumb - 1, 1, thumb, thumb)
-		    End If
-		    
-		    g.ForeColor = BorderColor
-		    
-		    If Rounded Then
-		      g.DrawOval(g.Width - thumb - 1, 1, thumb, thumb)
-		    Else
-		      g.DrawRect(g.Width - thumb - 1, 1, thumb, thumb)
-		    End If
-		    
-		    Dim w, h As Integer
+		    X = g.Width - thumb - 1
+		  Else
+		    X = 1
+		  End If
+		  If Rounded Then
+		    g.DrawOval(X, 1, thumb, thumb)
+		  Else
+		    g.DrawRect(X, 1, thumb, thumb)
+		  End If
+		  
+		  
+		  'draw text
+		  Dim w, h As Integer
+		  g.Bold = True
+		  g.ForeColor = TextColor
+		  If Me.Value Then
 		    g.Bold = True
 		    w = g.StringWidth(TrueText)
 		    h = g.StringHeight(TrueText, 5)
-		    g.ForeColor = TextColor
 		    g.DrawString(TrueText, (0.25 * g.Width) - (0.5 * w), 0.5 * g.Height + 5)
-		    
 		  Else
-		    g.ForeColor = OffColor
-		    If Rounded Then
-		      g.FillRoundRect(0, 0, g.Width, g.Height, thumb, thumb)
-		    Else
-		      g.FillRect(0, 0, g.Width, g.Height)
-		    End If
-		    
-		    g.ForeColor = BorderColor
-		    If Rounded Then
-		      g.DrawRoundRect(0, 0, g.Width, g.Height, thumb, thumb)
-		    Else
-		      g.DrawRect(0, 0, g.Width, g.Height)
-		    End If
-		    
-		    g.ForeColor = ThumbColor
-		    If Rounded Then
-		      g.FillOval(1, 1, thumb, thumb)
-		    Else
-		      g.FillRect(1, 1, thumb, thumb)
-		    End If
-		    
-		    g.ForeColor = BorderColor
-		    
-		    If Rounded Then
-		      g.DrawOval(1, 1, thumb, thumb)
-		    Else
-		      g.DrawRect(1, 1, thumb, thumb)
-		    End If
-		    
-		    Dim w, h As Integer
-		    g.Bold = True
 		    w = g.StringWidth(FalseText)
 		    h = g.StringHeight(FalseText, 5)
-		    g.ForeColor = TextColor
 		    g.DrawString(FalseText, (0.75 * g.Width) - (0.5 * w), 0.5 * g.Height + 5)
 		  End If
 		End Sub
@@ -279,6 +269,13 @@ Inherits Canvas
 			Group="Behavior"
 			Type="Boolean"
 			InheritedFrom="Canvas"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="FalseText"
+			Group="Behavior"
+			InitialValue="Off"
+			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Height"
@@ -425,10 +422,19 @@ Inherits Canvas
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Transparent"
+			Visible=true
 			Group="Behavior"
+			InitialValue="True"
 			Type="Boolean"
 			EditorType="Boolean"
 			InheritedFrom="Canvas"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="TrueText"
+			Group="Behavior"
+			InitialValue="On"
+			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="UseFocusRing"
