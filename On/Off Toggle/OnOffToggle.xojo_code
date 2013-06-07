@@ -68,7 +68,7 @@ Inherits Canvas
 		  #endif
 		  g.AntiAlias = True
 		  Dim thumb As Integer = g.Height - 2
-		  Dim X, Y As Integer
+		  Dim X As Integer
 		  g.ForeColor = &cFFFFFFFF
 		  g.FillRect(0, 0, g.Width, g.Height)
 		  
@@ -123,18 +123,14 @@ Inherits Canvas
 		  
 		  
 		  'draw text
-		  Dim w, h As Integer
 		  g.Bold = True
 		  g.ForeColor = TextColor
 		  If Me.Value Then
-		    g.Bold = True
-		    w = g.StringWidth(TrueText)
-		    h = g.StringHeight(TrueText, 5)
-		    g.DrawString(TrueText, (0.25 * g.Width) - (0.5 * w), 0.5 * g.Height + 5)
+		    X = g.StringWidth(TrueText)
+		    g.DrawString(TrueText, (0.25 * g.Width) - (0.5 * X), 0.5 * g.Height + 5)
 		  Else
-		    w = g.StringWidth(FalseText)
-		    h = g.StringHeight(FalseText, 5)
-		    g.DrawString(FalseText, (0.75 * g.Width) - (0.5 * w), 0.5 * g.Height + 5)
+		    X = g.StringWidth(FalseText)
+		    g.DrawString(FalseText, (0.75 * g.Width) - (0.5 * X), 0.5 * g.Height + 5)
 		  End If
 		End Sub
 	#tag EndEvent
