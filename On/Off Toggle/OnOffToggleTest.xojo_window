@@ -234,6 +234,8 @@ Begin Window OnOffToggleTest
       TabStop         =   True
       TextColorFalse  =   &c00000000
       TextColorTrue   =   &cFFFFFF00
+      TextFont        =   "System"
+      TextSize        =   0.0
       ThumbColorFalse =   &c80808000
       ThumbColorTrue  =   &c80808000
       Top             =   26
@@ -270,6 +272,8 @@ Begin Window OnOffToggleTest
       TabStop         =   True
       TextColorFalse  =   &c00000000
       TextColorTrue   =   &cFFFFFF00
+      TextFont        =   "System"
+      TextSize        =   0.0
       ThumbColorFalse =   &c80808000
       ThumbColorTrue  =   &c80808000
       Top             =   58
@@ -306,6 +310,8 @@ Begin Window OnOffToggleTest
       TabStop         =   True
       TextColorFalse  =   &c00000000
       TextColorTrue   =   &cFFFFFF00
+      TextFont        =   "System"
+      TextSize        =   0.0
       ThumbColorFalse =   &c80808000
       ThumbColorTrue  =   &c80808000
       Top             =   90

@@ -79,6 +79,8 @@ Inherits Canvas
 		    #pragma Unused areas
 		  #endif
 		  g.AntiAlias = True
+		  g.TextSize = Me.TextSize
+		  g.TextFont = Me.TextFont
 		  Dim thumb As Integer = g.Height - 2
 		  Dim X As Integer
 		  
@@ -169,6 +171,14 @@ Inherits Canvas
 
 	#tag Property, Flags = &h0
 		TextColorTrue As Color = &cFFFFFF00
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		TextFont As String = "System"
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		TextSize As Single = 0.0
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -393,6 +403,21 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="&cFFFFFF00"
 			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="TextFont"
+			Visible=true
+			Group="Behavior"
+			InitialValue="System"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="TextSize"
+			Visible=true
+			Group="Behavior"
+			InitialValue="0.0"
+			Type="Single"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ThumbColorFalse"
