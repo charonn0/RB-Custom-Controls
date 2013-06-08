@@ -297,7 +297,7 @@ Begin Window OnOffToggleTest
       FalseText       =   "Off"
       Height          =   30
       HelpTag         =   ""
-      Index           =   3
+      Index           =   2
       InitialParent   =   ""
       Left            =   58
       LockBottom      =   False
