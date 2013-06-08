@@ -87,7 +87,7 @@ Begin Window OnOffToggleTest
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   64
+      Top             =   61
       Transparent     =   False
       Underline       =   False
       Visible         =   True
@@ -215,8 +215,6 @@ Begin Window OnOffToggleTest
       Backdrop        =   0
       BackgroundColorFalse=   &cC0C0C000
       BackgroundColorTrue=   &c0080FF00
-      BorderColorFalse=   &c80808000
-      BorderColorTrue =   &c80808000
       Enabled         =   True
       FalseText       =   "Off"
       Height          =   30
@@ -234,11 +232,11 @@ Begin Window OnOffToggleTest
       TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
-      TextColorFalse  =   &cFFFFFF00
+      TextColorFalse  =   &c00000000
       TextColorTrue   =   &cFFFFFF00
       ThumbColorFalse =   &c80808000
       ThumbColorTrue  =   &c80808000
-      Top             =   27
+      Top             =   26
       Transparent     =   True
       TrueText        =   "On"
       UseFocusRing    =   True
@@ -253,8 +251,6 @@ Begin Window OnOffToggleTest
       Backdrop        =   0
       BackgroundColorFalse=   &cC0C0C000
       BackgroundColorTrue=   &c0080FF00
-      BorderColorFalse=   &c80808000
-      BorderColorTrue =   &c80808000
       Enabled         =   True
       FalseText       =   "Off"
       Height          =   30
@@ -272,7 +268,7 @@ Begin Window OnOffToggleTest
       TabIndex        =   9
       TabPanelIndex   =   0
       TabStop         =   True
-      TextColorFalse  =   &cFFFFFF00
+      TextColorFalse  =   &c00000000
       TextColorTrue   =   &cFFFFFF00
       ThumbColorFalse =   &c80808000
       ThumbColorTrue  =   &c80808000
@@ -291,8 +287,6 @@ Begin Window OnOffToggleTest
       Backdrop        =   0
       BackgroundColorFalse=   &cC0C0C000
       BackgroundColorTrue=   &c0080FF00
-      BorderColorFalse=   &c80808000
-      BorderColorTrue =   &c80808000
       Enabled         =   True
       FalseText       =   "Off"
       Height          =   30
@@ -310,11 +304,11 @@ Begin Window OnOffToggleTest
       TabIndex        =   10
       TabPanelIndex   =   0
       TabStop         =   True
-      TextColorFalse  =   &cFFFFFF00
+      TextColorFalse  =   &c00000000
       TextColorTrue   =   &cFFFFFF00
       ThumbColorFalse =   &c80808000
       ThumbColorTrue  =   &c80808000
-      Top             =   89
+      Top             =   90
       Transparent     =   True
       TrueText        =   "On"
       UseFocusRing    =   True

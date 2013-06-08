@@ -4,9 +4,9 @@ Inherits Canvas
 	#tag Event
 		Sub GotFocus()
 		  If Me.Value Then
-		    BorderColorTrue = RGB(BorderColorTrue.Red, BorderColorTrue.Green, BorderColorTrue.Blue, 0)
+		    BackgroundColorTrue = RGB(BackgroundColorTrue.Red, BackgroundColorTrue.Green, BackgroundColorTrue.Blue, &h30)
 		  Else
-		    BorderColorFalse = RGB(BorderColorFalse.Red, BorderColorFalse.Green, BorderColorFalse.Blue, 0)
+		    BackgroundColorFalse = RGB(BackgroundColorFalse.Red, BackgroundColorFalse.Green, BackgroundColorFalse.Blue, &h30)
 		  End If
 		  Me.Invalidate(False)
 		End Sub
@@ -24,9 +24,9 @@ Inherits Canvas
 	#tag Event
 		Sub LostFocus()
 		  If Me.Value Then
-		    BorderColorTrue = RGB(BorderColorTrue.Red, BorderColorTrue.Green, BorderColorTrue.Blue, &hCC)
+		    BackgroundColorTrue = RGB(BackgroundColorTrue.Red, BackgroundColorTrue.Green, BackgroundColorTrue.Blue, 0)
 		  Else
-		    BorderColorFalse = RGB(BorderColorFalse.Red, BorderColorFalse.Green, BorderColorFalse.Blue, &hCC)
+		    BackgroundColorFalse = RGB(BackgroundColorFalse.Red, BackgroundColorFalse.Green, BackgroundColorFalse.Blue, 0)
 		  End If
 		  Me.Invalidate(False)
 		End Sub
@@ -66,9 +66,9 @@ Inherits Canvas
 		  Me.AcceptTabs = True
 		  Me.UseFocusRing = True
 		  If Me.Value Then
-		    BorderColorTrue = RGB(BorderColorTrue.Red, BorderColorTrue.Green, BorderColorTrue.Blue, &hCC)
+		    BackgroundColorTrue = RGB(BackgroundColorTrue.Red, BackgroundColorTrue.Green, BackgroundColorTrue.Blue, 0)
 		  Else
-		    BorderColorFalse = RGB(BorderColorFalse.Red, BorderColorFalse.Green, BorderColorFalse.Blue, &hCC)
+		    BackgroundColorFalse = RGB(BackgroundColorFalse.Red, BackgroundColorFalse.Green, BackgroundColorFalse.Blue, 0)
 		  End If
 		End Sub
 	#tag EndEvent
@@ -94,23 +94,10 @@ Inherits Canvas
 		    g.FillRect(0, 0, g.Width, g.Height)
 		  End If
 		  
-		  
-		  'draw border
-		  If Me.Value Then
-		    g.ForeColor = BorderColorTrue
-		  Else
-		    g.ForeColor = BorderColorFalse
-		  End If
-		  If Rounded Then
-		    g.DrawRoundRect(1, 1, g.Width - 2, g.Height - 2, thumb, thumb)
-		  Else
-		    g.DrawRect(0, 0, g.Width, g.Height)
-		  End If
-		  
 		  'draw thumb
 		  If Me.Value Then
 		    g.ForeColor = ThumbColorTrue
-		    X = g.Width - thumb - 1
+		    X = g.Width - thumb
 		  Else
 		    g.ForeColor = ThumbColorFalse
 		    X = 1
@@ -120,22 +107,6 @@ Inherits Canvas
 		  Else
 		    g.FillRect(X, 1, thumb, thumb)
 		  End If
-		  
-		  
-		  'draw thumb border
-		  If Me.Value Then
-		    g.ForeColor = BorderColorTrue
-		    X = g.Width - thumb - 1
-		  Else
-		    g.ForeColor = BorderColorFalse
-		    X = 1
-		  End If
-		  If Rounded Then
-		    g.DrawOval(X, 1, thumb, thumb)
-		  Else
-		    g.DrawRect(X, 1, thumb, thumb)
-		  End If
-		  
 		  
 		  'draw text
 		  g.Bold = True
@@ -166,14 +137,6 @@ Inherits Canvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		BorderColorFalse As Color = &c80808000
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		BorderColorTrue As Color = &c80808000
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		FalseText As String = "Off"
 	#tag EndProperty
 
@@ -201,7 +164,7 @@ Inherits Canvas
 	#tag EndComputedProperty
 
 	#tag Property, Flags = &h0
-		TextColorFalse As Color = &cFFFFFF00
+		TextColorFalse As Color = &c00000000
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -279,20 +242,6 @@ Inherits Canvas
 			Visible=true
 			Group="Behavior"
 			InitialValue="&c0080FF00"
-			Type="Color"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="BorderColorFalse"
-			Visible=true
-			Group="Behavior"
-			InitialValue="&c80808000"
-			Type="Color"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="BorderColorTrue"
-			Visible=true
-			Group="Behavior"
-			InitialValue="&c80808000"
 			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
