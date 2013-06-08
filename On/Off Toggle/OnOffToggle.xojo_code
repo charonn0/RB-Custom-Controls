@@ -3,7 +3,11 @@ Protected Class OnOffToggle
 Inherits Canvas
 	#tag Event
 		Sub GotFocus()
-		  BorderColor = RGB(BorderColor.Red, BorderColor.Green, BorderColor.Blue, 0)
+		  If Me.Value Then
+		    BorderColorTrue = RGB(BorderColorTrue.Red, BorderColorTrue.Green, BorderColorTrue.Blue, 0)
+		  Else
+		    BorderColorFalse = RGB(BorderColorFalse.Red, BorderColorFalse.Green, BorderColorFalse.Blue, 0)
+		  End If
 		  Me.Invalidate(False)
 		End Sub
 	#tag EndEvent
@@ -19,7 +23,11 @@ Inherits Canvas
 
 	#tag Event
 		Sub LostFocus()
-		  BorderColor = RGB(BorderColor.Red, BorderColor.Green, BorderColor.Blue, &hCC)
+		  If Me.Value Then
+		    BorderColorTrue = RGB(BorderColorTrue.Red, BorderColorTrue.Green, BorderColorTrue.Blue, &hCC)
+		  Else
+		    BorderColorFalse = RGB(BorderColorFalse.Red, BorderColorFalse.Green, BorderColorFalse.Blue, &hCC)
+		  End If
 		  Me.Invalidate(False)
 		End Sub
 	#tag EndEvent
@@ -57,7 +65,11 @@ Inherits Canvas
 		  Me.AcceptFocus = True
 		  Me.AcceptTabs = True
 		  Me.UseFocusRing = True
-		  BorderColor = RGB(BorderColor.Red, BorderColor.Green, BorderColor.Blue, &hCC)
+		  If Me.Value Then
+		    BorderColorTrue = RGB(BorderColorTrue.Red, BorderColorTrue.Green, BorderColorTrue.Blue, &hCC)
+		  Else
+		    BorderColorFalse = RGB(BorderColorFalse.Red, BorderColorFalse.Green, BorderColorFalse.Blue, &hCC)
+		  End If
 		End Sub
 	#tag EndEvent
 
@@ -69,15 +81,12 @@ Inherits Canvas
 		  g.AntiAlias = True
 		  Dim thumb As Integer = g.Height - 2
 		  Dim X As Integer
-		  g.ForeColor = &cFFFFFFFF
-		  g.FillRect(0, 0, g.Width, g.Height)
-		  
 		  
 		  'draw background
 		  If Me.Value Then
-		    g.ForeColor = OnColor
+		    g.ForeColor = BackgroundColorTrue
 		  Else
-		    g.ForeColor = OffColor
+		    g.ForeColor = BackgroundColorFalse
 		  End If
 		  If Rounded Then
 		    g.FillRoundRect(0, 0, g.Width, g.Height, thumb, thumb)
@@ -87,18 +96,23 @@ Inherits Canvas
 		  
 		  
 		  'draw border
-		  g.ForeColor = BorderColor
+		  If Me.Value Then
+		    g.ForeColor = BorderColorTrue
+		  Else
+		    g.ForeColor = BorderColorFalse
+		  End If
 		  If Rounded Then
-		    g.DrawRoundRect(0, 0, g.Width, g.Height, thumb, thumb)
+		    g.DrawRoundRect(1, 1, g.Width - 2, g.Height - 2, thumb, thumb)
 		  Else
 		    g.DrawRect(0, 0, g.Width, g.Height)
 		  End If
 		  
 		  'draw thumb
-		  g.ForeColor = ThumbColor
 		  If Me.Value Then
+		    g.ForeColor = ThumbColorTrue
 		    X = g.Width - thumb - 1
 		  Else
+		    g.ForeColor = ThumbColorFalse
 		    X = 1
 		  End If
 		  If Rounded Then
@@ -110,9 +124,10 @@ Inherits Canvas
 		  
 		  'draw thumb border
 		  If Me.Value Then
-		    g.ForeColor = BorderColor
+		    g.ForeColor = BorderColorTrue
 		    X = g.Width - thumb - 1
 		  Else
+		    g.ForeColor = BorderColorFalse
 		    X = 1
 		  End If
 		  If Rounded Then
@@ -124,11 +139,12 @@ Inherits Canvas
 		  
 		  'draw text
 		  g.Bold = True
-		  g.ForeColor = TextColor
 		  If Me.Value Then
+		    g.ForeColor = TextColorTrue
 		    X = g.StringWidth(TrueText)
 		    g.DrawString(TrueText, (0.25 * g.Width) - (0.5 * X), 0.5 * g.Height + 5)
 		  Else
+		    g.ForeColor = TextColorFalse
 		    X = g.StringWidth(FalseText)
 		    g.DrawString(FalseText, (0.75 * g.Width) - (0.5 * X), 0.5 * g.Height + 5)
 		  End If
@@ -142,7 +158,19 @@ Inherits Canvas
 
 
 	#tag Property, Flags = &h0
-		BorderColor As Color = &c80808000
+		BackgroundColorFalse As Color = &cC0C0C000
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		BackgroundColorTrue As Color = &c0080FF00
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		BorderColorFalse As Color = &c80808000
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		BorderColorTrue As Color = &c80808000
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -155,14 +183,6 @@ Inherits Canvas
 
 	#tag Property, Flags = &h21
 		Private mValue As Boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		OffColor As Color = &cC0C0C000
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		OnColor As Color = &c0080FF00
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -181,11 +201,19 @@ Inherits Canvas
 	#tag EndComputedProperty
 
 	#tag Property, Flags = &h0
-		TextColor As Color = &cFFFFFF00
+		TextColorFalse As Color = &cFFFFFF00
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		ThumbColor As Color = &cE5E5E500
+		TextColorTrue As Color = &cFFFFFF00
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		ThumbColorFalse As Color = &c80808000
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		ThumbColorTrue As Color = &c80808000
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -240,7 +268,28 @@ Inherits Canvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="BorderColor"
+			Name="BackgroundColorFalse"
+			Visible=true
+			Group="Behavior"
+			InitialValue="&cC0C0C000"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="BackgroundColorTrue"
+			Visible=true
+			Group="Behavior"
+			InitialValue="&c0080FF00"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="BorderColorFalse"
+			Visible=true
+			Group="Behavior"
+			InitialValue="&c80808000"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="BorderColorTrue"
 			Visible=true
 			Group="Behavior"
 			InitialValue="&c80808000"
@@ -346,20 +395,6 @@ Inherits Canvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="OffColor"
-			Visible=true
-			Group="Behavior"
-			InitialValue="&cC0C0C000"
-			Type="Color"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="OnColor"
-			Visible=true
-			Group="Behavior"
-			InitialValue="&c0080FF00"
-			Type="Color"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Rounded"
 			Visible=true
 			Group="Behavior"
@@ -397,17 +432,31 @@ Inherits Canvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="TextColor"
+			Name="TextColorFalse"
 			Visible=true
 			Group="Behavior"
 			InitialValue="&cFFFFFF00"
 			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="ThumbColor"
+			Name="TextColorTrue"
 			Visible=true
 			Group="Behavior"
-			InitialValue="&cE5E5E500"
+			InitialValue="&cFFFFFF00"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ThumbColorFalse"
+			Visible=true
+			Group="Behavior"
+			InitialValue="&c80808000"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ThumbColorTrue"
+			Visible=true
+			Group="Behavior"
+			InitialValue="&c80808000"
 			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty

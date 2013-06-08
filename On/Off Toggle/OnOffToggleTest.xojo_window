@@ -8,7 +8,7 @@ Begin Window OnOffToggleTest
    Frame           =   0
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   148
+   Height          =   130
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -24,39 +24,7 @@ Begin Window OnOffToggleTest
    Resizeable      =   False
    Title           =   "On/Off Toggle Test"
    Visible         =   True
-   Width           =   296
-   Begin OnOffToggle OnOff
-      AcceptFocus     =   False
-      AcceptTabs      =   False
-      AutoDeactivate  =   True
-      Backdrop        =   0
-      BorderColor     =   &c80808000
-      Enabled         =   True
-      Height          =   30
-      HelpTag         =   ""
-      Index           =   0
-      InitialParent   =   ""
-      Left            =   58
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      OffColor        =   &cC0C0C000
-      OnColor         =   &c0080FF00
-      Rounded         =   False
-      Scope           =   0
-      TabIndex        =   0
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextColor       =   &cFFFFFF00
-      ThumbColor      =   &cE5E5E500
-      Top             =   27
-      UseFocusRing    =   True
-      Value           =   False
-      Visible         =   True
-      Width           =   60
-   End
+   Width           =   258
    Begin Label Label1
       AutoDeactivate  =   True
       Bold            =   False
@@ -68,7 +36,7 @@ Begin Window OnOffToggleTest
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   7
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -85,43 +53,11 @@ Begin Window OnOffToggleTest
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   31
+      Top             =   32
       Transparent     =   False
       Underline       =   False
       Visible         =   True
       Width           =   46
-   End
-   Begin OnOffToggle OnOff
-      AcceptFocus     =   False
-      AcceptTabs      =   False
-      AutoDeactivate  =   True
-      Backdrop        =   0
-      BorderColor     =   &c80808000
-      Enabled         =   True
-      Height          =   30
-      HelpTag         =   ""
-      Index           =   1
-      InitialParent   =   ""
-      Left            =   58
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      OffColor        =   &cC0C0C000
-      OnColor         =   &c0080FF00
-      Rounded         =   False
-      Scope           =   0
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextColor       =   &cFFFFFF00
-      ThumbColor      =   &cE5E5E500
-      Top             =   69
-      UseFocusRing    =   True
-      Value           =   False
-      Visible         =   True
-      Width           =   60
    End
    Begin Label Label2
       AutoDeactivate  =   True
@@ -134,7 +70,7 @@ Begin Window OnOffToggleTest
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   7
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -151,43 +87,11 @@ Begin Window OnOffToggleTest
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   73
+      Top             =   64
       Transparent     =   False
       Underline       =   False
       Visible         =   True
       Width           =   46
-   End
-   Begin OnOffToggle OnOff
-      AcceptFocus     =   False
-      AcceptTabs      =   False
-      AutoDeactivate  =   True
-      Backdrop        =   0
-      BorderColor     =   &c80808000
-      Enabled         =   True
-      Height          =   30
-      HelpTag         =   ""
-      Index           =   2
-      InitialParent   =   ""
-      Left            =   58
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      OffColor        =   &cC0C0C000
-      OnColor         =   &c0080FF00
-      Rounded         =   False
-      Scope           =   0
-      TabIndex        =   4
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextColor       =   &cFFFFFF00
-      ThumbColor      =   &cE5E5E500
-      Top             =   111
-      UseFocusRing    =   True
-      Value           =   False
-      Visible         =   True
-      Width           =   60
    End
    Begin Label Label3
       AutoDeactivate  =   True
@@ -200,7 +104,7 @@ Begin Window OnOffToggleTest
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   7
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -217,7 +121,7 @@ Begin Window OnOffToggleTest
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   115
+      Top             =   93
       Transparent     =   False
       Underline       =   False
       Visible         =   True
@@ -241,7 +145,7 @@ Begin Window OnOffToggleTest
       GridLinesVertical=   0
       HasHeading      =   False
       HeadingIndex    =   -1
-      Height          =   114
+      Height          =   92
       HelpTag         =   ""
       Hierarchical    =   False
       Index           =   -2147483648
@@ -269,7 +173,7 @@ Begin Window OnOffToggleTest
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   158
+      Width           =   121
       _ScrollWidth    =   -1
    End
    Begin CheckBox CheckBox1
@@ -304,26 +208,140 @@ Begin Window OnOffToggleTest
       Visible         =   True
       Width           =   100
    End
+   Begin OnOffToggle OnOff
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      BackgroundColorFalse=   &cC0C0C000
+      BackgroundColorTrue=   &c0080FF00
+      BorderColorFalse=   &c80808000
+      BorderColorTrue =   &c80808000
+      Enabled         =   True
+      FalseText       =   "Off"
+      Height          =   30
+      HelpTag         =   ""
+      Index           =   0
+      InitialParent   =   ""
+      Left            =   58
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Rounded         =   False
+      Scope           =   0
+      TabIndex        =   8
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColorFalse  =   &cFFFFFF00
+      TextColorTrue   =   &cFFFFFF00
+      ThumbColorFalse =   &c80808000
+      ThumbColorTrue  =   &c80808000
+      Top             =   27
+      Transparent     =   True
+      TrueText        =   "On"
+      UseFocusRing    =   True
+      Value           =   False
+      Visible         =   True
+      Width           =   60
+   End
+   Begin OnOffToggle OnOff
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      BackgroundColorFalse=   &cC0C0C000
+      BackgroundColorTrue=   &c0080FF00
+      BorderColorFalse=   &c80808000
+      BorderColorTrue =   &c80808000
+      Enabled         =   True
+      FalseText       =   "Off"
+      Height          =   30
+      HelpTag         =   ""
+      Index           =   1
+      InitialParent   =   ""
+      Left            =   58
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Rounded         =   False
+      Scope           =   0
+      TabIndex        =   9
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColorFalse  =   &cFFFFFF00
+      TextColorTrue   =   &cFFFFFF00
+      ThumbColorFalse =   &c80808000
+      ThumbColorTrue  =   &c80808000
+      Top             =   58
+      Transparent     =   True
+      TrueText        =   "On"
+      UseFocusRing    =   True
+      Value           =   False
+      Visible         =   True
+      Width           =   60
+   End
+   Begin OnOffToggle OnOff
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      BackgroundColorFalse=   &cC0C0C000
+      BackgroundColorTrue=   &c0080FF00
+      BorderColorFalse=   &c80808000
+      BorderColorTrue =   &c80808000
+      Enabled         =   True
+      FalseText       =   "Off"
+      Height          =   30
+      HelpTag         =   ""
+      Index           =   3
+      InitialParent   =   ""
+      Left            =   58
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Rounded         =   False
+      Scope           =   0
+      TabIndex        =   10
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColorFalse  =   &cFFFFFF00
+      TextColorTrue   =   &cFFFFFF00
+      ThumbColorFalse =   &c80808000
+      ThumbColorTrue  =   &c80808000
+      Top             =   89
+      Transparent     =   True
+      TrueText        =   "On"
+      UseFocusRing    =   True
+      Value           =   False
+      Visible         =   True
+      Width           =   60
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
 #tag EndWindowCode
 
-#tag Events OnOff
-	#tag Event
-		Sub ValueChanged(index as Integer)
-		  Listbox1.AddRow("Toggle #" + Str(index) + ": " + Str(Me.Value))
-		  Listbox1.ScrollPosition = Listbox1.LastIndex
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag Events CheckBox1
 	#tag Event
 		Sub Action()
 		  OnOff(0).Rounded = Me.Value
 		  OnOff(1).Rounded = Me.Value
 		  OnOff(2).Rounded = Me.Value
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events OnOff
+	#tag Event
+		Sub ValueChanged(index as Integer)
+		  Listbox1.AddRow("Toggle #" + Str(index) + ": " + Str(Me.Value))
+		  Listbox1.ScrollPosition = Listbox1.LastIndex
 		End Sub
 	#tag EndEvent
 #tag EndEvents
