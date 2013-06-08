@@ -38,9 +38,20 @@ Inherits Canvas
 		  #pragma Unused Y
 		  Me.SetFocus
 		  Me.Invalidate(False)
-		  Me.Value = Not Me.Value
+		  mDown = True
 		  Return True
 		End Function
+	#tag EndEvent
+
+	#tag Event
+		Sub MouseDrag(X As Integer, Y As Integer)
+		  if x<0 or y<0 or x>me.width or y>me.height then
+		    //Outside the button
+		    mDown = False
+		  Else
+		    mDown = True
+		  end
+		End Sub
 	#tag EndEvent
 
 	#tag Event
@@ -52,6 +63,14 @@ Inherits Canvas
 	#tag Event
 		Sub MouseExit()
 		  Me.MouseCursor = System.Cursors.StandardPointer
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub MouseUp(X As Integer, Y As Integer)
+		  If mDown Then Me.Value = Not Me.Value
+		  mDown = False
+		  
 		End Sub
 	#tag EndEvent
 
@@ -140,6 +159,10 @@ Inherits Canvas
 
 	#tag Property, Flags = &h0
 		FalseText As String = "Off"
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mDown As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
