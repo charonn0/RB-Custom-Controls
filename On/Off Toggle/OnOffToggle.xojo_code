@@ -8,7 +8,7 @@ Inherits Canvas
 		  Else
 		    BackgroundColorFalse = RGB(BackgroundColorFalse.Red, BackgroundColorFalse.Green, BackgroundColorFalse.Blue, &h30)
 		  End If
-		  Me.Invalidate(False)
+		  Me.Update()
 		End Sub
 	#tag EndEvent
 
@@ -28,7 +28,7 @@ Inherits Canvas
 		  Else
 		    BackgroundColorFalse = RGB(BackgroundColorFalse.Red, BackgroundColorFalse.Green, BackgroundColorFalse.Blue, 0)
 		  End If
-		  Me.Invalidate(False)
+		  Me.Update()
 		End Sub
 	#tag EndEvent
 
@@ -37,7 +37,7 @@ Inherits Canvas
 		  #pragma Unused X
 		  #pragma Unused Y
 		  Me.SetFocus
-		  Me.Invalidate(False)
+		  Me.Update()
 		  mDown = True
 		  Return True
 		End Function
@@ -99,6 +99,30 @@ Inherits Canvas
 		  #If RBVersion > 2012 Then
 		    #pragma Unused areas
 		  #endif
+		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Then Update(False)
+		  g.DrawPicture(Buffer, 0, 0)
+		End Sub
+	#tag EndEvent
+
+
+	#tag Method, Flags = &h0
+		Sub Enabled(Assigns b As Boolean)
+		  RectControl(Me).Enabled = b
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub Update(AndInvalidate As Boolean = True)
+		  #pragma BreakOnExceptions Off
+		  Try
+		    buffer = New Picture(Me.Width, Me.Height)
+		  Catch
+		    Buffer = Nil
+		    Return
+		  End Try
+		  #pragma BreakOnExceptions Default
+		  Dim g As Graphics = Buffer.Graphics
+		  
 		  g.AntiAlias = True
 		  g.TextSize = Me.TextSize
 		  g.TextFont = Me.TextFont
@@ -142,8 +166,34 @@ Inherits Canvas
 		    X = g.StringWidth(FalseText)
 		    g.DrawString(FalseText, (0.75 * g.Width) - (0.5 * X), 0.5 * g.Height + 5)
 		  End If
+		  
+		  If Not Me.Enabled Then
+		    Dim w As Integer = Buffer.Width
+		    Dim h As Integer = Buffer.Height
+		    Dim surf As RGBSurface = Buffer.RGBSurface
+		    
+		    If surf = Nil Then Raise New NilObjectException
+		    
+		    Dim greyColor(255) As Color //precompute the 256 grey colors
+		    For i As Integer = 0 To 255
+		      greyColor(i) = RGB(i, i, i)
+		    Next
+		    
+		    Dim intensity As Integer
+		    Dim c As Color
+		    For X = 0 To w
+		      For Y As Integer = 0 To h
+		        c = surf.Pixel(X, Y)
+		        intensity = c.Red * 0.30 + c.Green * 0.59 + c.Blue * 0.11
+		        surf.Pixel(X, Y) = greyColor(intensity) //lookup grey
+		      Next
+		    Next
+		    
+		  End If
+		  
+		  If AndInvalidate Then Me.Invalidate(False)
 		End Sub
-	#tag EndEvent
+	#tag EndMethod
 
 
 	#tag Hook, Flags = &h0
@@ -157,6 +207,10 @@ Inherits Canvas
 
 	#tag Property, Flags = &h0
 		BackgroundColorTrue As Color = &c0080FF00
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected Buffer As Picture
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -184,7 +238,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mRounded = value
-			  Invalidate(True)
+			  Me.Update()
 			End Set
 		#tag EndSetter
 		Rounded As Boolean
@@ -227,7 +281,7 @@ Inherits Canvas
 		#tag Setter
 			Set
 			  mValue = value
-			  Invalidate(False)
+			  Me.Update()
 			  ValueChanged()
 			End Set
 		#tag EndSetter

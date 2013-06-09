@@ -43,10 +43,11 @@ Begin Window OnOffToggleTest
       LockRight       =   False
       LockTop         =   True
       Multiline       =   False
-      Scope           =   0
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Item:"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -77,10 +78,11 @@ Begin Window OnOffToggleTest
       LockRight       =   False
       LockTop         =   True
       Multiline       =   False
-      Scope           =   0
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Item:"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -111,10 +113,11 @@ Begin Window OnOffToggleTest
       LockRight       =   False
       LockTop         =   True
       Multiline       =   False
-      Scope           =   0
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Item:"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -159,7 +162,7 @@ Begin Window OnOffToggleTest
       LockRight       =   False
       LockTop         =   True
       RequiresSelection=   False
-      Scope           =   0
+      Scope           =   "0"
       ScrollbarHorizontal=   False
       ScrollBarVertical=   True
       SelectionType   =   0
@@ -194,7 +197,7 @@ Begin Window OnOffToggleTest
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
-      Scope           =   0
+      Scope           =   "0"
       State           =   0
       TabIndex        =   7
       TabPanelIndex   =   0
@@ -228,7 +231,7 @@ Begin Window OnOffToggleTest
       LockRight       =   False
       LockTop         =   True
       Rounded         =   False
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
@@ -266,7 +269,7 @@ Begin Window OnOffToggleTest
       LockRight       =   False
       LockTop         =   True
       Rounded         =   False
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   9
       TabPanelIndex   =   0
       TabStop         =   True
@@ -304,7 +307,7 @@ Begin Window OnOffToggleTest
       LockRight       =   False
       LockTop         =   True
       Rounded         =   False
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   10
       TabPanelIndex   =   0
       TabStop         =   True
@@ -339,7 +342,7 @@ End
 #tag EndEvents
 #tag Events OnOff
 	#tag Event
-		Sub ValueChanged(index as Integer)
+		Sub ValueChanged()
 		  Listbox1.AddRow("Toggle #" + Str(index) + ": " + Str(Me.Value))
 		  Listbox1.ScrollPosition = Listbox1.LastIndex
 		End Sub
