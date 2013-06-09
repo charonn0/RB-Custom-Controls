@@ -68,6 +68,8 @@ Inherits Canvas
 
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
+		  #pragma Unused X
+		  #pragma Unused Y
 		  If mDown Then Me.Value = Not Me.Value
 		  mDown = False
 		  

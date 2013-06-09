@@ -22,15 +22,15 @@ Begin Window Window1
    MinWidth        =   64
    Placement       =   2
    Resizeable      =   False
-   Title           =   "Controls Test Window"
+   Title           =   "Controls"
    Visible         =   True
-   Width           =   600
+   Width           =   592
    Begin PushButton PushButton1
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
       Cancel          =   False
-      Caption         =   "Slider Test Window"
+      Caption         =   "Slider"
       Default         =   False
       Enabled         =   True
       Height          =   22
@@ -51,7 +51,7 @@ Begin Window Window1
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   63
       Underline       =   False
       Visible         =   True
       Width           =   148
@@ -61,7 +61,7 @@ Begin Window Window1
       Bold            =   False
       ButtonStyle     =   "0"
       Cancel          =   False
-      Caption         =   "Progressbar Test Window"
+      Caption         =   "Progressbar"
       Default         =   False
       Enabled         =   True
       Height          =   22
@@ -69,7 +69,7 @@ Begin Window Window1
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   151
+      Left            =   445
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -82,7 +82,7 @@ Begin Window Window1
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   43
       Underline       =   False
       Visible         =   True
       Width           =   148
@@ -92,7 +92,7 @@ Begin Window Window1
       Bold            =   False
       ButtonStyle     =   "0"
       Cancel          =   False
-      Caption         =   "LinkLabel Test Window"
+      Caption         =   "LinkLabel"
       Default         =   False
       Enabled         =   True
       Height          =   22
@@ -100,7 +100,7 @@ Begin Window Window1
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   302
+      Left            =   0
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -113,7 +113,7 @@ Begin Window Window1
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   43
       Underline       =   False
       Visible         =   True
       Width           =   148
@@ -123,7 +123,7 @@ Begin Window Window1
       Bold            =   False
       ButtonStyle     =   "0"
       Cancel          =   False
-      Caption         =   "HintText Test Window"
+      Caption         =   "HintText"
       Default         =   False
       Enabled         =   True
       Height          =   22
@@ -131,7 +131,7 @@ Begin Window Window1
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   452
+      Left            =   297
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -144,38 +144,7 @@ Begin Window Window1
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
-      Underline       =   False
-      Visible         =   True
-      Width           =   148
-   End
-   Begin PushButton PushButton5
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Graph Test Window"
-      Default         =   False
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   4
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   21
+      Top             =   22
       Underline       =   False
       Visible         =   True
       Width           =   148
@@ -185,7 +154,7 @@ Begin Window Window1
       Bold            =   False
       ButtonStyle     =   "0"
       Cancel          =   False
-      Caption         =   "Drag Canvas Test Window"
+      Caption         =   "Drag Canvas"
       Default         =   False
       Enabled         =   True
       Height          =   22
@@ -193,7 +162,7 @@ Begin Window Window1
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   151
+      Left            =   0
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -206,7 +175,7 @@ Begin Window Window1
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   21
+      Top             =   22
       Underline       =   False
       Visible         =   True
       Width           =   148
@@ -216,7 +185,7 @@ Begin Window Window1
       Bold            =   False
       ButtonStyle     =   "0"
       Cancel          =   False
-      Caption         =   "Color Selector Test Window"
+      Caption         =   "Color Selector"
       Default         =   False
       Enabled         =   True
       Height          =   22
@@ -224,7 +193,7 @@ Begin Window Window1
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   302
+      Left            =   149
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -237,7 +206,7 @@ Begin Window Window1
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   21
+      Top             =   0
       Underline       =   False
       Visible         =   True
       Width           =   148
@@ -247,38 +216,7 @@ Begin Window Window1
       Bold            =   False
       ButtonStyle     =   "0"
       Cancel          =   False
-      Caption         =   "Button Test Window"
-      Default         =   False
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   452
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   7
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   21
-      Underline       =   False
-      Visible         =   True
-      Width           =   148
-   End
-   Begin PushButton PushButton9
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "HistoryField Test Window"
+      Caption         =   "Button"
       Default         =   False
       Enabled         =   True
       Height          =   22
@@ -293,23 +231,23 @@ Begin Window Window1
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   8
+      TabIndex        =   7
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   42
+      Top             =   0
       Underline       =   False
       Visible         =   True
       Width           =   148
    End
-   Begin PushButton PushButton10
+   Begin PushButton PushButton9
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
       Cancel          =   False
-      Caption         =   "CharacterGrid Test Window"
+      Caption         =   "HistoryField"
       Default         =   False
       Enabled         =   True
       Height          =   22
@@ -317,20 +255,20 @@ Begin Window Window1
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   151
+      Left            =   445
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   9
+      TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   42
+      Top             =   22
       Underline       =   False
       Visible         =   True
       Width           =   148
@@ -340,7 +278,7 @@ Begin Window Window1
       Bold            =   False
       ButtonStyle     =   "0"
       Cancel          =   False
-      Caption         =   "PointMap Test Window"
+      Caption         =   "PointMap"
       Default         =   False
       Enabled         =   True
       Height          =   22
@@ -348,7 +286,7 @@ Begin Window Window1
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   302
+      Left            =   297
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -371,7 +309,7 @@ Begin Window Window1
       Bold            =   False
       ButtonStyle     =   "0"
       Cancel          =   False
-      Caption         =   "DirViewListEx Test Window"
+      Caption         =   "DirViewListEx"
       Default         =   False
       Enabled         =   True
       Height          =   22
@@ -379,7 +317,7 @@ Begin Window Window1
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   452
+      Left            =   445
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -392,7 +330,7 @@ Begin Window Window1
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   42
+      Top             =   0
       Underline       =   False
       Visible         =   True
       Width           =   148
@@ -410,7 +348,7 @@ Begin Window Window1
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   297
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -423,7 +361,7 @@ Begin Window Window1
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   63
+      Top             =   0
       Underline       =   False
       Visible         =   True
       Width           =   148
@@ -441,7 +379,7 @@ Begin Window Window1
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   151
+      Left            =   149
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -454,7 +392,38 @@ Begin Window Window1
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   63
+      Top             =   43
+      Underline       =   False
+      Visible         =   True
+      Width           =   148
+   End
+   Begin PushButton OnOffTest1
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "Filter List"
+      Default         =   False
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   149
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   14
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   22
       Underline       =   False
       Visible         =   True
       Width           =   148
@@ -513,13 +482,6 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events PushButton5
-	#tag Event
-		Sub Action()
-		  GraphWindow.Show
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag Events PushButton6
 	#tag Event
 		Sub Action()
@@ -545,13 +507,6 @@ End
 	#tag Event
 		Sub Action()
 		  HistoryFieldWindow.Show
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events PushButton10
-	#tag Event
-		Sub Action()
-		  CharacterGridWindow.Show
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -583,6 +538,13 @@ End
 	#tag Event
 		Sub Action()
 		  OnOffToggleTest.Show
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events OnOffTest1
+	#tag Event
+		Sub Action()
+		  FilterListTest.Show
 		End Sub
 	#tag EndEvent
 #tag EndEvents
