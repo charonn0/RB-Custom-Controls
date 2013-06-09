@@ -170,11 +170,10 @@ End
 		  Dim tstart, tstop, gstart, gstop As Integer
 		  tstart = InStr(txt, Self.Param) - 1
 		  tstop = tstart + Self.Param.Len
-		  If tstop = txt.Len Then tstop = tstop - 1
-		  
 		  gstart = g.StringWidth(Left(txt, tstart))
 		  For i As Integer = tstart To tstop
 		    Dim char As String = Mid(txt, i, 1).Trim
+		    If i = txt.Len Then Continue
 		    gstop = gstop + g.StringWidth(char)
 		  Next
 		  g.ForeColor = Self.HilightColor
