@@ -1,34 +1,15 @@
 #tag Class
 Protected Class ProgBar
-Inherits Canvas
+Inherits BaseCanvas
 	#tag Event
-		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
-		  #If RBVersion >= 2012 Then 'areas() was added in RS2012 R1
-		    #pragma Unused areas
-		  #endif
-		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Then Update(False)
-		  g.DrawPicture(Buffer, 0, 0)
-		End Sub
-	#tag EndEvent
-
-
-	#tag Method, Flags = &h1
-		Protected Sub Update(Invalidate As Boolean = True)
-		  #pragma BreakOnExceptions Off
+		Sub Paint	(g As Graphics)
 		  Dim filledWidth As Integer = (((value * 100) / maximum) * (Me.Width / 100))
-		  #If RBVersion >= 2011.04 Then
-		    Buffer = New Picture(Me.Width, Me.Height)
-		  #Else
-		    Buffer = New Picture(Me.Width, Me.Height, 32)
-		  #endif
-		  
 		  'barWell
 		  Dim H, W As Integer
 		  H = Buffer.Height
 		  W = Buffer.Width
-		  Buffer.Graphics.ForeColor = barWell
-		  Buffer.Graphics.FillRect(0, 0, W, H)
-		  
+		  g.ForeColor = barWell
+		  g.FillRect(0, 0, W, H)
 		  
 		  'bar
 		  If hasGradient Then
@@ -36,49 +17,42 @@ Inherits Canvas
 		    For i As Integer = 0 To Buffer.Height
 		      ratio = ((Buffer.Height - i) / Buffer.Height)
 		      endratio = (i / Buffer.Height)
-		      Buffer.Graphics.ForeColor = RGB(gradientEnd.Red * endratio + barColor.Red * ratio, gradientEnd.Green * endratio + barColor.Green * ratio, _
+		      g.ForeColor = RGB(gradientEnd.Red * endratio + barColor.Red * ratio, gradientEnd.Green * endratio + barColor.Green * ratio, _
 		      gradientEnd.Blue * endratio + barColor.Blue * ratio)
-		      Buffer.Graphics.DrawLine(0, i, filledWidth, i)
+		      g.DrawLine(0, i, filledWidth, i)
 		    next
-		    Buffer.Graphics.ForeColor = barColor
-		    Buffer.Graphics.DrawLine(0, 0, filledWidth, 0)
+		    g.ForeColor = barColor
+		    g.DrawLine(0, 0, filledWidth, 0)
 		  Else
-		    Buffer.Graphics.ForeColor = barColor
-		    Buffer.Graphics.FillRect(0, 0, filledWidth, H)
+		    g.ForeColor = barColor
+		    g.FillRect(0, 0, filledWidth, H)
 		  End If
 		  
 		  'box
 		  If hasBox Then
-		    Buffer.Graphics.ForeColor = boxColor
-		    Buffer.Graphics.DrawRect(0, 0, W, H)
+		    g.ForeColor = boxColor
+		    g.DrawRect(0, 0, W, H)
 		  End If
 		  
 		  'text
 		  If hasText Then
 		    Dim percStr As String
-		    Buffer.Graphics.TextSize = 10
+		    g.TextSize = 10
 		    percStr = PreText + " " + Format((Me.Value*100) / Me.maximum, textFormat) + OverrideText
-		    Buffer.Graphics.Bold = bold
-		    Buffer.Graphics.Italic = italic
-		    Buffer.Graphics.Underline = underline
-		    Buffer.Graphics.TextFont = textFont
-		    Buffer.Graphics.ForeColor= textColor
-		    Buffer.Graphics.TextSize = textSize
+		    g.Bold = bold
+		    g.Italic = italic
+		    g.Underline = underline
+		    g.TextFont = textFont
+		    g.ForeColor= textColor
+		    g.TextSize = textSize
 		    Dim strWidth, strHeight As Integer
-		    strWidth = Buffer.Graphics.StringWidth(percStr)
-		    strHeight = Buffer.Graphics.StringHeight(percStr, Me.Width)
-		    Buffer.Graphics.DrawString(percStr, (Me.Width/2) - (strWidth/2), ((Me.Height/2) + (strHeight/4)))
+		    strWidth = g.StringWidth(percStr)
+		    strHeight = g.StringHeight(percStr, Me.Width)
+		    g.DrawString(percStr, (Me.Width/2) - (strWidth/2), ((Me.Height/2) + (strHeight/4)))
 		  End If
 		  
-		  If Invalidate Then
-		    Me.Invalidate(False)
-		  End If
-		  
-		  
-		Exception Err As OutOfBoundsException
-		  Buffer = Nil
 		End Sub
-	#tag EndMethod
+	#tag EndEvent
 
 
 	#tag Hook, Flags = &h0
@@ -194,21 +168,6 @@ Inherits Canvas
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mbold
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mbold = value
-			  Update()
-			End Set
-		#tag EndSetter
-		bold As Boolean
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
 			  return mboxColor
 			End Get
 		#tag EndGetter
@@ -220,10 +179,6 @@ Inherits Canvas
 		#tag EndSetter
 		boxColor As Color
 	#tag EndComputedProperty
-
-	#tag Property, Flags = &h21
-		Private Buffer As Picture
-	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
@@ -288,21 +243,6 @@ Inherits Canvas
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mitalic
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mitalic = value
-			  Update()
-			End Set
-		#tag EndSetter
-		italic As Boolean
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
 			  return mmaximum
 			End Get
 		#tag EndGetter
@@ -321,10 +261,6 @@ Inherits Canvas
 
 	#tag Property, Flags = &h21
 		Private mbarWell As Color
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mbold As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -348,19 +284,7 @@ Inherits Canvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mitalic As Boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
 		Private mmaximum As Integer = 100
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mtextColor As Color
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mtextFont As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -368,58 +292,12 @@ Inherits Canvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mtextSize As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private munderline As Boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
 		Private mvalue As Double
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mvalue1 As Double
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		PreText As String
 	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		ShowValue1 As Boolean
-	#tag EndProperty
-
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
-			  return mtextColor
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mtextColor = value
-			  Update()
-			End Set
-		#tag EndSetter
-		textColor As Color
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
-			  return mtextFont
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mtextFont = value
-			  Update()
-			End Set
-		#tag EndSetter
-		textFont As String
-	#tag EndComputedProperty
 
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
@@ -435,36 +313,6 @@ Inherits Canvas
 			End Set
 		#tag EndSetter
 		textFormat As String
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
-			  return mtextSize
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mtextSize = value
-			  Update()
-			End Set
-		#tag EndSetter
-		textSize As Integer
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
-			  return munderline
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  munderline = value
-			  Update()
-			End Set
-		#tag EndSetter
-		underline As Boolean
 	#tag EndComputedProperty
 
 	#tag ComputedProperty, Flags = &h0

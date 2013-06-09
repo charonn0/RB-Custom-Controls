@@ -1,6 +1,6 @@
 #tag Class
 Protected Class PointMap
-Inherits Canvas
+Inherits BaseCanvas
 	#tag Event
 		Sub DoubleClick(X As Integer, Y As Integer)
 		  If FindPoint(X, Y) Then
@@ -34,6 +34,8 @@ Inherits Canvas
 		    End If
 		    Hovering = False
 		  End If
+		  Me.Update(False)
+		  Me.Refresh(False)
 		End Sub
 	#tag EndEvent
 
@@ -48,12 +50,8 @@ Inherits Canvas
 	#tag EndEvent
 
 	#tag Event
-		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
-		  #If RBVersion >= 2012 Then 'areas() was added in RS2012 R1
-		    #pragma Unused areas
-		  #endif
-		  Dim p As New Picture(g.Width, g.Height, 32)
-		  RaiseEvent Paint(p.Graphics)
+		Sub Paint	(g As Graphics)
+		  RaiseEvent Paint(g)
 		  For Each Key As String In Points.Keys
 		    Dim X, Y As Integer
 		    X = CoordX(Key)
@@ -61,12 +59,10 @@ Inherits Canvas
 		    Dim gX, gY As Integer
 		    gX = X - (0.5 * Me.PointWidth)
 		    gY = Y - (0.5 * Me.PointHeight)
-		    PointPaint(p.Graphics.Clip(gX, gY, Me.PointWidth, Me.PointHeight), X, Y)
+		    PointPaint(g.Clip(gX, gY, Me.PointWidth, Me.PointHeight), X, Y)
 		  Next
 		  
-		  PostPaint(p.Graphics)
-		  g.DrawPicture(p, 0, 0)
-		  
+		  PostPaint(g)
 		  
 		  
 		End Sub

@@ -1,6 +1,6 @@
 #tag Class
 Protected Class OnOffToggle
-Inherits Canvas
+Inherits BoolCanvas
 	#tag Event
 		Sub GotFocus()
 		  If Me.Value Then
@@ -95,34 +95,7 @@ Inherits Canvas
 	#tag EndEvent
 
 	#tag Event
-		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
-		  #If RBVersion > 2012 Then
-		    #pragma Unused areas
-		  #endif
-		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Then Update(False)
-		  g.DrawPicture(Buffer, 0, 0)
-		End Sub
-	#tag EndEvent
-
-
-	#tag Method, Flags = &h0
-		Sub Enabled(Assigns b As Boolean)
-		  RectControl(Me).Enabled = b
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub Update(AndInvalidate As Boolean = True)
-		  #pragma BreakOnExceptions Off
-		  Try
-		    buffer = New Picture(Me.Width, Me.Height)
-		  Catch
-		    Buffer = Nil
-		    Return
-		  End Try
-		  #pragma BreakOnExceptions Default
-		  Dim g As Graphics = Buffer.Graphics
-		  
+		Sub Paint	(g As Graphics)
 		  g.AntiAlias = True
 		  g.TextSize = Me.TextSize
 		  g.TextFont = Me.TextFont
@@ -166,39 +139,8 @@ Inherits Canvas
 		    X = g.StringWidth(FalseText)
 		    g.DrawString(FalseText, (0.75 * g.Width) - (0.5 * X), 0.5 * g.Height + 5)
 		  End If
-		  
-		  If Not Me.Enabled Then
-		    Dim w As Integer = Buffer.Width
-		    Dim h As Integer = Buffer.Height
-		    Dim surf As RGBSurface = Buffer.RGBSurface
-		    
-		    If surf = Nil Then Raise New NilObjectException
-		    
-		    Dim greyColor(255) As Color //precompute the 256 grey colors
-		    For i As Integer = 0 To 255
-		      greyColor(i) = RGB(i, i, i)
-		    Next
-		    
-		    Dim intensity As Integer
-		    Dim c As Color
-		    For X = 0 To w
-		      For Y As Integer = 0 To h
-		        c = surf.Pixel(X, Y)
-		        intensity = c.Red * 0.30 + c.Green * 0.59 + c.Blue * 0.11
-		        surf.Pixel(X, Y) = greyColor(intensity) //lookup grey
-		      Next
-		    Next
-		    
-		  End If
-		  
-		  If AndInvalidate Then Me.Invalidate(False)
 		End Sub
-	#tag EndMethod
-
-
-	#tag Hook, Flags = &h0
-		Event ValueChanged()
-	#tag EndHook
+	#tag EndEvent
 
 
 	#tag Property, Flags = &h0
@@ -207,10 +149,6 @@ Inherits Canvas
 
 	#tag Property, Flags = &h0
 		BackgroundColorTrue As Color = &c0080FF00
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected Buffer As Picture
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -223,10 +161,6 @@ Inherits Canvas
 
 	#tag Property, Flags = &h21
 		Private mRounded As Boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mValue As Boolean
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -253,14 +187,6 @@ Inherits Canvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		TextFont As String = "System"
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		TextSize As Single = 0.0
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		ThumbColorFalse As Color = &c80808000
 	#tag EndProperty
 
@@ -271,22 +197,6 @@ Inherits Canvas
 	#tag Property, Flags = &h0
 		TrueText As String = "On"
 	#tag EndProperty
-
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
-			  return mValue
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mValue = value
-			  Me.Update()
-			  ValueChanged()
-			End Set
-		#tag EndSetter
-		Value As Boolean
-	#tag EndComputedProperty
 
 
 	#tag ViewBehavior

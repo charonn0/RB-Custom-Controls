@@ -1,8 +1,9 @@
 #tag Window
 Begin Window ProgressBarwindow
-   BackColor       =   14486461
-   Backdrop        =   ""
+   BackColor       =   &cDD0BBD00
+   Backdrop        =   0
    CloseButton     =   True
+   Compatibility   =   ""
    Composite       =   False
    Frame           =   0
    FullScreen      =   False
@@ -14,7 +15,7 @@ Begin Window ProgressBarwindow
    MaxHeight       =   32000
    MaximizeButton  =   False
    MaxWidth        =   32000
-   MenuBar         =   ""
+   MenuBar         =   0
    MenuBarVisible  =   True
    MinHeight       =   64
    MinimizeButton  =   True
@@ -25,17 +26,17 @@ Begin Window ProgressBarwindow
    Visible         =   True
    Width           =   486
    Begin ProgBar ProgBar1
-      AcceptFocus     =   ""
-      AcceptTabs      =   ""
+      AcceptFocus     =   False
+      AcceptTabs      =   False
       AutoDeactivate  =   True
-      barColor        =   65280
-      barWell         =   12632256
+      barColor        =   
+      barWell         =   
       bold            =   False
-      boxColor        =   0
-      DoubleBuffer    =   ""
+      boxColor        =   
+      DoubleBuffer    =   False
       Enabled         =   True
-      EraseBackground =   ""
-      gradientEnd     =   39758
+      EraseBackground =   False
+      gradientEnd     =   
       hasBox          =   False
       hasGradient     =   True
       hasText         =   False
@@ -45,63 +46,63 @@ Begin Window ProgressBarwindow
       InitialParent   =   ""
       italic          =   False
       Left            =   3
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
-      LockLeft        =   ""
-      LockRight       =   ""
-      LockTop         =   ""
+      LockLeft        =   False
+      LockRight       =   False
+      LockTop         =   False
       maximum         =   100
       PreText         =   ""
-      Scope           =   0
-      ShowValue1      =   ""
+      Scope           =   "0"
+      ShowValue1      =   False
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      textColor       =   0
+      textColor       =   
       textFont        =   "System"
       textFormat      =   "###.0\\%"
       textSize        =   0
       Top             =   5
       underline       =   False
       UseFocusRing    =   True
-      value           =   0
+      value           =   0.0
       value1          =   ""
       Visible         =   True
       Width           =   483
    End
    Begin Timer Timer1
       Enabled         =   True
-      Height          =   32
-      Index           =   -2147483648
+      Height          =   "32"
+      Index           =   
       Left            =   523
       LockedInPosition=   False
       Mode            =   0
       Period          =   50
-      Scope           =   0
-      TabIndex        =   1
+      Scope           =   "0"
+      TabIndex        =   "1"
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   60
       Visible         =   True
-      Width           =   32
+      Width           =   "32"
    End
    Begin Oval BoxColor
       AutoDeactivate  =   True
-      BorderColor     =   0
+      BorderColor     =   
       BorderWidth     =   0
       Enabled         =   True
-      FillColor       =   16777215
+      FillColor       =   
       Height          =   24
       HelpTag         =   "Box Color"
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   27
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
@@ -111,21 +112,21 @@ Begin Window ProgressBarwindow
    End
    Begin Oval barColor
       AutoDeactivate  =   True
-      BorderColor     =   0
+      BorderColor     =   
       BorderWidth     =   0
       Enabled         =   True
-      FillColor       =   16777215
+      FillColor       =   
       Height          =   24
       HelpTag         =   "Bar Color"
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   136
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
@@ -135,7 +136,7 @@ Begin Window ProgressBarwindow
    End
    Begin Label StaticText1
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -143,34 +144,34 @@ Begin Window ProgressBarwindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   54
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Multiline       =   ""
-      Scope           =   0
+      Multiline       =   False
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "Box Color"
       TextAlign       =   0
-      TextColor       =   0
+      TextColor       =   
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   40
       Transparent     =   True
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   53
    End
    Begin Label StaticText2
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -178,34 +179,34 @@ Begin Window ProgressBarwindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   165
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Multiline       =   ""
-      Scope           =   0
+      Multiline       =   False
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "Bar Color"
       TextAlign       =   0
-      TextColor       =   0
+      TextColor       =   
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   40
       Transparent     =   True
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   49
    End
    Begin CheckBox hasBox
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Has Box"
       DataField       =   ""
       DataSource      =   ""
@@ -214,30 +215,30 @@ Begin Window ProgressBarwindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   45
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Scope           =   0
+      Scope           =   "0"
       State           =   0
       TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   72
-      Underline       =   ""
+      Underline       =   False
       Value           =   False
       Visible         =   True
       Width           =   80
    End
    Begin CheckBox hasGradient
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Gradient"
       DataField       =   ""
       DataSource      =   ""
@@ -246,44 +247,44 @@ Begin Window ProgressBarwindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   204
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Scope           =   0
+      Scope           =   "0"
       State           =   0
       TabIndex        =   7
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   72
-      Underline       =   ""
+      Underline       =   False
       Value           =   False
       Visible         =   True
       Width           =   67
    End
    Begin Oval barWellColor
       AutoDeactivate  =   True
-      BorderColor     =   0
+      BorderColor     =   
       BorderWidth     =   0
       Enabled         =   True
-      FillColor       =   16777215
+      FillColor       =   
       Height          =   24
       HelpTag         =   "Barwell Color"
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   243
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   14
       TabPanelIndex   =   0
       TabStop         =   True
@@ -293,7 +294,7 @@ Begin Window ProgressBarwindow
    End
    Begin Label StaticText5
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -301,34 +302,34 @@ Begin Window ProgressBarwindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   271
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Multiline       =   ""
-      Scope           =   0
+      Multiline       =   False
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   15
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "Barwell"
       TextAlign       =   0
-      TextColor       =   0
+      TextColor       =   
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   40
       Transparent     =   True
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   54
    End
    Begin CheckBox hasText
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Text"
       DataField       =   ""
       DataSource      =   ""
@@ -337,57 +338,57 @@ Begin Window ProgressBarwindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   351
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Scope           =   0
+      Scope           =   "0"
       State           =   0
       TabIndex        =   19
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   72
-      Underline       =   ""
+      Underline       =   False
       Value           =   False
       Visible         =   True
       Width           =   55
    End
    Begin GroupBox GroupBox1
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Text Properties"
       Enabled         =   True
       Height          =   97
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   10
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   30
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   98
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   466
       Begin PopupMenu textFont
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          DataField       =   ""
          DataSource      =   ""
          Enabled         =   True
@@ -396,29 +397,29 @@ Begin Window ProgressBarwindow
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
          InitialValue    =   ""
-         Italic          =   ""
+         Italic          =   False
          Left            =   27
          ListIndex       =   0
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   True
-         Scope           =   0
+         Scope           =   "0"
          TabIndex        =   2
          TabPanelIndex   =   0
          TabStop         =   True
          TextFont        =   "System"
-         TextSize        =   11
+         TextSize        =   11.0
          TextUnit        =   0
          Top             =   124
-         Underline       =   ""
+         Underline       =   False
          Visible         =   True
          Width           =   120
       End
       Begin PopupMenu textFont1
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          DataField       =   ""
          DataSource      =   ""
          Enabled         =   True
@@ -427,43 +428,43 @@ Begin Window ProgressBarwindow
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
          InitialValue    =   ""
-         Italic          =   ""
+         Italic          =   False
          Left            =   152
          ListIndex       =   0
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   True
-         Scope           =   0
+         Scope           =   "0"
          TabIndex        =   3
          TabPanelIndex   =   0
          TabStop         =   True
          TextFont        =   "System"
-         TextSize        =   11
+         TextSize        =   11.0
          TextUnit        =   0
          Top             =   124
-         Underline       =   ""
+         Underline       =   False
          Visible         =   True
          Width           =   46
       End
       Begin Oval stringColor
          AutoDeactivate  =   True
-         BorderColor     =   0
+         BorderColor     =   
          BorderWidth     =   1
          Enabled         =   True
-         FillColor       =   16777215
+         FillColor       =   
          Height          =   24
          HelpTag         =   "Color"
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
          Left            =   210
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
-         LockLeft        =   ""
-         LockRight       =   ""
-         LockTop         =   ""
-         Scope           =   0
+         LockLeft        =   False
+         LockRight       =   False
+         LockTop         =   False
+         Scope           =   "0"
          TabIndex        =   4
          TabPanelIndex   =   0
          TabStop         =   True
@@ -473,7 +474,7 @@ Begin Window ProgressBarwindow
       End
       Begin CheckBox bold
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          Caption         =   "Bold"
          DataField       =   ""
          DataSource      =   ""
@@ -482,30 +483,30 @@ Begin Window ProgressBarwindow
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
-         Italic          =   ""
+         Italic          =   False
          Left            =   252
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   True
-         Scope           =   0
+         Scope           =   "0"
          State           =   0
          TabIndex        =   5
          TabPanelIndex   =   0
          TabStop         =   True
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   127
-         Underline       =   ""
+         Underline       =   False
          Value           =   False
          Visible         =   True
          Width           =   59
       End
       Begin CheckBox italic
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          Caption         =   "Italic"
          DataField       =   ""
          DataSource      =   ""
@@ -514,30 +515,30 @@ Begin Window ProgressBarwindow
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
-         Italic          =   ""
+         Italic          =   False
          Left            =   323
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   True
-         Scope           =   0
+         Scope           =   "0"
          State           =   0
          TabIndex        =   6
          TabPanelIndex   =   0
          TabStop         =   True
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   128
-         Underline       =   ""
+         Underline       =   False
          Value           =   False
          Visible         =   True
          Width           =   53
       End
       Begin CheckBox underline
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          Caption         =   "Underline"
          DataField       =   ""
          DataSource      =   ""
@@ -546,34 +547,34 @@ Begin Window ProgressBarwindow
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
-         Italic          =   ""
+         Italic          =   False
          Left            =   382
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   True
-         Scope           =   0
+         Scope           =   "0"
          State           =   0
          TabIndex        =   7
          TabPanelIndex   =   0
          TabStop         =   True
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   128
-         Underline       =   ""
+         Underline       =   False
          Value           =   False
          Visible         =   True
          Width           =   77
       End
       Begin TextField textFormat
-         AcceptTabs      =   ""
+         AcceptTabs      =   False
          Alignment       =   0
          AutoDeactivate  =   True
          AutomaticallyCheckSpelling=   False
-         BackColor       =   16777215
-         Bold            =   ""
+         BackColor       =   
+         Bold            =   False
          Border          =   True
          CueText         =   ""
          DataField       =   ""
@@ -584,35 +585,35 @@ Begin Window ProgressBarwindow
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
-         Italic          =   ""
+         Italic          =   False
          Left            =   159
          LimitText       =   0
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   True
          Mask            =   ""
-         Password        =   ""
-         ReadOnly        =   ""
-         Scope           =   0
+         Password        =   False
+         ReadOnly        =   False
+         Scope           =   "0"
          TabIndex        =   8
          TabPanelIndex   =   0
          TabStop         =   True
          Text            =   "###.#\\%"
-         TextColor       =   0
+         TextColor       =   
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   165
-         Underline       =   ""
+         Underline       =   False
          UseFocusRing    =   True
          Visible         =   True
          Width           =   161
       End
       Begin Label Label1
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          DataField       =   ""
          DataSource      =   ""
          Enabled         =   True
@@ -620,49 +621,49 @@ Begin Window ProgressBarwindow
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
-         Italic          =   ""
+         Italic          =   False
          Left            =   53
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   True
-         Multiline       =   ""
-         Scope           =   0
+         Multiline       =   False
+         Scope           =   "0"
          Selectable      =   False
          TabIndex        =   9
          TabPanelIndex   =   0
          TabStop         =   True
          Text            =   "Text Format:"
          TextAlign       =   2
-         TextColor       =   0
+         TextColor       =   
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   166
          Transparent     =   False
-         Underline       =   ""
+         Underline       =   False
          Visible         =   True
          Width           =   100
       End
    End
    Begin Oval gradientColor
       AutoDeactivate  =   True
-      BorderColor     =   0
+      BorderColor     =   
       BorderWidth     =   0
       Enabled         =   True
-      FillColor       =   16777215
+      FillColor       =   
       Height          =   24
       HelpTag         =   "Gradient Color"
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   337
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   32
       TabPanelIndex   =   0
       TabStop         =   True
@@ -672,7 +673,7 @@ Begin Window ProgressBarwindow
    End
    Begin Label StaticText51
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -680,65 +681,65 @@ Begin Window ProgressBarwindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   365
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Multiline       =   ""
-      Scope           =   0
+      Multiline       =   False
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   33
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "Gradient End"
       TextAlign       =   0
-      TextColor       =   0
+      TextColor       =   
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   40
       Transparent     =   True
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   94
    End
    Begin GroupBox GroupBox2
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Run Settings"
       Enabled         =   True
       Height          =   66
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   10
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   34
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   198
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   466
       Begin TextField maximum
-         AcceptTabs      =   ""
+         AcceptTabs      =   False
          Alignment       =   0
          AutoDeactivate  =   True
          AutomaticallyCheckSpelling=   False
-         BackColor       =   16777215
-         Bold            =   ""
+         BackColor       =   
+         Bold            =   False
          Border          =   True
          CueText         =   ""
          DataField       =   ""
@@ -749,35 +750,35 @@ Begin Window ProgressBarwindow
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox2"
-         Italic          =   ""
+         Italic          =   False
          Left            =   134
          LimitText       =   0
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   True
          Mask            =   ""
-         Password        =   ""
-         ReadOnly        =   ""
-         Scope           =   0
+         Password        =   False
+         ReadOnly        =   False
+         Scope           =   "0"
          TabIndex        =   0
          TabPanelIndex   =   0
          TabStop         =   True
-         Text            =   100
-         TextColor       =   0
+         Text            =   "100"
+         TextColor       =   
          TextFont        =   "System"
-         TextSize        =   11
+         TextSize        =   11.0
          TextUnit        =   0
          Top             =   236
-         Underline       =   ""
+         Underline       =   False
          UseFocusRing    =   True
          Visible         =   True
          Width           =   55
       End
       Begin Label StaticText4
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          DataField       =   ""
          DataSource      =   ""
          Enabled         =   True
@@ -785,28 +786,28 @@ Begin Window ProgressBarwindow
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox2"
-         Italic          =   ""
+         Italic          =   False
          Left            =   134
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   True
-         Multiline       =   ""
-         Scope           =   0
+         Multiline       =   False
+         Scope           =   "0"
          Selectable      =   False
          TabIndex        =   1
          TabPanelIndex   =   0
          TabStop         =   True
          Text            =   "ProgBar Max:"
          TextAlign       =   0
-         TextColor       =   0
+         TextColor       =   
          TextFont        =   "System"
-         TextSize        =   11
+         TextSize        =   11.0
          TextUnit        =   0
          Top             =   218
          Transparent     =   True
-         Underline       =   ""
+         Underline       =   False
          Visible         =   True
          Width           =   100
       End
@@ -819,20 +820,20 @@ Begin Window ProgressBarwindow
          InitialParent   =   "GroupBox2"
          Left            =   243
          LineStep        =   1
-         LiveScroll      =   ""
-         LockBottom      =   ""
+         LiveScroll      =   False
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   True
          Maximum         =   500
          Minimum         =   25
          PageStep        =   20
-         Scope           =   0
+         Scope           =   "0"
          TabIndex        =   2
          TabPanelIndex   =   0
          TabStop         =   True
-         TickStyle       =   0
+         TickStyle       =   "0"
          Top             =   242
          Value           =   50
          Visible         =   True
@@ -840,7 +841,7 @@ Begin Window ProgressBarwindow
       End
       Begin Label StaticText41
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          DataField       =   ""
          DataSource      =   ""
          Enabled         =   True
@@ -848,60 +849,60 @@ Begin Window ProgressBarwindow
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox2"
-         Italic          =   ""
+         Italic          =   False
          Left            =   243
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   True
-         Multiline       =   ""
-         Scope           =   0
+         Multiline       =   False
+         Scope           =   "0"
          Selectable      =   False
          TabIndex        =   3
          TabPanelIndex   =   0
          TabStop         =   True
          Text            =   "Timer Speed:"
          TextAlign       =   0
-         TextColor       =   0
+         TextColor       =   
          TextFont        =   "System"
-         TextSize        =   11
+         TextSize        =   11.0
          TextUnit        =   0
          Top             =   218
          Transparent     =   True
-         Underline       =   ""
+         Underline       =   False
          Visible         =   True
          Width           =   100
       End
    End
    Begin PushButton PushButton1
       AutoDeactivate  =   True
-      Bold            =   ""
-      ButtonStyle     =   0
-      Cancel          =   ""
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   False
       Caption         =   "Go"
-      Default         =   ""
+      Default         =   False
       Enabled         =   True
       Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   191
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   35
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   270
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   80
    End
@@ -1176,3 +1177,250 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
+#tag ViewBehavior
+	#tag ViewProperty
+		Name="BackColor"
+		Visible=true
+		Group="Appearance"
+		InitialValue="&hFFFFFF"
+		Type="Color"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Backdrop"
+		Visible=true
+		Group="Appearance"
+		Type="Picture"
+		EditorType="Picture"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="CloseButton"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Composite"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Frame"
+		Visible=true
+		Group="Appearance"
+		InitialValue="0"
+		Type="Integer"
+		EditorType="Enum"
+		InheritedFrom="Window"
+		#tag EnumValues
+			"0 - Document"
+			"1 - Movable Modal"
+			"2 - Modal Dialog"
+			"3 - Floating Window"
+			"4 - Plain Box"
+			"5 - Shadowed Box"
+			"6 - Rounded Window"
+			"7 - Global Floating Window"
+			"8 - Sheet Window"
+			"9 - Metal Window"
+			"10 - Drawer Window"
+			"11 - Modeless Dialog"
+		#tag EndEnumValues
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="FullScreen"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="HasBackColor"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Height"
+		Visible=true
+		Group="Position"
+		InitialValue="400"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="ImplicitInstance"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Interfaces"
+		Visible=true
+		Group="ID"
+		Type="String"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LiveResize"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MacProcID"
+		Visible=true
+		Group="Appearance"
+		InitialValue="0"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MaxHeight"
+		Visible=true
+		Group="Position"
+		InitialValue="32000"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MaximizeButton"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MaxWidth"
+		Visible=true
+		Group="Position"
+		InitialValue="32000"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MenuBar"
+		Visible=true
+		Group="Appearance"
+		Type="MenuBar"
+		EditorType="MenuBar"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MenuBarVisible"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MinHeight"
+		Visible=true
+		Group="Position"
+		InitialValue="64"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MinimizeButton"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MinWidth"
+		Visible=true
+		Group="Position"
+		InitialValue="64"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Name"
+		Visible=true
+		Group="ID"
+		Type="String"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Placement"
+		Visible=true
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType="Enum"
+		InheritedFrom="Window"
+		#tag EnumValues
+			"0 - Default"
+			"1 - Parent Window"
+			"2 - Main Screen"
+			"3 - Parent Window Screen"
+			"4 - Stagger"
+		#tag EndEnumValues
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Resizeable"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Super"
+		Visible=true
+		Group="ID"
+		Type="String"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Title"
+		Visible=true
+		Group="Appearance"
+		InitialValue="Untitled"
+		Type="String"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Visible"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Width"
+		Visible=true
+		Group="Position"
+		InitialValue="600"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+#tag EndViewBehavior

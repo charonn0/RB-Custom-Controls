@@ -1,8 +1,9 @@
 #tag Window
 Begin Window SliderWindow
-   BackColor       =   16777215
-   Backdrop        =   ""
+   BackColor       =   &cFFFFFF00
+   Backdrop        =   0
    CloseButton     =   True
+   Compatibility   =   ""
    Composite       =   False
    Frame           =   0
    FullScreen      =   False
@@ -14,7 +15,7 @@ Begin Window SliderWindow
    MaxHeight       =   32000
    MaximizeButton  =   False
    MaxWidth        =   32000
-   MenuBar         =   ""
+   MenuBar         =   0
    MenuBarVisible  =   True
    MinHeight       =   64
    MinimizeButton  =   True
@@ -28,16 +29,16 @@ Begin Window SliderWindow
       AcceptFocus     =   True
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      Backdrop        =   ""
-      BarColor        =   65280
-      BarWell         =   12632256
+      Backdrop        =   0
+      BarColor        =   
+      BarWell         =   
       Border          =   True
-      BoxColor        =   0
+      BoxColor        =   
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   False
       Gradated        =   True
-      GradientEnd     =   39758
+      GradientEnd     =   
       Height          =   16
       HelpTag         =   ""
       Index           =   -2147483648
@@ -50,13 +51,13 @@ Begin Window SliderWindow
       LockRight       =   True
       LockTop         =   True
       Maximum         =   100
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      ThumbColor      =   0
+      ThumbColor      =   
       ThumbStyle      =   2
-      TickColor       =   0
+      TickColor       =   
       Ticks           =   True
       Top             =   5
       UseFocusRing    =   True
@@ -66,10 +67,10 @@ Begin Window SliderWindow
    End
    Begin Oval BoxColor
       AutoDeactivate  =   True
-      BorderColor     =   0
+      BorderColor     =   
       BorderWidth     =   0
       Enabled         =   True
-      FillColor       =   16777215
+      FillColor       =   
       Height          =   24
       HelpTag         =   "Box Color"
       Index           =   -2147483648
@@ -78,21 +79,22 @@ Begin Window SliderWindow
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   65
       Visible         =   True
       Width           =   24
    End
    Begin Oval barColor
       AutoDeactivate  =   True
-      BorderColor     =   0
+      BorderColor     =   
       BorderWidth     =   0
       Enabled         =   True
-      FillColor       =   16777215
+      FillColor       =   
       Height          =   24
       HelpTag         =   "Bar Color"
       Index           =   -2147483648
@@ -101,18 +103,19 @@ Begin Window SliderWindow
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   2
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   103
       Visible         =   True
       Width           =   24
    End
    Begin Label StaticText1
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -120,33 +123,34 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   154
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Multiline       =   ""
-      Scope           =   0
+      Multiline       =   False
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Box Color"
       TextAlign       =   0
-      TextColor       =   0
+      TextColor       =   
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   67
       Transparent     =   True
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   53
    End
    Begin Label StaticText2
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -154,33 +158,34 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   156
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Multiline       =   ""
-      Scope           =   0
+      Multiline       =   False
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Bar Color"
       TextAlign       =   0
-      TextColor       =   0
+      TextColor       =   
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   105
       Transparent     =   True
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   49
    End
    Begin CheckBox Border
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Has Box"
       DataField       =   ""
       DataSource      =   ""
@@ -189,30 +194,30 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   207
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Scope           =   0
+      Scope           =   "0"
       State           =   0
       TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   33
-      Underline       =   ""
+      Underline       =   False
       Value           =   False
       Visible         =   True
       Width           =   64
    End
    Begin CheckBox hasGradient
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Gradient"
       DataField       =   ""
       DataSource      =   ""
@@ -221,33 +226,33 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   283
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Scope           =   0
+      Scope           =   "0"
       State           =   0
       TabIndex        =   7
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   33
-      Underline       =   ""
+      Underline       =   False
       Value           =   False
       Visible         =   True
       Width           =   67
    End
    Begin Oval barWellColor
       AutoDeactivate  =   True
-      BorderColor     =   0
+      BorderColor     =   
       BorderWidth     =   0
       Enabled         =   True
-      FillColor       =   16777215
+      FillColor       =   
       Height          =   24
       HelpTag         =   "Barwell Color"
       Index           =   -2147483648
@@ -256,18 +261,19 @@ Begin Window SliderWindow
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   14
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   143
       Visible         =   True
       Width           =   24
    End
    Begin Label StaticText5
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -275,36 +281,37 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   155
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Multiline       =   ""
-      Scope           =   0
+      Multiline       =   False
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   15
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Barwell"
       TextAlign       =   0
-      TextColor       =   0
+      TextColor       =   
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   145
       Transparent     =   True
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   54
    End
    Begin Oval gradientColor
       AutoDeactivate  =   True
-      BorderColor     =   0
+      BorderColor     =   
       BorderWidth     =   0
       Enabled         =   True
-      FillColor       =   16777215
+      FillColor       =   
       Height          =   24
       HelpTag         =   "Gradient Color"
       Index           =   -2147483648
@@ -313,18 +320,19 @@ Begin Window SliderWindow
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   32
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   103
       Visible         =   True
       Width           =   24
    End
    Begin Label StaticText51
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -332,36 +340,37 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   273
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Multiline       =   ""
-      Scope           =   0
+      Multiline       =   False
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   33
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Gradient End"
       TextAlign       =   0
-      TextColor       =   0
+      TextColor       =   
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   105
       Transparent     =   True
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   94
    End
    Begin Oval ThumbColor
       AutoDeactivate  =   True
-      BorderColor     =   0
+      BorderColor     =   
       BorderWidth     =   0
       Enabled         =   True
-      FillColor       =   16777215
+      FillColor       =   
       Height          =   24
       HelpTag         =   "Gradient Color"
       Index           =   -2147483648
@@ -370,18 +379,19 @@ Begin Window SliderWindow
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   36
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   67
       Visible         =   True
       Width           =   24
    End
    Begin Label StaticText511
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -389,33 +399,34 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   273
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Multiline       =   ""
-      Scope           =   0
+      Multiline       =   False
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   37
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Thumb Color"
       TextAlign       =   0
-      TextColor       =   0
+      TextColor       =   
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   69
       Transparent     =   True
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   94
    End
    Begin CheckBox HasTicks
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Has Ticks"
       DataField       =   ""
       DataSource      =   ""
@@ -424,33 +435,33 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   127
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Scope           =   0
+      Scope           =   "0"
       State           =   0
       TabIndex        =   38
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   33
-      Underline       =   ""
+      Underline       =   False
       Value           =   False
       Visible         =   True
       Width           =   80
    End
    Begin Oval TickColor
       AutoDeactivate  =   True
-      BorderColor     =   0
+      BorderColor     =   
       BorderWidth     =   0
       Enabled         =   True
-      FillColor       =   16777215
+      FillColor       =   
       Height          =   24
       HelpTag         =   "Gradient Color"
       Index           =   -2147483648
@@ -459,18 +470,19 @@ Begin Window SliderWindow
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   39
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   141
       Visible         =   True
       Width           =   24
    End
    Begin Label StaticText512
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -478,37 +490,38 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   273
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Multiline       =   ""
-      Scope           =   0
+      Multiline       =   False
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   40
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Tick Color"
       TextAlign       =   0
-      TextColor       =   0
+      TextColor       =   
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   143
       Transparent     =   True
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   94
    End
    Begin TextField maximum
-      AcceptTabs      =   ""
+      AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   16777215
-      Bold            =   ""
+      BackColor       =   
+      Bold            =   False
       Border          =   True
       CueText         =   ""
       DataField       =   ""
@@ -519,35 +532,35 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   140
       LimitText       =   0
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
       Mask            =   ""
-      Password        =   ""
-      ReadOnly        =   ""
-      Scope           =   0
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   "0"
       TabIndex        =   41
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   100
-      TextColor       =   0
+      Text            =   "100"
+      TextColor       =   
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   195
-      Underline       =   ""
+      Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
       Width           =   55
    End
    Begin Label StaticText4
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -555,33 +568,34 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   43
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Multiline       =   ""
-      Scope           =   0
+      Multiline       =   False
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   42
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Slider Maximum"
       TextAlign       =   0
-      TextColor       =   0
+      TextColor       =   
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   195
       Transparent     =   True
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   100
    End
    Begin Label sliderval
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -589,33 +603,34 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   324
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Multiline       =   ""
-      Scope           =   0
+      Multiline       =   False
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   43
       TabPanelIndex   =   0
-      Text            =   0
+      TabStop         =   True
+      Text            =   "0"
       TextAlign       =   0
-      TextColor       =   0
+      TextColor       =   
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   195
       Transparent     =   False
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   100
    End
    Begin Label StaticText41
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -623,33 +638,34 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   242
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Multiline       =   ""
-      Scope           =   0
+      Multiline       =   False
+      Scope           =   "0"
       Selectable      =   False
       TabIndex        =   44
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Current Value:"
       TextAlign       =   0
-      TextColor       =   0
+      TextColor       =   
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   195
       Transparent     =   True
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   76
    End
    Begin CheckBox CheckBox1
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Enabled"
       DataField       =   ""
       DataSource      =   ""
@@ -658,30 +674,30 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   362
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Scope           =   0
+      Scope           =   "0"
       State           =   1
       TabIndex        =   45
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   33
-      Underline       =   ""
+      Underline       =   False
       Value           =   True
       Visible         =   True
       Width           =   100
    End
    Begin CheckBox LiveScroll
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Live Scroll"
       DataField       =   ""
       DataSource      =   ""
@@ -690,23 +706,23 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   43
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Scope           =   0
+      Scope           =   "0"
       State           =   0
       TabIndex        =   46
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   33
-      Underline       =   ""
+      Underline       =   False
       Value           =   False
       Visible         =   True
       Width           =   80
@@ -714,7 +730,7 @@ Begin Window SliderWindow
    Begin ComboBox ComboBox1
       AutoComplete    =   False
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -722,23 +738,23 @@ Begin Window SliderWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialValue    =   "SmallRect\r\nBigRect\r\nSmallOval\r\nBigOval"
-      Italic          =   ""
+      Italic          =   False
       Left            =   362
       ListIndex       =   0
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   False
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   47
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   65
-      Underline       =   ""
+      Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
       Width           =   91
@@ -961,3 +977,250 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
+#tag ViewBehavior
+	#tag ViewProperty
+		Name="BackColor"
+		Visible=true
+		Group="Appearance"
+		InitialValue="&hFFFFFF"
+		Type="Color"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Backdrop"
+		Visible=true
+		Group="Appearance"
+		Type="Picture"
+		EditorType="Picture"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="CloseButton"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Composite"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Frame"
+		Visible=true
+		Group="Appearance"
+		InitialValue="0"
+		Type="Integer"
+		EditorType="Enum"
+		InheritedFrom="Window"
+		#tag EnumValues
+			"0 - Document"
+			"1 - Movable Modal"
+			"2 - Modal Dialog"
+			"3 - Floating Window"
+			"4 - Plain Box"
+			"5 - Shadowed Box"
+			"6 - Rounded Window"
+			"7 - Global Floating Window"
+			"8 - Sheet Window"
+			"9 - Metal Window"
+			"10 - Drawer Window"
+			"11 - Modeless Dialog"
+		#tag EndEnumValues
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="FullScreen"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="HasBackColor"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Height"
+		Visible=true
+		Group="Position"
+		InitialValue="400"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="ImplicitInstance"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Interfaces"
+		Visible=true
+		Group="ID"
+		Type="String"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LiveResize"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MacProcID"
+		Visible=true
+		Group="Appearance"
+		InitialValue="0"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MaxHeight"
+		Visible=true
+		Group="Position"
+		InitialValue="32000"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MaximizeButton"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MaxWidth"
+		Visible=true
+		Group="Position"
+		InitialValue="32000"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MenuBar"
+		Visible=true
+		Group="Appearance"
+		Type="MenuBar"
+		EditorType="MenuBar"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MenuBarVisible"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MinHeight"
+		Visible=true
+		Group="Position"
+		InitialValue="64"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MinimizeButton"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MinWidth"
+		Visible=true
+		Group="Position"
+		InitialValue="64"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Name"
+		Visible=true
+		Group="ID"
+		Type="String"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Placement"
+		Visible=true
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType="Enum"
+		InheritedFrom="Window"
+		#tag EnumValues
+			"0 - Default"
+			"1 - Parent Window"
+			"2 - Main Screen"
+			"3 - Parent Window Screen"
+			"4 - Stagger"
+		#tag EndEnumValues
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Resizeable"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Super"
+		Visible=true
+		Group="ID"
+		Type="String"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Title"
+		Visible=true
+		Group="Appearance"
+		InitialValue="Untitled"
+		Type="String"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Visible"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Width"
+		Visible=true
+		Group="Position"
+		InitialValue="600"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+#tag EndViewBehavior

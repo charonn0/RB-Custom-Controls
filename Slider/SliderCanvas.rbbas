@@ -1,6 +1,6 @@
 #tag Class
 Protected Class SliderCanvas
-Inherits Canvas
+Inherits BaseCanvas
 	#tag Event
 		Function KeyDown(Key As String) As Boolean
 		  //up = &h1E
@@ -57,40 +57,20 @@ Inherits Canvas
 	#tag EndEvent
 
 	#tag Event
-		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
-		  #If RBVersion >= 2012 Then 'areas() was added in RS2012 R1
-		    #pragma Unused areas
-		  #endif
-		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Then Update(False)
-		  g.DrawPicture(Buffer, 0, 0)
-		End Sub
-	#tag EndEvent
-
-
-	#tag Method, Flags = &h21
-		Private Sub Update(Invalidate As Boolean = True)
-		  #pragma BreakOnExceptions Off 'We might get and OoBE if Height or height <= 0
-		  #if RBVersion >= 2011.04 Then
-		    Buffer = New Picture(Me.Width, Me.Height)
-		  #else
-		    Buffer = New Picture(Me.Width, Me.Height, 32)
-		  #endif
-		  #pragma BreakOnExceptions On
-		  
+		Sub Paint	(g As Graphics)
 		  Dim FilledWidth As Integer = (Me.Value * 100 / Me.Maximum) * (Me.Width / 100)
 		  'BarWell
-		  Buffer.Graphics.ForeColor = barWell
-		  Buffer.Graphics.FillRect(0, 0, Buffer.Width, Buffer.Height)
+		  g.ForeColor = barWell
+		  g.FillRect(0, 0, Buffer.Width, Buffer.Height)
 		  
 		  'ticks
 		  If Ticks Then
 		    Dim markStep As Integer = Buffer.Width \ 20
 		    For i As Integer = 0 To Buffer.Width Step markStep
-		      Buffer.Graphics.ForeColor = TickColor
-		      Buffer.Graphics.DrawLine(i, Buffer.Height - Buffer.Height \ 4, i, Buffer.Height)
+		      g.ForeColor = TickColor
+		      g.DrawLine(i, Buffer.Height - Buffer.Height \ 4, i, Buffer.Height)
 		    Next
 		  End If
-		  
 		  
 		  'bar
 		  Dim ratio, endratio as Double
@@ -99,12 +79,12 @@ Inherits Canvas
 		    If Gradated Then
 		      ratio = ((Buffer.Height - i) / Buffer.Height)
 		      endratio = (i / Buffer.Height)
-		      Buffer.Graphics.ForeColor = RGB(GradientEnd.Red * endratio + barColor.Red * ratio, GradientEnd.Green * endratio + barColor.Green * ratio, _
+		      g.ForeColor = RGB(GradientEnd.Red * endratio + barColor.Red * ratio, GradientEnd.Green * endratio + barColor.Green * ratio, _
 		      GradientEnd.Blue * endratio + barColor.Blue * ratio)
 		    Else
-		      Buffer.Graphics.ForeColor = barColor
+		      g.ForeColor = barColor
 		    End If
-		    Buffer.Graphics.DrawLine(0, i, filledWidth, i)
+		    g.DrawLine(0, i, filledWidth, i)
 		  next
 		  
 		  'Thumb
@@ -119,11 +99,11 @@ Inherits Canvas
 		    thumb.Graphics.ForeColor = ThumbColor
 		    thumb.Graphics.FillRect(0, 0, thumb.Width, thumb.Height)
 		    If FilledWidth <= 0 Then
-		      Buffer.Graphics.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
+		      g.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
 		    ElseIf FilledWidth >= Buffer.Width Then
-		      Buffer.Graphics.DrawPicture(thumb, Buffer.Width - (thumb.Width \ 2), 0)
+		      g.DrawPicture(thumb, Buffer.Width - (thumb.Width \ 2), 0)
 		    Else
-		      Buffer.Graphics.DrawPicture(thumb, FilledWidth - (thumb.Width \ 2), 0)
+		      g.DrawPicture(thumb, FilledWidth - (thumb.Width \ 2), 0)
 		    End If
 		  Case 1
 		    Dim thumb As New Picture(Buffer.Height, Buffer.Height)', 32)
@@ -132,11 +112,11 @@ Inherits Canvas
 		    thumb.Graphics.ForeColor = ThumbColor
 		    thumb.Graphics.FillRect(0, 0, thumb.Width, thumb.Height)
 		    If FilledWidth <= 0 Then
-		      Buffer.Graphics.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
+		      g.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
 		    ElseIf FilledWidth >= Buffer.Width Then
-		      Buffer.Graphics.DrawPicture(thumb, Buffer.Width - (thumb.Width \ 2), 0)
+		      g.DrawPicture(thumb, Buffer.Width - (thumb.Width \ 2), 0)
 		    Else
-		      Buffer.Graphics.DrawPicture(thumb, FilledWidth - (thumb.Width \ 2), 0)
+		      g.DrawPicture(thumb, FilledWidth - (thumb.Width \ 2), 0)
 		    End If
 		  Case 2
 		    Dim thumb As New Picture(Buffer.Height \ 4, Buffer.Height)', 32)
@@ -145,11 +125,11 @@ Inherits Canvas
 		    thumb.Graphics.ForeColor = ThumbColor
 		    thumb.Graphics.FillOval(0, 0, thumb.Width, thumb.Height)
 		    If FilledWidth <= 0 Then
-		      Buffer.Graphics.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
+		      g.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
 		    ElseIf FilledWidth >= Buffer.Width Then
-		      Buffer.Graphics.DrawPicture(thumb, Buffer.Width - (thumb.Width \ 2), 0)
+		      g.DrawPicture(thumb, Buffer.Width - (thumb.Width \ 2), 0)
 		    Else
-		      Buffer.Graphics.DrawPicture(thumb, FilledWidth - (thumb.Width \ 2), 0)
+		      g.DrawPicture(thumb, FilledWidth - (thumb.Width \ 2), 0)
 		    End If
 		  Case 3
 		    Dim thumb As New Picture(Buffer.Height, Buffer.Height)', 32)
@@ -158,58 +138,23 @@ Inherits Canvas
 		    thumb.Graphics.ForeColor = ThumbColor
 		    thumb.Graphics.FillOval(0, 0, thumb.Width, thumb.Height)
 		    If FilledWidth <= 0 Then
-		      Buffer.Graphics.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
+		      g.DrawPicture(thumb, 0 - thumb.Width \ 2, 0)
 		    ElseIf FilledWidth >= Buffer.Width Then
-		      Buffer.Graphics.DrawPicture(thumb, Buffer.Width - (thumb.Width \ 2), 0)
+		      g.DrawPicture(thumb, Buffer.Width - (thumb.Width \ 2), 0)
 		    Else
-		      Buffer.Graphics.DrawPicture(thumb, FilledWidth - (thumb.Width \ 2), 0)
+		      g.DrawPicture(thumb, FilledWidth - (thumb.Width \ 2), 0)
 		    End If
 		  End Select
 		  
 		  
-		  
-		  
-		  If Not Me.Enabled Then
-		    //Converts the passed Picture to greyscale.
-		    //Can take a few seconds on very large Pictures
-		    //This function was *greatly* optimized by user 'doofus' on the RealSoftware forums:
-		    //http://forums.realsoftware.com/viewtopic.php?f=1&t=42327&sid=4e724091fc9dd70fd5705110098adf67
-		    
-		    Dim surf As RGBSurface = Buffer.RGBSurface
-		    
-		    Dim greyColor(255) As Color //precompute the 256 grey colors
-		    For i As Integer = 0 To 255
-		      greyColor(i) = RGB(i, i, i)
-		    Next
-		    
-		    Dim X, Y, intensity As Integer, c As Color
-		    For X = 0 To Buffer.Width
-		      For Y = 0 To Buffer.Height
-		        c = surf.Pixel(X, Y)
-		        intensity = c.Red * 0.30 + c.Green * 0.59 + c.Blue * 0.11
-		        surf.Pixel(X, Y) = greyColor(intensity) //lookup grey
-		      Next
-		    Next
-		    
-		  End If
-		  
 		  'border
 		  If Me.Border Then
-		    Buffer.Graphics.ForeColor = boxColor
-		    Buffer.Graphics.DrawRect(0, 0, Buffer.Width, Buffer.Height)
+		    g.ForeColor = boxColor
+		    g.DrawRect(0, 0, Buffer.Width, Buffer.Height)
 		  End If
-		  
-		  
-		  If Invalidate Then
-		    Me.Invalidate(False)
-		  End If
-		  
-		  
-		Exception OutOfBoundsException
-		  Buffer = New Picture(Max(1, Me.Width), Max(1, Me.Height))
 		  
 		End Sub
-	#tag EndMethod
+	#tag EndEvent
 
 
 	#tag Hook, Flags = &h0
@@ -296,10 +241,6 @@ Inherits Canvas
 		#tag EndSetter
 		BoxColor As Color
 	#tag EndComputedProperty
-
-	#tag Property, Flags = &h21
-		Private Buffer As Picture
-	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter

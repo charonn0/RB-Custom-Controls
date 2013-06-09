@@ -1,8 +1,9 @@
 #tag Window
 Begin Window ButtonWindow
-   BackColor       =   16777215
-   Backdrop        =   ""
+   BackColor       =   &cFFFFFF00
+   Backdrop        =   0
    CloseButton     =   True
+   Compatibility   =   ""
    Composite       =   False
    Frame           =   0
    FullScreen      =   False
@@ -28,22 +29,22 @@ Begin Window ButtonWindow
       AcceptFocus     =   True
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      Backdrop        =   ""
+      Backdrop        =   0
       Bold            =   False
       Caption         =   "ButtonCanvas"
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
       Font            =   "System"
-      FontColor       =   255
+      FontColor       =   &c0000FF00
       FontSize        =   30
       Height          =   58
       HelpTag         =   ""
       hilightBorder   =   True
-      hilightColor    =   8454143
+      hilightColor    =   &c80FFFF00
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   11
       LockBottom      =   True
       LockedInPosition=   False
@@ -55,15 +56,16 @@ Begin Window ButtonWindow
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   14
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       UseFocusRing    =   True
-      Value           =   ""
+      Value           =   False
       Visible         =   True
       Width           =   287
    End
    Begin CheckBox CheckBox1
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Enabled"
       DataField       =   ""
       DataSource      =   ""
@@ -72,7 +74,7 @@ Begin Window ButtonWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   11
       LockBottom      =   True
       LockedInPosition=   False
@@ -85,17 +87,17 @@ Begin Window ButtonWindow
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   92
-      Underline       =   ""
+      Underline       =   False
       Value           =   True
       Visible         =   True
       Width           =   100
    End
    Begin CheckBox CheckBox2
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Bold"
       DataField       =   ""
       DataSource      =   ""
@@ -104,7 +106,7 @@ Begin Window ButtonWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   11
       LockBottom      =   True
       LockedInPosition=   False
@@ -117,17 +119,17 @@ Begin Window ButtonWindow
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   114
-      Underline       =   ""
+      Underline       =   False
       Value           =   False
       Visible         =   True
       Width           =   100
    End
    Begin CheckBox CheckBox3
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Italic"
       DataField       =   ""
       DataSource      =   ""
@@ -136,7 +138,7 @@ Begin Window ButtonWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   11
       LockBottom      =   True
       LockedInPosition=   False
@@ -149,17 +151,17 @@ Begin Window ButtonWindow
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   136
-      Underline       =   ""
+      Underline       =   False
       Value           =   False
       Visible         =   True
       Width           =   100
    End
    Begin CheckBox CheckBox4
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Underline"
       DataField       =   ""
       DataSource      =   ""
@@ -168,7 +170,7 @@ Begin Window ButtonWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   11
       LockBottom      =   True
       LockedInPosition=   False
@@ -181,20 +183,20 @@ Begin Window ButtonWindow
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   158
-      Underline       =   ""
+      Underline       =   False
       Value           =   False
       Visible         =   True
       Width           =   100
    End
    Begin Oval stringColor
       AutoDeactivate  =   True
-      BorderColor     =   0
+      BorderColor     =   &c00000000
       BorderWidth     =   1
       Enabled         =   True
-      FillColor       =   16777215
+      FillColor       =   &cFFFFFF00
       Height          =   24
       HelpTag         =   "Color"
       Index           =   -2147483648
@@ -214,7 +216,7 @@ Begin Window ButtonWindow
    End
    Begin PopupMenu textSize
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -223,7 +225,7 @@ Begin Window ButtonWindow
       Index           =   -2147483648
       InitialParent   =   ""
       InitialValue    =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   136
       ListIndex       =   0
       LockBottom      =   True
@@ -236,16 +238,16 @@ Begin Window ButtonWindow
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   183
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   46
    End
    Begin PopupMenu textFont
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -254,7 +256,7 @@ Begin Window ButtonWindow
       Index           =   -2147483648
       InitialParent   =   ""
       InitialValue    =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   11
       ListIndex       =   0
       LockBottom      =   True
@@ -267,16 +269,16 @@ Begin Window ButtonWindow
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   11
+      TextSize        =   11.0
       TextUnit        =   0
       Top             =   183
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   120
    End
    Begin CheckBox CheckBox5
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Highlight"
       DataField       =   ""
       DataSource      =   ""
@@ -285,7 +287,7 @@ Begin Window ButtonWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   150
       LockBottom      =   True
       LockedInPosition=   False
@@ -298,20 +300,20 @@ Begin Window ButtonWindow
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   92
-      Underline       =   ""
+      Underline       =   False
       Value           =   True
       Visible         =   True
       Width           =   100
    End
    Begin Oval hilightColor
       AutoDeactivate  =   True
-      BorderColor     =   0
+      BorderColor     =   &c00000000
       BorderWidth     =   1
       Enabled         =   True
-      FillColor       =   16777215
+      FillColor       =   &cFFFFFF00
       Height          =   24
       HelpTag         =   "Color"
       Index           =   -2147483648
@@ -330,12 +332,12 @@ Begin Window ButtonWindow
       Width           =   24
    End
    Begin TextField TextField1
-      AcceptTabs      =   ""
+      AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   16777215
-      Bold            =   ""
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
       Border          =   True
       CueText         =   ""
       DataField       =   ""
@@ -345,7 +347,7 @@ Begin Window ButtonWindow
       Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
-      Italic          =   ""
+      Italic          =   False
       Left            =   150
       LimitText       =   0
       LockBottom      =   True
@@ -354,19 +356,19 @@ Begin Window ButtonWindow
       LockRight       =   False
       LockTop         =   False
       Mask            =   ""
-      Password        =   ""
-      ReadOnly        =   ""
+      Password        =   False
+      ReadOnly        =   False
       Scope           =   0
       TabIndex        =   11
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "ButtonCanvas"
-      TextColor       =   0
+      TextColor       =   &c00000000
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   124
-      Underline       =   ""
+      Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
       Width           =   139
@@ -421,12 +423,12 @@ End
 		  Dim c As Color = Me.FillColor
 		  Call SelectColor(c, "Choose a Text Color")
 		  Me.FillColor = c
-		  ButtonCanvas1.FontColor = c
+		  ButtonCanvas1.TextColor = c
 		End Function
 	#tag EndEvent
 	#tag Event
 		Sub Open()
-		  Me.FillColor = ButtonCanvas1.FontColor
+		  Me.FillColor = ButtonCanvas1.TextColor
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -437,14 +439,14 @@ End
 		  Me.ListIndex = 0
 		  For i As Integer = 8 To 72
 		    Me.AddRow(Str(i))
-		    If ButtonCanvas1.FontSize = i Then Me.ListIndex = i - 7
+		    If ButtonCanvas1.TextSize = i Then Me.ListIndex = i - 7
 		  Next
 		  
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub Change()
-		  If Me.ListIndex <> 0 Then ButtonCanvas1.FontSize = Val(Me.Text)
+		  If Me.ListIndex <> 0 Then ButtonCanvas1.TextSize = Val(Me.Text)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -461,13 +463,13 @@ End
 		  fonts.Sort
 		  For i As Integer = 0 To fonts.Ubound
 		    Me.AddRow(fonts(i))
-		    If ButtonCanvas1.Font = fonts(i) Then Me.ListIndex = i
+		    If ButtonCanvas1.TextFont = fonts(i) Then Me.ListIndex = i
 		  Next
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub Change()
-		  If Me.ListIndex <> 0 Then ButtonCanvas1.Font = Me.Text
+		  If Me.ListIndex <> 0 Then ButtonCanvas1.TextFont = Me.Text
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -504,3 +506,250 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
+#tag ViewBehavior
+	#tag ViewProperty
+		Name="BackColor"
+		Visible=true
+		Group="Appearance"
+		InitialValue="&hFFFFFF"
+		Type="Color"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Backdrop"
+		Visible=true
+		Group="Appearance"
+		Type="Picture"
+		EditorType="Picture"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="CloseButton"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Composite"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Frame"
+		Visible=true
+		Group="Appearance"
+		InitialValue="0"
+		Type="Integer"
+		EditorType="Enum"
+		InheritedFrom="Window"
+		#tag EnumValues
+			"0 - Document"
+			"1 - Movable Modal"
+			"2 - Modal Dialog"
+			"3 - Floating Window"
+			"4 - Plain Box"
+			"5 - Shadowed Box"
+			"6 - Rounded Window"
+			"7 - Global Floating Window"
+			"8 - Sheet Window"
+			"9 - Metal Window"
+			"10 - Drawer Window"
+			"11 - Modeless Dialog"
+		#tag EndEnumValues
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="FullScreen"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="HasBackColor"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Height"
+		Visible=true
+		Group="Position"
+		InitialValue="400"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="ImplicitInstance"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Interfaces"
+		Visible=true
+		Group="ID"
+		Type="String"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LiveResize"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MacProcID"
+		Visible=true
+		Group="Appearance"
+		InitialValue="0"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MaxHeight"
+		Visible=true
+		Group="Position"
+		InitialValue="32000"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MaximizeButton"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MaxWidth"
+		Visible=true
+		Group="Position"
+		InitialValue="32000"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MenuBar"
+		Visible=true
+		Group="Appearance"
+		Type="MenuBar"
+		EditorType="MenuBar"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MenuBarVisible"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MinHeight"
+		Visible=true
+		Group="Position"
+		InitialValue="64"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MinimizeButton"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MinWidth"
+		Visible=true
+		Group="Position"
+		InitialValue="64"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Name"
+		Visible=true
+		Group="ID"
+		Type="String"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Placement"
+		Visible=true
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType="Enum"
+		InheritedFrom="Window"
+		#tag EnumValues
+			"0 - Default"
+			"1 - Parent Window"
+			"2 - Main Screen"
+			"3 - Parent Window Screen"
+			"4 - Stagger"
+		#tag EndEnumValues
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Resizeable"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Super"
+		Visible=true
+		Group="ID"
+		Type="String"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Title"
+		Visible=true
+		Group="Appearance"
+		InitialValue="Untitled"
+		Type="String"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Visible"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Width"
+		Visible=true
+		Group="Position"
+		InitialValue="600"
+		Type="Integer"
+		InheritedFrom="Window"
+	#tag EndViewProperty
+#tag EndViewBehavior
