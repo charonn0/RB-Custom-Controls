@@ -177,7 +177,7 @@ End
 		    gstop = gstop + g.StringWidth(char)
 		  Next
 		  g.ForeColor = Self.HilightColor
-		  g.FillRect(gstart, 2, gStop, g.Height - 2)
+		  g.FillRoundRect(gstart, 2, gStop, g.Height - 2, 5, 5)
 		  g.ForeColor = Self.TextColor
 		  g.DrawString(txt, 0, y)
 		  Return True
