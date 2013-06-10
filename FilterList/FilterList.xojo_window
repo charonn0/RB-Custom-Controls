@@ -57,7 +57,7 @@ Begin ContainerControl FilterList
       LockRight       =   True
       LockTop         =   True
       RequiresSelection=   False
-      Scope           =   0
+      Scope           =   "0"
       ScrollbarHorizontal=   False
       ScrollBarVertical=   True
       SelectionType   =   0
@@ -102,7 +102,7 @@ Begin ContainerControl FilterList
       Mask            =   ""
       Password        =   False
       ReadOnly        =   False
-      Scope           =   0
+      Scope           =   "0"
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
@@ -172,7 +172,7 @@ End
 		  tstop = tstart + Self.Param.Len
 		  gstart = g.StringWidth(Left(txt, tstart))
 		  For i As Integer = tstart To tstop
-		    Dim char As String = Mid(txt, i, 1).Trim
+		    Dim char As String = Mid(txt.Trim, i, 1).Trim
 		    If i = txt.Len Then Continue
 		    gstop = gstop + g.StringWidth(char)
 		  Next
