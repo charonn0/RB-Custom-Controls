@@ -58,6 +58,14 @@ Inherits ProgressCanvas
 
 	#tag Event
 		Sub Paint(g As Graphics, FilledWidth As Integer)
+		  If Ticks Then
+		    Dim markStep As Integer = g.Width \ 20
+		    For i As Integer = 0 To g.Width Step markStep
+		      g.ForeColor = TickColor
+		      g.DrawLine(i, g.Height - g.Height \ 4, i, g.Height)
+		    Next
+		  End If
+		  
 		  'Thumb
 		  Select Case Me.ThumbStyle
 		  Case 0
