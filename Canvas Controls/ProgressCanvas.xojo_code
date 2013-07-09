@@ -14,9 +14,17 @@ Inherits BaseCanvas
 		  'bar
 		  Dim ratio, endratio as Double
 		  Dim thickness As Integer = Max(BarThickness * Buffer.Height, 5)
-		  Dim bottom As Integer = g.Height - thickness
+		  Dim bottom, top As Integer
+		  bottom = g.Height - thickness
 		  g.ForeColor = barColor
-		  For i As Integer = bottom DownTo g.Height - bottom
+		  If bottom < g.Height - bottom Then
+		    top = g.Height - bottom
+		  Else
+		    top = bottom
+		    bottom = g.Height - top
+		  End If
+		  
+		  For i As Integer = top DownTo bottom
 		    If Gradated Then
 		      ratio = ((thickness - (i - bottom)) / thickness)
 		      endratio = ((i - bottom) / thickness)
