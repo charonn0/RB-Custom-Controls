@@ -74,6 +74,10 @@ Inherits BaseCanvas
 		Event Paint(g As Graphics, FilledWidth As Integer)
 	#tag EndHook
 
+	#tag Hook, Flags = &h0
+		Event ValueChanged()
+	#tag EndHook
+
 
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
@@ -296,7 +300,9 @@ Inherits BaseCanvas
 		#tag EndGetter
 		#tag Setter
 			Set
-			  mvalue = value
+			  mvalue = Min(value, Me.Maximum)
+			  mvalue = Max(mvalue, 0)
+			  RaiseEvent ValueChanged()
 			  Update()
 			End Set
 		#tag EndSetter

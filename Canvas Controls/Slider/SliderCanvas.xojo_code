@@ -137,14 +137,6 @@ Inherits ProgressCanvas
 		Event MouseExit()
 	#tag EndHook
 
-	#tag Hook, Flags = &h0
-		Event ValueChanged()
-	#tag EndHook
-
-
-	#tag Property, Flags = &h0
-		LiveScroll As Boolean = False
-	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private mThumbColor As Color = &c000000
@@ -237,7 +229,7 @@ Inherits ProgressCanvas
 			Visible=true
 			Group="Behavior"
 			InitialValue="0.33"
-			Type="Single"
+			Type="Double"
 			InheritedFrom="ProgressCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -529,7 +521,7 @@ Inherits ProgressCanvas
 			Visible=true
 			Group="Behavior"
 			InitialValue="0"
-			Type="Double"
+			Type="Integer"
 			InheritedFrom="ProgressCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
