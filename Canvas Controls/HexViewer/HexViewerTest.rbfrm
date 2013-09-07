@@ -44,7 +44,7 @@ Begin Window HexViewerTest
       LockRight       =   ""
       LockTop         =   False
       Scope           =   0
-      TabIndex        =   1
+      TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -75,7 +75,7 @@ Begin Window HexViewerTest
       Minimum         =   0
       PageStep        =   20
       Scope           =   0
-      TabIndex        =   3
+      TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   0
@@ -103,7 +103,7 @@ Begin Window HexViewerTest
       LockTop         =   False
       Scope           =   0
       State           =   0
-      TabIndex        =   9
+      TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -135,7 +135,7 @@ Begin Window HexViewerTest
       LockRight       =   True
       LockTop         =   False
       Scope           =   0
-      TabIndex        =   10
+      TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -166,7 +166,7 @@ Begin Window HexViewerTest
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
-      TabIndex        =   11
+      TabIndex        =   5
       TabPanelIndex   =   0
       Text            =   "Use a fixed-width font!"
       TextAlign       =   2
@@ -181,8 +181,8 @@ Begin Window HexViewerTest
       Width           =   146
    End
    Begin HexViewer HexViewer1
-      AcceptFocus     =   ""
-      AcceptTabs      =   ""
+      AcceptFocus     =   True
+      AcceptTabs      =   True
       AutoDeactivate  =   True
       Backdrop        =   ""
       Bold            =   ""
@@ -208,7 +208,7 @@ Begin Window HexViewerTest
       LockTop         =   True
       Scope           =   0
       ShowOffsets     =   ""
-      TabIndex        =   12
+      TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
       TextBackGroundColor=   "&cFFFFFF00"
@@ -307,5 +307,16 @@ End
 		  ScrollBar1.Value = ScrollBar1.Value + LinesDelta
 		  Return True ' Since we're updating the offset in ScrollBar1.ValueChanged, we return true to prevent the HexViewer from updating it too.
 		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  Dim mb As New MemoryBlock(256)
+		  For i As Integer = 0 To 255
+		    mb.Byte(i) = i
+		  Next
+		  Dim bs As New BinaryStream(mb)
+		  HexViewer1.ShowData(bs)
+		  
+		End Sub
 	#tag EndEvent
 #tag EndEvents

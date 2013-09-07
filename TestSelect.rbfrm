@@ -44,7 +44,7 @@ Begin Window TestSelect
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   0
+      TabIndex        =   12
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -75,7 +75,7 @@ Begin Window TestSelect
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   1
+      TabIndex        =   11
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -106,7 +106,7 @@ Begin Window TestSelect
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   2
+      TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -137,7 +137,7 @@ Begin Window TestSelect
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   3
+      TabIndex        =   6
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -168,7 +168,7 @@ Begin Window TestSelect
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   5
+      TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -199,7 +199,7 @@ Begin Window TestSelect
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   6
+      TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -230,7 +230,7 @@ Begin Window TestSelect
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   7
+      TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -261,7 +261,7 @@ Begin Window TestSelect
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   8
+      TabIndex        =   7
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -323,7 +323,7 @@ Begin Window TestSelect
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   11
+      TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -354,7 +354,7 @@ Begin Window TestSelect
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   12
+      TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -385,7 +385,7 @@ Begin Window TestSelect
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   13
+      TabIndex        =   9
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -416,7 +416,7 @@ Begin Window TestSelect
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   14
+      TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -447,7 +447,7 @@ Begin Window TestSelect
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   15
+      TabIndex        =   13
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"

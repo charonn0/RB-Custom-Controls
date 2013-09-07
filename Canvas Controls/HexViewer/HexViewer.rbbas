@@ -2,6 +2,20 @@
 Protected Class HexViewer
 Inherits BaseCanvas
 	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  If Asc(key) = &h1F Then ' up arrow
+		    If Not RaiseEvent Scrolled(1, LineLength) Then
+		      Me.Offset = Me.Offset + LineLength
+		    End If
+		  ElseIf Asc(key) = &h1E Then ' down arrow
+		    If Not RaiseEvent Scrolled(-1, LineLength * -1) Then
+		      Me.Offset = Me.Offset - LineLength
+		    End If
+		  End If
+		End Function
+	#tag EndEvent
+
+	#tag Event
 		Function MouseWheel(X As Integer, Y As Integer, deltaX as Integer, deltaY as Integer) As Boolean
 		  #pragma Unused deltaX
 		  #pragma Unused X
@@ -78,7 +92,7 @@ Inherits BaseCanvas
 		    rowoffset = Stream.Position
 		    Do Until BinGraphics.StringWidth(data) >= BinGraphics.Width - bytewidth
 		      Dim bt As Byte = Stream.ReadByte
-		      hx = Left(Hex(bt) + "00", 2)
+		      hx = Hex(bt, 2)
 		      data = data + " " + hx + " "
 		      If bt < 33 Or bt > 127 Then
 		        txt = txt + "."
@@ -90,7 +104,7 @@ Inherits BaseCanvas
 		        End If
 		      End If
 		      If row = 0 Then
-		        Dim header As String = Left(Hex(column) + "00", 2)
+		        Dim header As String = Hex(column, 2)
 		        Dim headerstart As Integer = GutterGraphics.Width + (bytewidth * column) + BinGraphics.StringWidth(" 00 ")
 		        TopGutterGraphics.DrawString(" " + header, headerstart, TopGutterGraphics.Height)
 		      End If
@@ -115,18 +129,27 @@ Inherits BaseCanvas
 		    
 		    TextGraphics.ForeColor = TextColor
 		    BinGraphics.ForeColor = ByteColor
-		    BinGraphics.DrawString(data, 0, TextHeight)
-		    TextGraphics.DrawString(txt, 0, TextHeight)
+		    BinGraphics.DrawString(data, 0, TextHeight - 1)
+		    TextGraphics.DrawString(txt, 0, TextHeight - 1)
 		    GutterGraphics.ForeColor = LineNumbersColor
-		    GutterGraphics.DrawString("0x" + Left(Hex(rowoffset) + "00000000", 8), 0, TextHeight)
+		    Dim linenumber As String = Hex(rowoffset, 8)
+		    GutterGraphics.DrawString("0x" + linenumber, 0, TextHeight - 1)
 		    data = ""
 		    txt = ""
 		    row = row + 1
 		  Loop
-		  g.DrawLine(BinGraphics.Width + GutterGraphics.Width, 0, BinGraphics.Width + GutterGraphics.Width, BinGraphics.Height)
+		  g.DrawLine(BinGraphics.Width + GutterGraphics.Width - 1, 0, BinGraphics.Width + GutterGraphics.Width - 1, BinGraphics.Height)
 		End Sub
 	#tag EndEvent
 
+
+	#tag Method, Flags = &h1
+		Protected Shared Function Hex(Data As Integer, Width As Integer = 2) As String
+		  Dim number As String = Left(REALbasic.Hex(Data) + "00000000", Width)
+		  If TargetLittleEndian Then number = StrReverse(number)
+		  Return number
+		End Function
+	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Function LineCount() As Integer
@@ -203,6 +226,32 @@ Inherits BaseCanvas
 		  Offset = 0
 		  Me.Refresh(False)
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Shared Function StrReverse(s As String) As String
+		  'from WFS
+		  // Return s with the characters in reverse order.
+		  
+		  If Len(s) < 2 Then Return s
+		  
+		  Dim m As New MemoryBlock(s.LenB)
+		  
+		  Dim c As String
+		  Dim pos, mpos, csize As Integer
+		  pos = 1
+		  mpos = m.Size
+		  While mpos > 0
+		    c = Mid(s, pos, 1)
+		    csize = c.LenB
+		    mpos = mpos - csize
+		    m.StringValue(mpos, csize) = c
+		    pos = pos + 1
+		  Wend
+		  
+		  Return DefineEncoding(m.StringValue(0, m.Size), s.Encoding)
+		  
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
