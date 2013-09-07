@@ -50,7 +50,7 @@ Begin Window HexViewerTest
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   0
-      Top             =   457
+      Top             =   461
       Underline       =   ""
       Visible         =   True
       Width           =   80
@@ -83,41 +83,6 @@ Begin Window HexViewerTest
       Visible         =   True
       Width           =   16
    End
-   Begin HexViewer HexViewer1
-      AcceptFocus     =   ""
-      AcceptTabs      =   ""
-      AutoDeactivate  =   True
-      Backdrop        =   ""
-      Bold            =   ""
-      DoubleBuffer    =   True
-      Enabled         =   True
-      EraseBackground =   False
-      Height          =   452
-      HelpTag         =   ""
-      Hilight         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   ""
-      Left            =   0
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      Scope           =   0
-      ShowLineNumbers =   True
-      TabIndex        =   4
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextColor       =   "&c000000"
-      TextFont        =   ""
-      TextSize        =   ""
-      Top             =   0
-      Underline       =   ""
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   583
-   End
    Begin CheckBox LineNumber
       AutoDeactivate  =   True
       Bold            =   ""
@@ -144,7 +109,7 @@ Begin Window HexViewerTest
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   0
-      Top             =   459
+      Top             =   463
       Underline       =   ""
       Value           =   False
       Visible         =   True
@@ -176,7 +141,7 @@ Begin Window HexViewerTest
       TextFont        =   "System"
       TextSize        =   11.0
       TextUnit        =   0
-      Top             =   459
+      Top             =   463
       Underline       =   False
       Visible         =   True
       Width           =   165
@@ -203,18 +168,60 @@ Begin Window HexViewerTest
       Selectable      =   False
       TabIndex        =   11
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Use a fixed-width font!"
       TextAlign       =   2
       TextColor       =   &h000000
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   0
-      Top             =   458
+      Top             =   462
       Transparent     =   False
       Underline       =   ""
       Visible         =   True
       Width           =   146
+   End
+   Begin HexViewer HexViewer1
+      AcceptFocus     =   ""
+      AcceptTabs      =   ""
+      AutoDeactivate  =   True
+      Backdrop        =   ""
+      Bold            =   ""
+      ByteBackgroundColor=   "&cFFFFFF00"
+      ByteBackgroundColorAlt=   &h00C0C0C0
+      ByteColor       =   "&c0000FF00"
+      DoubleBuffer    =   ""
+      Enabled         =   True
+      EraseBackground =   ""
+      GutterColor     =   "&cFFFFFF00"
+      GutterColorAlt  =   "&cC0C0C000"
+      Height          =   459
+      HelpTag         =   ""
+      Hilight         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   0
+      LineNumbersColor=   "&c80000000"
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Scope           =   0
+      ShowOffsets     =   ""
+      TabIndex        =   12
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextBackGroundColor=   "&cFFFFFF00"
+      TextBackGroundColorAlt=   "&cC0C0C000"
+      TextColor       =   ""
+      TextFont        =   "System"
+      TextSize        =   0
+      Top             =   0
+      Underline       =   ""
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   583
    End
 End
 #tag EndWindow
@@ -240,15 +247,6 @@ End
 		Sub ValueChanged()
 		  HexViewer1.Offset = Me.Value
 		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events HexViewer1
-	#tag Event
-		Function Scrolled(LinesDelta As Integer, BytesDelta As Integer) As Boolean
-		  #pragma Unused BytesDelta
-		  ScrollBar1.Value = ScrollBar1.Value + LinesDelta
-		  Return True ' Since we're updating the offset in ScrollBar1.ValueChanged, we return true to prevent the HexViewer from updating it too.
-		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events LineNumber
@@ -287,5 +285,14 @@ End
 		  Next
 		  Me.ListIndex = index
 		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events HexViewer1
+	#tag Event
+		Function Scrolled(LinesDelta As Integer, BytesDelta As Integer) As Boolean
+		  #pragma Unused BytesDelta
+		  ScrollBar1.Value = ScrollBar1.Value + LinesDelta
+		  Return True ' Since we're updating the offset in ScrollBar1.ValueChanged, we return true to prevent the HexViewer from updating it too.
+		End Function
 	#tag EndEvent
 #tag EndEvents

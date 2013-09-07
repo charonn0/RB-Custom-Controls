@@ -52,6 +52,7 @@ Inherits BaseCanvas
 		  App.UseGDIPlus = True
 		  Dim BinWidth As Integer
 		  Dim gw As Integer
+		  Dim alt As Boolean = True
 		  If ShowOffsets Then
 		    gw = g.StringWidth("0x00000000") + 2
 		  Else
@@ -62,8 +63,7 @@ Inherits BaseCanvas
 		  BinGraphics = g.Clip(GutterGraphics.Width, 0, BinWidth, Buffer.Height)
 		  Dim TextWidth As Integer = Me.Width - BinWidth - GutterGraphics.Width
 		  TextGraphics = g.Clip(BinWidth + GutterGraphics.Width, 0, TextWidth, Buffer.Height)
-		  GutterGraphics.ForeColor = &cC0C0C000
-		  GutterGraphics.FillRect(0, 0, GutterGraphics.Width, GutterGraphics.Height)
+		  
 		  If Stream = Nil Then Return
 		  Dim TextHeight, row, column, bytewidth As Integer
 		  Dim data, txt, hx As String
@@ -88,19 +88,26 @@ Inherits BaseCanvas
 		    Loop
 		    column = 1
 		    TextHeight = TextHeight + LineHeight
-		    If row Mod 2 = 0 Then
-		      BinGraphics.Forecolor = &cEAFFFF00
-		      BinGraphics.FillRect(0, TextHeight, BinGraphics.Width, LineHeight)
-		      BinGraphics.ForeColor = &c00000000
-		      TextGraphics.Forecolor = &cEAFFFF00
-		      TextGraphics.FillRect(0, TextHeight, TextGraphics.Width, LineHeight)
-		      TextGraphics.ForeColor = &c00000000
+		    If alt Then
+		      BinGraphics.Forecolor = ByteBackgroundColorAlt
+		      TextGraphics.Forecolor = TextBackGroundColorAlt
+		      GutterGraphics.ForeColor = GutterColorAlt
+		    Else
+		      BinGraphics.Forecolor = ByteBackgroundColor
+		      TextGraphics.Forecolor = TextBackGroundColor
+		      GutterGraphics.ForeColor = GutterColor
 		    End If
+		    alt = Not alt
+		    BinGraphics.FillRect(0, TextHeight, BinGraphics.Width, LineHeight)
+		    TextGraphics.FillRect(0, TextHeight, TextGraphics.Width, LineHeight)
+		    GutterGraphics.FillRect(0, TextHeight, GutterGraphics.Width, LineHeight)
+		    
+		    TextGraphics.ForeColor = TextColor
+		    BinGraphics.ForeColor = ByteColor
 		    BinGraphics.DrawString(data, 0, TextHeight)
 		    TextGraphics.DrawString(txt, 0, TextHeight)
-		    GutterGraphics.ForeColor = &c0000FF00
+		    GutterGraphics.ForeColor = LineNumbersColor
 		    GutterGraphics.DrawString("0x" + Left(Hex(row) + "00000000", 8), 0, TextHeight)
-		    
 		    data = ""
 		    txt = ""
 		    row = row + 1
@@ -203,6 +210,51 @@ Inherits BaseCanvas
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
+			  return mByteBackgroundColor
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mByteBackgroundColor = value
+			  Update()
+			End Set
+		#tag EndSetter
+		ByteBackgroundColor As Color
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mByteBackgroundColorAlt
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mByteBackgroundColorAlt = value
+			  Update()
+			End Set
+		#tag EndSetter
+		ByteBackgroundColorAlt As Color
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mByteColor
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mByteColor = value
+			  Update()
+			End Set
+		#tag EndSetter
+		ByteColor As Color
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
 			  return mEncoding
 			End Get
 		#tag EndGetter
@@ -215,12 +267,81 @@ Inherits BaseCanvas
 		Encoding As TextEncoding
 	#tag EndComputedProperty
 
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mGutterColor
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mGutterColor = value
+			  Update()
+			End Set
+		#tag EndSetter
+		GutterColor As Color
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mGutterColorAlt
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mGutterColorAlt = value
+			  Update()
+			End Set
+		#tag EndSetter
+		GutterColorAlt As Color
+	#tag EndComputedProperty
+
 	#tag Property, Flags = &h21
 		Private GutterGraphics As Graphics
 	#tag EndProperty
 
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mLineNumbersColor
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mLineNumbersColor = value
+			  Update()
+			End Set
+		#tag EndSetter
+		LineNumbersColor As Color
+	#tag EndComputedProperty
+
+	#tag Property, Flags = &h21
+		Private mByteBackgroundColor As Color = &cFFFFFF00
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mByteBackgroundColorAlt As Color = &cEAFFFF00
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mByteColor As Color
+	#tag EndProperty
+
 	#tag Property, Flags = &h21
 		Private mEncoding As TextEncoding
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mGutterColor As Color = &cC0C0C000
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mGutterColorAlt As Color
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mLineNumbersColor As Color = &c0000FF00
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -233,6 +354,14 @@ Inherits BaseCanvas
 
 	#tag Property, Flags = &h21
 		Private mStreamLen As UInt64
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mTextBackGroundColor As Color = &cFFFFFF00
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mTextBackGroundColorAlt As Color = &cEAFFFF00
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -286,6 +415,36 @@ Inherits BaseCanvas
 		StreamLen As UInt64
 	#tag EndComputedProperty
 
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mTextBackGroundColor
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mTextBackGroundColor = value
+			  Update()
+			End Set
+		#tag EndSetter
+		TextBackGroundColor As Color
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mTextBackGroundColorAlt
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mTextBackGroundColorAlt = value
+			  Update()
+			End Set
+		#tag EndSetter
+		TextBackGroundColorAlt As Color
+	#tag EndComputedProperty
+
 	#tag Property, Flags = &h21
 		Private TextGraphics As Graphics
 	#tag EndProperty
@@ -329,8 +488,30 @@ Inherits BaseCanvas
 			InheritedFrom="BaseCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="ByteBackgroundColor"
+			Visible=true
+			Group="Behavior"
+			InitialValue="&cFFFFFF00"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ByteBackgroundColorAlt"
+			Visible=true
+			Group="Behavior"
+			InitialValue="&cC0C0C000"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ByteColor"
+			Visible=true
+			Group="Behavior"
+			InitialValue="&c0000FF00"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="DoubleBuffer"
 			Group="Behavior"
+			InitialValue="True"
 			Type="Boolean"
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
@@ -345,8 +526,23 @@ Inherits BaseCanvas
 		#tag ViewProperty
 			Name="EraseBackground"
 			Group="Behavior"
+			InitialValue="False"
 			Type="Boolean"
 			InheritedFrom="Canvas"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="GutterColor"
+			Visible=true
+			Group="Behavior"
+			InitialValue="&cFFFFFF00"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="GutterColorAlt"
+			Visible=true
+			Group="Behavior"
+			InitialValue="&cC0C0C000"
+			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Height"
@@ -396,6 +592,13 @@ Inherits BaseCanvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="LineNumbersColor"
+			Visible=true
+			Group="Behavior"
+			InitialValue="&c80000000"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="LockBottom"
 			Visible=true
 			Group="Position"
@@ -432,6 +635,7 @@ Inherits BaseCanvas
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ShowOffsets"
+			Visible=true
 			Group="Behavior"
 			Type="Boolean"
 		#tag EndViewProperty
@@ -465,7 +669,22 @@ Inherits BaseCanvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="TextBackGroundColor"
+			Visible=true
+			Group="Behavior"
+			InitialValue="&cFFFFFF00"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="TextBackGroundColorAlt"
+			Visible=true
+			Group="Behavior"
+			InitialValue="&cC0C0C000"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="TextColor"
+			Visible=true
 			Group="Behavior"
 			Type="Color"
 			InheritedFrom="BaseCanvas"
