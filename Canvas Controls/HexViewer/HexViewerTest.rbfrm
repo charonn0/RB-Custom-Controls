@@ -226,6 +226,20 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Resized()
+		  SetScrollMax()
+		End Sub
+	#tag EndEvent
+
+
+	#tag Method, Flags = &h21
+		Private Sub SetScrollMax()
+		  ScrollBar1.Maximum = HexViewer1.LineCount - (HexViewer1.VisibleLineCount \ 2)
+		End Sub
+	#tag EndMethod
+
+
 #tag EndWindowCode
 
 #tag Events PushButton1
@@ -236,7 +250,7 @@ End
 		    Dim bs As BinaryStream = BinaryStream.Open(g)
 		    HexViewer1.ShowData(bs)
 		    Self.Title = "Hex Viewer Test - " + g.AbsolutePath
-		    ScrollBar1.Maximum = HexViewer1.LineCount
+		    SetScrollMax()
 		  End If
 		End Sub
 	#tag EndEvent
@@ -244,7 +258,7 @@ End
 #tag Events ScrollBar1
 	#tag Event
 		Sub ValueChanged()
-		  HexViewer1.Offset = Me.Value
+		  HexViewer1.Offset = Me.Value * HexViewer1.LineLength
 		End Sub
 	#tag EndEvent
 #tag EndEvents

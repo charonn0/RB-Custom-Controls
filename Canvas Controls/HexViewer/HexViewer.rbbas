@@ -55,14 +55,18 @@ Inherits BaseCanvas
 		  Dim alt As Boolean = True
 		  If ShowOffsets Then
 		    gw = g.StringWidth("0x00000000") + 2
+		    'TopGutterGraphics = g.Clip(0, 0, g.Width, g.StringHeight("0x00000000", 99)) 'broken right now
+		    TopGutterGraphics = g.Clip(0, 0, 0, 0)
 		  Else
 		    gw = 0
+		    TopGutterGraphics = g.Clip(0, 0, 0, 0)
 		  End If
-		  GutterGraphics = g.Clip(0, 0, gw, Buffer.Height)
+		  TopGutterGraphics.TextSize = 0.75 * Me.TextSize
+		  GutterGraphics = g.Clip(0, TopGutterGraphics.Height, gw, Buffer.Height - TopGutterGraphics.Height)
 		  BinWidth = (0.80 * Me.Width) - GutterGraphics.Width
-		  BinGraphics = g.Clip(GutterGraphics.Width, 0, BinWidth, Buffer.Height)
+		  BinGraphics = g.Clip(GutterGraphics.Width, TopGutterGraphics.Height, BinWidth, Buffer.Height - TopGutterGraphics.Height)
 		  Dim TextWidth As Integer = Me.Width - BinWidth - GutterGraphics.Width
-		  TextGraphics = g.Clip(BinWidth + GutterGraphics.Width, 0, TextWidth, Buffer.Height)
+		  TextGraphics = g.Clip(BinWidth + GutterGraphics.Width, TopGutterGraphics.Height, TextWidth, Buffer.Height - TopGutterGraphics.Height)
 		  
 		  If Stream = Nil Then Return
 		  Dim TextHeight, row, column, bytewidth As Integer
@@ -84,8 +88,14 @@ Inherits BaseCanvas
 		          txt = txt + Chr(bt).Trim
 		        End If
 		      End If
+		      If row = 0 Then
+		        Dim header As String = Left(Hex(column) + "00", 2)
+		        Dim headerstart As Integer = GutterGraphics.Width + (bytewidth * column) + BinGraphics.StringWidth(" 00 ")
+		        TopGutterGraphics.DrawString(" " + header, headerstart, TopGutterGraphics.Height)
+		      End If
 		      column = column + 1
 		    Loop
+		    
 		    column = 1
 		    TextHeight = TextHeight + LineHeight
 		    If alt Then
@@ -119,6 +129,7 @@ Inherits BaseCanvas
 
 	#tag Method, Flags = &h0
 		Function LineCount() As Integer
+		  If Stream = Nil Then Return 0
 		  If Stream.Length Mod LineLength = 0 Then
 		    Return Stream.Length \ LineLength
 		  Else
@@ -191,6 +202,13 @@ Inherits BaseCanvas
 		  Offset = 0
 		  Me.Refresh(False)
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function VisibleLineCount() As Integer
+		  Dim h As Integer = LineHeight
+		  Return BinGraphics.Height \ h
+		End Function
 	#tag EndMethod
 
 
@@ -447,6 +465,10 @@ Inherits BaseCanvas
 
 	#tag Property, Flags = &h21
 		Private TextGraphics As Graphics
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private TopGutterGraphics As Graphics
 	#tag EndProperty
 
 
