@@ -51,7 +51,7 @@ Inherits BaseCanvas
 		  g.AntiAlias = True
 		  App.UseGDIPlus = True
 		  Dim BinWidth As Integer
-		  Dim gw As Integer
+		  Dim gw, rowoffset As Integer
 		  Dim alt As Boolean = True
 		  If ShowOffsets Then
 		    gw = g.StringWidth("0x00000000") + 2
@@ -75,6 +75,7 @@ Inherits BaseCanvas
 		  Stream.Position = Offset
 		  row = LineFromOffset(Offset)
 		  Do Until TextHeight > BinGraphics.Height Or Stream.EOF
+		    rowoffset = Stream.Position
 		    Do Until BinGraphics.StringWidth(data) >= BinGraphics.Width - bytewidth
 		      Dim bt As Byte = Stream.ReadByte
 		      hx = Left(Hex(bt) + "00", 2)
@@ -117,7 +118,7 @@ Inherits BaseCanvas
 		    BinGraphics.DrawString(data, 0, TextHeight)
 		    TextGraphics.DrawString(txt, 0, TextHeight)
 		    GutterGraphics.ForeColor = LineNumbersColor
-		    GutterGraphics.DrawString("0x" + Left(Hex(row) + "00000000", 8), 0, TextHeight)
+		    GutterGraphics.DrawString("0x" + Left(Hex(rowoffset) + "00000000", 8), 0, TextHeight)
 		    data = ""
 		    txt = ""
 		    row = row + 1
