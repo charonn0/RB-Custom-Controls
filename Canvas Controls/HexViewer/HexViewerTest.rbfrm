@@ -187,11 +187,10 @@ Begin Window HexViewerTest
       Backdrop        =   ""
       Bold            =   ""
       ByteBackgroundColor=   "&cFFFFFF00"
-      ByteBackgroundColorAlt=   &h00C0C0C0
+      ByteBackgroundColorAlt=   "&cC0C0C000"
       ByteColor       =   "&c0000FF00"
-      DoubleBuffer    =   ""
+      DoubleBuffer    =   True
       Enabled         =   True
-      EraseBackground =   ""
       GutterColor     =   "&cFFFFFF00"
       GutterColorAlt  =   "&cC0C0C000"
       Height          =   459
