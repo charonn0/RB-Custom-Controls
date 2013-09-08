@@ -282,7 +282,7 @@ End
 		Sub Open()
 		  Dim index As Integer
 		  For i As Integer = 0 To Me.ListCount - 1
-		    If Me.List(i) = "Consolas" Then
+		    If Me.List(i) = "Consolas" Or Me.List(i) = "Courier" Then
 		      index = i
 		      Exit For
 		    End If
