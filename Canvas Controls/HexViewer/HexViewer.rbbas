@@ -74,7 +74,7 @@ Inherits BaseCanvas
 		  
 		  If ShowOffsets Then
 		    Dim tmp As String
-		    For i As Integer = 1 To 4
+		    For i As Integer = 1 To 3
 		      tmp = tmp + "0"
 		    Next
 		    gw = g.StringWidth(tmp) + 1
@@ -89,7 +89,7 @@ Inherits BaseCanvas
 		  TopGutterGraphics.TextSize = 0.75 * Me.TextSize
 		  GutterGraphics = g.Clip(0, TopGutterGraphics.Height, gw, Buffer.Height - TopGutterGraphics.Height)
 		  If ShowOffsets Then
-		    BinWidth = (0.75 * Me.Width) - GutterGraphics.Width + g.StringWidth(" 0")
+		    BinWidth = (0.75 * Me.Width) - GutterGraphics.Width + g.StringWidth(" ")
 		  Else
 		    BinWidth = (0.75 * Me.Width) - GutterGraphics.Width
 		  End If
@@ -202,16 +202,6 @@ Inherits BaseCanvas
 		End Sub
 	#tag EndEvent
 
-
-	#tag Method, Flags = &h1000
-		Sub Constructor()
-		  // Calling the overridden superclass constructor.
-		  Super.Constructor
-		  Dim mb As New MemoryBlock(2048)
-		  'Stream = New BinaryStream(mb)
-		  
-		End Sub
-	#tag EndMethod
 
 	#tag Method, Flags = &h1
 		Protected Shared Function Hex(Data As Integer, Width As Integer = 2, LittleEndian As Boolean) As String
