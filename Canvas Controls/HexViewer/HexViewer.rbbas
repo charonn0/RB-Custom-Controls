@@ -63,7 +63,10 @@ Inherits BaseCanvas
 		Sub Paint	(g As Graphics)
 		  'g.ClearRect(0, 0, g.Width, g.Height)
 		  g.AntiAlias = True
-		  App.UseGDIPlus = True
+		  #If TargetWin32 Then
+		    Static appGDIplus As Boolean = App.UseGDIPlus
+		    App.UseGDIPlus = False
+		  #endif
 		  Dim BinWidth As Integer
 		  Dim gw, rowoffset As Integer
 		  Dim alt As Boolean = True
@@ -139,6 +142,9 @@ Inherits BaseCanvas
 		    row = row + 1
 		  Loop
 		  g.DrawLine(BinGraphics.Width + GutterGraphics.Width - 1, 0, BinGraphics.Width + GutterGraphics.Width - 1, BinGraphics.Height)
+		  #If TargetWin32 Then
+		    App.UseGDIPlus = AppGDIPlus
+		  #endif
 		End Sub
 	#tag EndEvent
 
