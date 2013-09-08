@@ -306,18 +306,6 @@ End
 		  Return True ' Since we're updating the offset in ScrollBar1.ValueChanged, we return true to prevent the HexViewer from updating it too.
 		End Function
 	#tag EndEvent
-	#tag Event
-		Sub Open()
-		  Dim mb As New MemoryBlock(2048)
-		  
-		  For i As Integer = 0 To mb.Size - 1
-		    mb.Byte(i) = i
-		  Next
-		  Dim bs As New BinaryStream(mb)
-		  HexViewer1.ShowData(bs)
-		  
-		End Sub
-	#tag EndEvent
 #tag EndEvents
 #tag Events ScrollBar1
 	#tag Event
