@@ -127,36 +127,6 @@ Inherits BaseCanvas
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mhasBox
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mhasBox = value
-			  Update()
-			End Set
-		#tag EndSetter
-		Border As Boolean
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
-			  return mboxColor
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mboxColor = value
-			  Update()
-			End Set
-		#tag EndSetter
-		BorderColor As Color
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
 			  return mhasGradient
 			End Get
 		#tag EndGetter
@@ -212,15 +182,7 @@ Inherits BaseCanvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mboxColor As Color = &c808080
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
 		Private mgradientEnd As Color
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mhasBox As Boolean = True
 	#tag EndProperty
 
 	#tag Property, Flags = &h21

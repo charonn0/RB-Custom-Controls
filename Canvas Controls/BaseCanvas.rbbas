@@ -174,6 +174,36 @@ Inherits Canvas
 		Bold As Boolean
 	#tag EndComputedProperty
 
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mBorder
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mBorder = value
+			  Update()
+			End Set
+		#tag EndSetter
+		Border As Boolean
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mBorderColor
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mBorderColor = value
+			  Update()
+			End Set
+		#tag EndSetter
+		BorderColor As Color
+	#tag EndComputedProperty
+
 	#tag Property, Flags = &h1
 		Protected Buffer As Picture
 	#tag EndProperty
@@ -199,6 +229,14 @@ Inherits Canvas
 
 	#tag Property, Flags = &h21
 		Private mbold As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mBorder As Boolean = True
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mBorderColor As Color = &c808080
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
