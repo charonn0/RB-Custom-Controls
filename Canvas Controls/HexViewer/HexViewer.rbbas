@@ -163,6 +163,16 @@ Inherits BaseCanvas
 	#tag EndEvent
 
 
+	#tag Method, Flags = &h1000
+		Sub Constructor()
+		  // Calling the overridden superclass constructor.
+		  Super.Constructor
+		  Dim mb As New MemoryBlock(2048)
+		  Stream = New BinaryStream(mb)
+		  
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h1
 		Protected Shared Function Hex(Data As Integer, Width As Integer = 2, LittleEndian As Boolean) As String
 		  Dim number As String = Left(REALbasic.Hex(Data) + "00000000", Width)

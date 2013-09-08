@@ -308,8 +308,9 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub Open()
-		  Dim mb As New MemoryBlock(256)
-		  For i As Integer = 0 To 255
+		  Dim mb As New MemoryBlock(2048)
+		  
+		  For i As Integer = 0 To mb.Size - 1
 		    mb.Byte(i) = i
 		  Next
 		  Dim bs As New BinaryStream(mb)
