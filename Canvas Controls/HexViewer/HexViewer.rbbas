@@ -68,7 +68,7 @@ Inherits BaseCanvas
 		  #endif
 		  Dim BinWidth As Integer
 		  Dim gw, rowoffset As Integer
-		  Dim alt As Boolean = True
+		  Dim alt As Boolean
 		  If ShowOffsets Then
 		    gw = g.StringWidth("0x00000000") + 1
 		    'TopGutterGraphics = g.Clip(0, 0, g.Width, g.StringHeight("0x00000000", 99)) 'broken right now
@@ -79,7 +79,11 @@ Inherits BaseCanvas
 		  End If
 		  TopGutterGraphics.TextSize = 0.75 * Me.TextSize
 		  GutterGraphics = g.Clip(0, TopGutterGraphics.Height, gw, Buffer.Height - TopGutterGraphics.Height)
-		  BinWidth = (0.75 * Me.Width) - GutterGraphics.Width
+		  If ShowOffsets Then
+		    BinWidth = (0.75 * Me.Width) - GutterGraphics.Width + g.StringWidth(" 0")
+		  Else
+		    BinWidth = (0.75 * Me.Width) - GutterGraphics.Width
+		  End If
 		  BinGraphics = g.Clip(GutterGraphics.Width, TopGutterGraphics.Height, BinWidth, Buffer.Height - TopGutterGraphics.Height)
 		  Dim TextWidth As Integer = Me.Width - BinWidth - GutterGraphics.Width
 		  TextGraphics = g.Clip(BinWidth + GutterGraphics.Width, TopGutterGraphics.Height, TextWidth, Buffer.Height - TopGutterGraphics.Height)
@@ -95,7 +99,7 @@ Inherits BaseCanvas
 		    Do Until BinGraphics.StringWidth(data) >= BinGraphics.Width - bytewidth
 		      If Stream.EOF Then
 		        data = data + " "
-		        Continue
+		        Exit Do
 		      End If
 		      Dim bt As Byte = Stream.ReadByte
 		      hx = Hex(bt, 2, BytesLittleEndian)
@@ -129,9 +133,10 @@ Inherits BaseCanvas
 		      GutterGraphics.ForeColor = GutterColor
 		    End If
 		    alt = Not alt
-		    BinGraphics.FillRect(0, TextHeight, BinGraphics.Width, LineHeight)
-		    TextGraphics.FillRect(0, TextHeight, TextGraphics.Width, LineHeight)
-		    GutterGraphics.FillRect(0, TextHeight, GutterGraphics.Width, LineHeight)
+		    
+		    BinGraphics.FillRect(0, TextHeight - LineHeight, BinGraphics.Width, LineHeight)
+		    TextGraphics.FillRect(0, TextHeight - LineHeight, TextGraphics.Width, LineHeight)
+		    GutterGraphics.FillRect(0, TextHeight - LineHeight, GutterGraphics.Width, LineHeight)
 		    
 		    TextGraphics.ForeColor = TextColor
 		    BinGraphics.ForeColor = ByteColor
@@ -140,10 +145,14 @@ Inherits BaseCanvas
 		    GutterGraphics.ForeColor = LineNumbersColor
 		    Dim linenumber As String = Hex(rowoffset, 8, LineNumbersLittleEndian)
 		    GutterGraphics.DrawString("0x" + linenumber, 0, TextHeight - 1)
+		    
 		    data = ""
 		    txt = ""
 		    row = row + 1
 		  Loop
+		  
+		  g.ForeColor = GutterColor
+		  g.FillRect(0, TextHeight, g.Width, g.Height - TextHeight)
 		  g.ForeColor = Me.BorderColor
 		  g.DrawLine(BinGraphics.Width + GutterGraphics.Width - 1, 0, BinGraphics.Width + GutterGraphics.Width - 1, BinGraphics.Height)
 		  g.DrawLine(GutterGraphics.Width - 1, 0, GutterGraphics.Width - 1, BinGraphics.Height)
