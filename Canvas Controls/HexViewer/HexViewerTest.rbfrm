@@ -310,7 +310,7 @@ End
 #tag Events ScrollBar1
 	#tag Event
 		Sub ValueChanged()
-		  HexViewer1.Offset = Me.Value * HexViewer1.LineLength
+		  HexViewer1.Offset = Me.Value * HexViewer1.BytesPerLine
 		End Sub
 	#tag EndEvent
 #tag EndEvents
