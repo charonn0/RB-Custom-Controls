@@ -18,7 +18,7 @@ Inherits BaseCanvas
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
 		  Me.SelectionStart = OffsetFromXY(X, Y)
-		  Return Me.SelectionStart > 0 
+		  Return Me.SelectionStart > 0
 		End Function
 	#tag EndEvent
 
@@ -87,7 +87,7 @@ Inherits BaseCanvas
 		  
 		  If ShowOffsets Then
 		    Dim tmp As String
-		    For i As Integer = 1 To 3
+		    For i As Integer = 1 To 6
 		      tmp = tmp + "0"
 		    Next
 		    gw = g.StringWidth(tmp) + 1
@@ -168,7 +168,7 @@ Inherits BaseCanvas
 		      BinGraphics.DrawString(data, 0, TextHeight - 2)
 		      TextGraphics.DrawString(txt, 0, TextHeight - 2)
 		      GutterGraphics.ForeColor = LineNumbersColor
-		      Dim linenumber As String = Hex(rowoffset, 4, LineNumbersLittleEndian)
+		      Dim linenumber As String = Hex(rowoffset, 6, LineNumbersLittleEndian)
 		      GutterGraphics.DrawString(linenumber, 0, TextHeight - 2)
 		      
 		      data = ""
@@ -212,7 +212,7 @@ Inherits BaseCanvas
 		      TextGraphics.FillRect(0, TextHeight - LineHeight, TextGraphics.Width, LineHeight)
 		      GutterGraphics.FillRect(0, TextHeight - LineHeight, GutterGraphics.Width, LineHeight)
 		      GutterGraphics.ForeColor = LineNumbersColor
-		      Dim linenumber As String = Hex(rowoffset, 4, LineNumbersLittleEndian)
+		      Dim linenumber As String = Hex(rowoffset, 6, LineNumbersLittleEndian)
 		      GutterGraphics.DrawString(linenumber, 0, TextHeight - 1)
 		    Loop
 		  End If
