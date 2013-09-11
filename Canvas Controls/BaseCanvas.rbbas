@@ -67,15 +67,11 @@ Inherits Canvas
 		  #pragma BreakOnExceptions Off
 		  Dim g As Graphics
 		  Try
-		    #If TargetWin32 Then
-		      If App.UseGDIPlus Then
-		        buffer = New Picture(Me.Width, Me.Height)
-		      Else
-		        buffer = New Picture(Me.Width, Me.Height, 32)
-		      End If
-		    #else
+		    If Not TargetWin32 Or App.UseGDIPlus Then
 		      buffer = New Picture(Me.Width, Me.Height)
-		    #endif
+		    Else
+		      buffer = New Picture(Me.Width, Me.Height, 32)
+		    End If
 		    g = Buffer.Graphics
 		  Catch
 		    Buffer = Nil
