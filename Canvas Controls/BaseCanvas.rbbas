@@ -48,9 +48,6 @@ Inherits Canvas
 		  #If RBVersion >= 2012 Then 'areas() was added in RS2012 R1
 		    #pragma Unused areas
 		  #endif
-		  If UpdateClearsBackground Then
-		    g.ClearRect(0, 0, g.Width, g.Height)
-		  End If
 		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Then Update(False)
 		  g.DrawPicture(buffer, 0, 0)
 		  
@@ -319,10 +316,6 @@ Inherits Canvas
 		Underline As Boolean
 	#tag EndComputedProperty
 
-	#tag Property, Flags = &h1
-		Protected UpdateClearsBackground As Boolean = False
-	#tag EndProperty
-
 
 	#tag ViewBehavior
 		#tag ViewProperty
@@ -359,6 +352,17 @@ Inherits Canvas
 			Name="Bold"
 			Group="Behavior"
 			Type="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Border"
+			Group="Behavior"
+			Type="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="BorderColor"
+			Group="Behavior"
+			InitialValue="&c000000"
+			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="DoubleBuffer"

@@ -67,13 +67,6 @@ Inherits BaseCanvas
 	#tag EndEvent
 
 	#tag Event
-		Sub Open()
-		  Me.UpdateClearsBackground = True
-		  RaiseEvent Open
-		End Sub
-	#tag EndEvent
-
-	#tag Event
 		Sub Paint	(g As Graphics)
 		  g.AntiAlias = True
 		  #If TargetWin32 Then
@@ -376,10 +369,6 @@ Inherits BaseCanvas
 		End Function
 	#tag EndMethod
 
-
-	#tag Hook, Flags = &h0
-		Event Open()
-	#tag EndHook
 
 	#tag Hook, Flags = &h0
 		Event Scrolled(LinesDelta As Integer, BytesDelta As Integer) As Boolean
