@@ -36,7 +36,7 @@ Inherits BaseCanvas
 		  If Stream = Nil Then Return False
 		  Dim data As String
 		  Stream.Position = Offset
-		  Do Until Buffer.Graphics.StringWidth(data) >= Buffer.Graphics.Width - Buffer.Graphics.StringWidth(" 00")
+		  Do Until BinGraphics.StringWidth(data) >= BinGraphics.Width - BinGraphics.StringWidth(" 00")
 		    Dim bt As Byte = Stream.ReadByte
 		    data = data + " " + Hex(bt, 2, LineNumbersLittleEndian) + " "
 		  Loop

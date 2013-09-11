@@ -140,6 +140,7 @@ Begin Window HexViewerTest
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Use a fixed-width font!"
       TextAlign       =   2
       TextColor       =   &h000000
