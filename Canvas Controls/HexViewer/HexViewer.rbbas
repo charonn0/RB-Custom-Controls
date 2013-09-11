@@ -17,9 +17,14 @@ Inherits BaseCanvas
 
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  Me.SelectionStart = OffsetFromXY(X, Y)
-		  Return Me.SelectionStart > 0
+		  Return True
 		End Function
+	#tag EndEvent
+
+	#tag Event
+		Sub MouseDrag(X As Integer, Y As Integer)
+		  Me.SelectionStart = OffsetFromXY(X, Y)
+		End Sub
 	#tag EndEvent
 
 	#tag Event
@@ -80,6 +85,7 @@ Inherits BaseCanvas
 		  If Stream = Nil Then
 		    DrawBlank(TextHeight)
 		  Else
+		    'DrawSelection()
 		    DrawMain(TextHeight)
 		  End If
 		  
@@ -223,6 +229,7 @@ Inherits BaseCanvas
 		    BinGraphics.ForeColor = ByteColor
 		    BinGraphics.DrawString(data, 0, TextHeight - 2) ' hexified bytes
 		    TextGraphics.DrawString(txt, 0, TextHeight - 2) ' ASCII characters
+		    
 		    ' line offsets
 		    GutterGraphics.ForeColor = LineNumbersColor
 		    Dim linenumber As String = Hex(rowoffset, 6, LineNumbersLittleEndian)
@@ -232,6 +239,33 @@ Inherits BaseCanvas
 		    txt = ""
 		    row = row + 1
 		  Loop
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Sub DrawSelection()
+		  Dim TextHeight, pos, bytewidth, col As Integer
+		  pos = Offset
+		  bytewidth = BinGraphics.StringWidth(".00")
+		  
+		  Do Until TextHeight > BinGraphics.Height Or pos > Stream.Length
+		    Do Until col > BytesPerLine
+		      If pos >= Me.SelectionStart And pos <= Me.SelectionEnd Then
+		        BinGraphics.ForeColor = &c0080FF00
+		        Dim x, y, w, h As Integer
+		        x = col * bytewidth
+		        y = textheight
+		        w = bytewidth
+		        h = LineHeight
+		        BinGraphics.FillRect(x, y, w, h)
+		      End If
+		      col = col + 1
+		      pos = pos + 1
+		    Loop
+		    col = 0
+		    TextHeight = TextHeight + LineHeight
+		  Loop
+		  
 		End Sub
 	#tag EndMethod
 
