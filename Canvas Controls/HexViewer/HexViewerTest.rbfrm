@@ -75,7 +75,7 @@ Begin Window HexViewerTest
       LockTop         =   False
       Scope           =   0
       State           =   0
-      TabIndex        =   2
+      TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -107,7 +107,7 @@ Begin Window HexViewerTest
       LockRight       =   True
       LockTop         =   False
       Scope           =   0
-      TabIndex        =   1
+      TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -138,9 +138,8 @@ Begin Window HexViewerTest
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
-      TabIndex        =   5
+      TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Use a fixed-width font!"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -220,7 +219,7 @@ Begin Window HexViewerTest
       Minimum         =   0
       PageStep        =   20
       Scope           =   0
-      TabIndex        =   6
+      TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   0
@@ -255,7 +254,11 @@ End
 		  If g <> Nil Then
 		    Dim bs As BinaryStream = BinaryStream.Open(g)
 		    HexViewer1.ShowData(bs)
-		    Self.Title = "Hex Viewer Test - " + g.AbsolutePath
+		    #If RBVersion >= 2013 Then
+		      Self.Title = "Hex Viewer Test - " + g.NativePath
+		    #Else
+		      Self.Title = "Hex Viewer Test - " + g.AbsolutePath
+		    #endif
 		    SetScrollMax()
 		  End If
 		End Sub
