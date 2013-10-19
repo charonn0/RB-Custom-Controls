@@ -458,6 +458,37 @@ Begin Window TestSelect
       Visible         =   True
       Width           =   148
    End
+   Begin PushButton PushButton13
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   False
+      Caption         =   "Paint Canvas"
+      Default         =   False
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   297
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   14
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   64
+      Underline       =   False
+      Visible         =   True
+      Width           =   148
+   End
 End
 #tag EndWindow
 
@@ -582,6 +613,13 @@ End
 	#tag Event
 		Sub Action()
 		  HexViewerTest.Show
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PushButton13
+	#tag Event
+		Sub Action()
+		  PaintTest.Show
 		End Sub
 	#tag EndEvent
 #tag EndEvents
