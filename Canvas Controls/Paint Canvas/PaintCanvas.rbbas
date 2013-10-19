@@ -337,13 +337,7 @@ Inherits Canvas
 
 	#tag Method, Flags = &h1
 		Protected Sub PreviewPoint(point As REALbasic.Point)
-		  SetGraphicsSettings(Overlay)
-		  If CancelDraw Then
-		    CancelDraw = False
-		    Me.Invalidate(False)
-		    Return
-		  End If
-		  Overlay.Graphics.FillRect(Point.X - ViewOffset.X, Point.Y - ViewOffset.Y, Me.PenSize, Me.PenSize)
+		  Me.PreviewLine(DragStart, point)
 		  Me.Invalidate(False)
 		End Sub
 	#tag EndMethod
