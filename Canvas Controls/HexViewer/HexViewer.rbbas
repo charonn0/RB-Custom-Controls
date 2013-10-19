@@ -17,6 +17,8 @@ Inherits BaseCanvas
 
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
 		  Return True
 		End Function
 	#tag EndEvent
