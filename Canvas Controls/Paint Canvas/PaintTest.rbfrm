@@ -249,14 +249,6 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events TextField1
-	#tag Event
-		Sub KeyUp(Key As String)
-		  #pragma Unused key
-		  PaintCanvas1.PreviewText(New REALbasic.Point(10, 10), Me.Text)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag Events Canvas1
 	#tag Event
 		Sub Paint(g As Graphics)

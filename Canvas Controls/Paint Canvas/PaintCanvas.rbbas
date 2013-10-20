@@ -3,11 +3,6 @@ Protected Class PaintCanvas
 Inherits Canvas
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  If IsContextualClick Then
-		    Overlay = Nil
-		    CancelDraw = True
-		    Return True
-		  End If
 		  'Check if we're dragging the resize thumb
 		  Dim p As New REALbasic.Point(X, Y)
 		  Dim view As New REALbasic.Rect(ViewOffset.X, ViewOffset.Y, DrawingBuffer.Width, DrawingBuffer.Height)
@@ -24,7 +19,7 @@ Inherits Canvas
 		    Case DrawingModes.Line, DrawingModes.Oval, DrawingModes.Rect, DrawingModes.Point, DrawingModes.FilledRect, DrawingModes.FilledOval
 		      DragStart = p
 		    Case DrawingModes.FloodFill
-		      DrawFill(p)
+		      DrawFill(Overlay, p)
 		    End Select
 		  End If
 		  Me.Invalidate(False)
@@ -37,25 +32,20 @@ Inherits Canvas
 		  Dim p As New REALbasic.Point(X, Y)
 		  Dim rect As New REALbasic.Rect(DragStart.X, DragStart.Y, X - DragStart.X, Y - DragStart.Y)
 		  
-		  If IsContextualClick Then
-		    Overlay = Nil
-		    CancelDraw = True
-		  End If
-		  
 		  Select Case Mode
 		  Case DrawingModes.Line
-		    PreviewLine(DragStart, p)
+		    DrawLine(Overlay, DragStart, p)
 		  Case DrawingModes.Oval
-		    PreviewOval(rect, False)
+		    DrawOval(Overlay, rect, False)
 		  Case DrawingModes.Rect
-		    PreviewRect(rect, False)
+		    DrawRect(Overlay, rect, False)
 		  Case DrawingModes.FilledRect
-		    PreviewRect(rect, True)
+		    DrawRect(Overlay, rect, True)
 		  Case DrawingModes.FilledOval
-		    PreviewOval(rect, True)
+		    DrawOval(Overlay, rect, True)
 		  Case DrawingModes.Point
 		    If DragStart.X <> X Or DragStart.Y <> Y Then
-		      PreviewPoint(p)
+		      DrawLine(OverLay, DragStart, p)
 		    End If
 		    DragStart = New REALbasic.Point(X, Y)
 		  Case DrawingModes.Resizing
@@ -96,17 +86,25 @@ Inherits Canvas
 		  Dim rect As New REALbasic.Rect(DragStart.X, DragStart.Y, X - DragStart.X, Y - DragStart.Y)
 		  Select Case Me.Mode
 		  Case DrawingModes.Line
-		    DrawLine(DragStart, p)
+		    DrawLine(DrawingBuffer, DragStart, p)
 		  Case DrawingModes.Oval
-		    DrawOval(rect, False)
+		    DrawOval(DrawingBuffer, rect, False)
 		  Case DrawingModes.Rect
-		    DrawRect(rect, False)
+		    DrawRect(DrawingBuffer, rect, False)
 		  Case DrawingModes.FilledRect
-		    DrawRect(rect, True)
+		    DrawRect(DrawingBuffer, rect, True)
 		  Case DrawingModes.FilledOval
-		    DrawOval(rect, True)
+		    DrawOval(DrawingBuffer, rect, True)
+		  Case DrawingModes.FloodFill
+		    DrawFill(DrawingBuffer, p)
 		  Case DrawingModes.Point
-		    If Not CancelDraw Then DrawingBuffer.Graphics.DrawPicture(OverLay, ViewOffset.X, ViewOffset.Y)
+		    If CancelDraw Then
+		      CancelDraw = False
+		      Me.Invalidate(False)
+		      CancelDraw = False
+		    Else
+		      DrawingBuffer.Graphics.DrawPicture(OverLay, ViewOffset.X, ViewOffset.Y)
+		    End If
 		  Case DrawingModes.Resizing
 		    SaveUndo()
 		    Me.Mode = LastMode
@@ -175,31 +173,40 @@ Inherits Canvas
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Sub DrawFill(Point As REALbasic.Point)
-		  SetGraphicsSettings(DrawingBuffer)
+		Protected Sub DrawFill(p As Picture, Point As REALbasic.Point)
 		  If CancelDraw Then
 		    CancelDraw = False
 		    Me.Invalidate(False)
+		    CancelDraw = False
 		    Return
 		  End If
-		  DrawingBuffer.RGBSurface.FloodFill(Point.X - ViewOffset.X, Point.Y - ViewOffset.Y, DrawingColor)
+		  p.Graphics.DrawPicture(DrawingBuffer, 0, 0)
+		  SetGraphicsSettings(p)
+		  If CancelDraw Then
+		    CancelDraw = False
+		    Me.Invalidate(False)
+		    CancelDraw = False
+		    Return
+		  End If
+		  p.RGBSurface.FloodFill(Point.X - ViewOffset.X, Point.Y - ViewOffset.Y, DrawingColor)
 		  
 		  Me.Invalidate(False)
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Sub DrawLine(Point1 As REALbasic.Point, Point2 As REALbasic.Point)
-		  SetGraphicsSettings(DrawingBuffer)
-		  Dim view As New REALbasic.Rect(ViewOffset.X, ViewOffset.Y, DrawingBuffer.Width, DrawingBuffer.Height)
+		Protected Sub DrawLine(p As Picture, Point1 As REALbasic.Point, Point2 As REALbasic.Point)
+		  If CancelDraw Then
+		    CancelDraw = False
+		    Me.Invalidate(False)
+		    CancelDraw = False
+		    Return
+		  End If
+		  
+		  SetGraphicsSettings(p)
+		  Dim view As New REALbasic.Rect(ViewOffset.X, ViewOffset.Y, p.Width, p.Height)
 		  
 		  If view.Contains(Point1) And view.Contains(Point2) Then
-		    If CancelDraw Then
-		      CancelDraw = False
-		      Me.Invalidate(False)
-		      Return
-		    End If
-		    
 		    If Point2.X < 0 Then
 		      Point2.X = Abs(Point2.X)
 		      Point1.X = Point1.X - Point2.X
@@ -208,33 +215,41 @@ Inherits Canvas
 		      Point2.Y = Abs(Point2.Y)
 		      Point1.Y = Point1.Y - Point2.Y
 		    End If
-		    DrawingBuffer.Graphics.DrawLine(Point1.X, Point1.Y, Point2.X, Point2.Y)
+		    p.Graphics.DrawLine(Point1.X, Point1.Y, Point2.X, Point2.Y)
 		    Me.Invalidate(False)
 		  End If
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Sub DrawOval(Dimensions As REALbasic.Rect, Fill As Boolean)
-		  SetGraphicsSettings(DrawingBuffer)
+		Protected Sub DrawOval(p As Picture, Dimensions As REALbasic.Rect, Fill As Boolean)
 		  If CancelDraw Then
 		    CancelDraw = False
 		    Me.Invalidate(False)
+		    CancelDraw = False
 		    Return
 		  End If
 		  
+		  SetGraphicsSettings(p)
 		  If Not Fill Then
-		    DrawingBuffer.Graphics.DrawOval(Dimensions.Left, Dimensions.Top, Dimensions.Width, Dimensions.Height)
+		    p.Graphics.DrawOval(Dimensions.Left, Dimensions.Top, Dimensions.Width, Dimensions.Height)
 		  Else
-		    DrawingBuffer.Graphics.FillOval(Dimensions.Left, Dimensions.Top, Dimensions.Width, Dimensions.Height)
+		    p.Graphics.FillOval(Dimensions.Left, Dimensions.Top, Dimensions.Width, Dimensions.Height)
 		  End If
 		  Me.Invalidate(False)
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Sub DrawRect(Dimensions As REALbasic.Rect, Fill As Boolean)
-		  SetGraphicsSettings(DrawingBuffer)
+		Protected Sub DrawRect(p As Picture, Dimensions As REALbasic.Rect, Fill As Boolean)
+		  If CancelDraw Then
+		    CancelDraw = False
+		    Me.Invalidate(False)
+		    CancelDraw = False
+		    Return
+		  End If
+		  
+		  SetGraphicsSettings(p)
 		  If Dimensions.Width < 0 Then
 		    Dimensions.Width = Abs(Dimensions.Width)
 		    Dimensions.Left = Dimensions.Left - Dimensions.Width
@@ -244,9 +259,9 @@ Inherits Canvas
 		    Dimensions.Top = Dimensions.Top - Dimensions.Height
 		  End If
 		  If Not Fill Then
-		    DrawingBuffer.Graphics.DrawRect(Dimensions.Left, Dimensions.Top, Dimensions.Width, Dimensions.Height)
+		    p.Graphics.DrawRect(Dimensions.Left, Dimensions.Top, Dimensions.Width, Dimensions.Height)
 		  Else
-		    DrawingBuffer.Graphics.FillRect(Dimensions.Left, Dimensions.Top, Dimensions.Width, Dimensions.Height)
+		    p.Graphics.FillRect(Dimensions.Left, Dimensions.Top, Dimensions.Width, Dimensions.Height)
 		  End If
 		  
 		  Refresh(False)
@@ -254,9 +269,9 @@ Inherits Canvas
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub DrawText(Point As REALbasic.Point, Text As String)
-		  SetGraphicsSettings(DrawingBuffer)
-		  Dim g As Graphics = DrawingBuffer.Graphics
+		Sub DrawText(p As Picture, Point As REALbasic.Point, Text As String)
+		  SetGraphicsSettings(p)
+		  Dim g As Graphics = p.Graphics
 		  Dim w, h As Double
 		  w = g.StringWidth(Text.Trim)
 		  h = g.StringHeight(Text.Trim, w)
@@ -273,106 +288,6 @@ Inherits Canvas
 		  Overlay = Nil
 		  Me.Invalidate(False)
 		  mViewOffset = Nil
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub PreviewFill(Point As REALbasic.Point)
-		  OverLay.Graphics.DrawPicture(DrawingBuffer, 0, 0)
-		  SetGraphicsSettings(OverLay)
-		  If CancelDraw Then
-		    CancelDraw = False
-		    Me.Invalidate(False)
-		    Return
-		  End If
-		  OverLay.RGBSurface.FloodFill(Point.X - ViewOffset.X, Point.Y - ViewOffset.Y, DrawingColor)
-		  
-		  Me.Invalidate(False)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub PreviewLine(Point1 As REALbasic.Point, Point2 As REALbasic.Point)
-		  SetGraphicsSettings(Overlay)
-		  Dim view As New REALbasic.Rect(ViewOffset.X, ViewOffset.Y, Overlay.Width, Overlay.Height)
-		  
-		  If view.Contains(Point1) And view.Contains(Point2) Then
-		    If CancelDraw Then
-		      CancelDraw = False
-		      Me.Invalidate(False)
-		      Return
-		    End If
-		    
-		    If Point2.X < 0 Then
-		      Point2.X = Abs(Point2.X)
-		      Point1.X = Point1.X - Point2.X
-		    End If
-		    If Point2.Y < 0 Then
-		      Point2.Y = Abs(Point2.Y)
-		      Point1.Y = Point1.Y - Point2.Y
-		    End If
-		    Overlay.Graphics.DrawLine(Point1.X, Point1.Y, Point2.X, Point2.Y)
-		    Me.Invalidate(False)
-		  End If
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub PreviewOval(Dimensions As REALbasic.Rect, Fill As Boolean)
-		  SetGraphicsSettings(Overlay)
-		  If CancelDraw Then
-		    CancelDraw = False
-		    Me.Invalidate(False)
-		    Return
-		  End If
-		  
-		  If Not Fill Then
-		    Overlay.Graphics.DrawOval(Dimensions.Left, Dimensions.Top, Dimensions.Width, Dimensions.Height)
-		  Else
-		    Overlay.Graphics.FillOval(Dimensions.Left, Dimensions.Top, Dimensions.Width, Dimensions.Height)
-		  End If
-		  Me.Invalidate(False)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub PreviewPoint(point As REALbasic.Point)
-		  Me.PreviewLine(DragStart, point)
-		  Me.Invalidate(False)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub PreviewRect(Dimensions As REALbasic.Rect, Fill As Boolean)
-		  SetGraphicsSettings(OverLay)
-		  If Dimensions.Width < 0 Then
-		    Dimensions.Width = Abs(Dimensions.Width)
-		    Dimensions.Left = Dimensions.Left - Dimensions.Width
-		  End If
-		  If Dimensions.Height < 0 Then
-		    Dimensions.Height = Abs(Dimensions.Height)
-		    Dimensions.Top = Dimensions.Top - Dimensions.Height
-		  End If
-		  If Not Fill Then
-		    Overlay.Graphics.DrawRect(Dimensions.Left, Dimensions.Top, Dimensions.Width, Dimensions.Height)
-		  Else
-		    Overlay.Graphics.FillRect(Dimensions.Left, Dimensions.Top, Dimensions.Width, Dimensions.Height)
-		  End If
-		  
-		  Refresh(False)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub PreviewText(Point As REALbasic.Point, Text As String)
-		  SetGraphicsSettings(OverLay)
-		  Dim g As Graphics = OverLay.Graphics
-		  Dim w, h As Double
-		  w = g.StringWidth(Text.Trim)
-		  h = g.StringHeight(Text.Trim, w) + 4
-		  g = g.Clip(Point.X, Point.Y, w, h)
-		  g.DrawString(Text.Trim, 0, g.Height - 2)
-		  Refresh(False)
 		End Sub
 	#tag EndMethod
 
