@@ -234,6 +234,8 @@ End
 		    PaintCanvas1.Mode = PaintCanvas.DrawingModes.Rect
 		  Case "Flood fill"
 		    PaintCanvas1.Mode = PaintCanvas.DrawingModes.FloodFill
+		  Case "Polygon"
+		    PaintCanvas1.Mode = PaintCanvas.DrawingModes.Polygon
 		  End Select
 		End Sub
 	#tag EndEvent
@@ -245,6 +247,7 @@ End
 		  Me.AddRow("Oval")
 		  Me.AddRow("Freehand")
 		  Me.AddRow("Rectangle")
+		  Me.AddRow("Polygon")
 		  Me.AddRow("Flood fill")
 		End Sub
 	#tag EndEvent

@@ -4,6 +4,8 @@ Inherits Canvas
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
 		  'Check if we're dragging the resize thumb
+		  X = X + 1
+		  Y = Y + 1
 		  Dim p As New REALbasic.Point(X, Y)
 		  Dim view As New REALbasic.Rect(ViewOffset.X, ViewOffset.Y, DrawingBuffer.Width, DrawingBuffer.Height)
 		  Dim thumb As New REALbasic.Rect(DrawingBuffer.Width + ViewOffset.X, DrawingBuffer.Height + ViewOffset.Y, 5, 5)  //Resize thumb
@@ -20,6 +22,9 @@ Inherits Canvas
 		      DragStart = p
 		    Case DrawingModes.FloodFill
 		      DrawFill(Overlay, p)
+		    Case DrawingModes.Polygon
+		      PolygonPoints.Append(p)
+		      DrawPolygon(OverLay, PolygonPoints, True)
 		    End Select
 		  End If
 		  Me.Invalidate(False)
@@ -29,6 +34,8 @@ Inherits Canvas
 
 	#tag Event
 		Sub MouseDrag(X As Integer, Y As Integer)
+		  X = X + 1
+		  Y = Y + 1
 		  Dim p As New REALbasic.Point(X, Y)
 		  Dim rect As New REALbasic.Rect(DragStart.X, DragStart.Y, X - DragStart.X, Y - DragStart.Y)
 		  
@@ -52,12 +59,17 @@ Inherits Canvas
 		    DragStart.X = X
 		    DragStart.Y = Y
 		    Me.Invalidate(False)
+		  Case DrawingModes.Polygon
+		    PolygonPoints.Append(p)
+		    DrawPolygon(OverLay, PolygonPoints, True)
 		  End Select
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub MouseMove(X As Integer, Y As Integer)
+		  X = X + 1
+		  Y = Y + 1
 		  Select Case Me.Mode
 		  Case DrawingModes.Resizing
 		    ' The user is dragging the resizing thumb to resize the picture
@@ -82,6 +94,8 @@ Inherits Canvas
 
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
+		  X = X + 1
+		  Y = Y + 1
 		  Dim p As New REALbasic.Point(X, Y)
 		  Dim rect As New REALbasic.Rect(DragStart.X, DragStart.Y, X - DragStart.X, Y - DragStart.Y)
 		  Select Case Me.Mode
@@ -114,6 +128,14 @@ Inherits Canvas
 		      tmp.Graphics.DrawPicture(DrawingBuffer, 0, 0)
 		      DrawingBuffer = tmp
 		    End If
+		  Case DrawingModes.Polygon
+		    If Keyboard.AsyncControlKey Then
+		      PolygonPoints.Append(p)
+		      DrawPolygon(DrawingBuffer, PolygonPoints, True)
+		    Else
+		      ReDim PolygonPoints(-1)
+		      OverLay = Nil
+		    End If
 		  End Select
 		  Me.Refresh
 		  DragStart = New REALbasic.Point(0, 0)
@@ -137,17 +159,21 @@ Inherits Canvas
 		  If Not PaintBackdrop(g) Then
 		    g.ForeColor = &c808080  //Dark grey
 		    g.FillRect(0, 0, g.Width, g.Height)
+		    g.ForeColor = &c00000000  //Black
+		    g.DrawRect(0, 0, g.Width, g.Height)
 		  End If
 		  
-		  Dim drawable As Graphics = g.Clip(ViewOffset.X, ViewOffset.Y, DrawingBuffer.Width, DrawingBuffer.Height)
+		  Dim drawable As Graphics = g.Clip(ViewOffset.X + 1, ViewOffset.Y + 1, DrawingBuffer.Width, DrawingBuffer.Height)
 		  If Not PaintDrawingBuffer(drawable) Then
-		    g.DrawPicture(DrawingBuffer, ViewOffset.X, ViewOffset.Y)
+		    g.DrawPicture(DrawingBuffer, ViewOffset.X + 1, ViewOffset.Y + 1)
 		  End If
 		  
 		  If Not PaintOverlay(g) Then
 		    g.DrawPicture(Overlay, 0, 0)
 		    g.ForeColor = &c494949
 		    g.FillRect(DrawingBuffer.Width + ViewOffset.X, DrawingBuffer.Height + ViewOffset.Y, 5, 5)  //Resize thumb
+		    g.ForeColor = Me.DrawingColor
+		    g.FillRect(g.Width - 50, g.Height - 50, 50, 50)
 		  End If
 		  
 		  If Mode <> DrawingModes.Point Then Overlay = Nil
@@ -182,12 +208,6 @@ Inherits Canvas
 		  End If
 		  p.Graphics.DrawPicture(DrawingBuffer, 0, 0)
 		  SetGraphicsSettings(p)
-		  If CancelDraw Then
-		    CancelDraw = False
-		    Me.Invalidate(False)
-		    CancelDraw = False
-		    Return
-		  End If
 		  p.RGBSurface.FloodFill(Point.X - ViewOffset.X, Point.Y - ViewOffset.Y, DrawingColor)
 		  
 		  Me.Invalidate(False)
@@ -237,6 +257,28 @@ Inherits Canvas
 		    p.Graphics.FillOval(Dimensions.Left, Dimensions.Top, Dimensions.Width, Dimensions.Height)
 		  End If
 		  Me.Invalidate(False)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub DrawPolygon(p As Picture, Points() As RealBasic.Point, Fill As Boolean)
+		  If CancelDraw Then
+		    CancelDraw = False
+		    Me.Invalidate(False)
+		    CancelDraw = False
+		    Return
+		  End If
+		  If UBound(Points) > 0 Then
+		    SetGraphicsSettings(p)
+		    For i As Integer = 1 To UBound(Points)
+		      Dim p1, p2 As REALbasic.Point
+		      p1 = Points(i - 1)
+		      p2 = Points(i)
+		      p.Graphics.DrawLine(p1.X, p1.Y, p2.X, p2.Y)
+		    Next
+		  End If
+		  
+		  Me.Refresh(False)
 		End Sub
 	#tag EndMethod
 
@@ -396,6 +438,10 @@ Inherits Canvas
 		PenSize As Integer
 	#tag EndProperty
 
+	#tag Property, Flags = &h1
+		Protected PolygonPoints() As REALbasic.Point
+	#tag EndProperty
+
 	#tag Property, Flags = &h0
 		TextFont As String
 	#tag EndProperty
@@ -415,7 +461,8 @@ Inherits Canvas
 		  Rect
 		  FloodFill
 		  Magnify
-		Resizing
+		  Resizing
+		Polygon
 	#tag EndEnum
 
 
