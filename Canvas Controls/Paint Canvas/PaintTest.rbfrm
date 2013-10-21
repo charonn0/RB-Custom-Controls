@@ -171,6 +171,11 @@ End
 	#tag EndMenuHandler
 
 
+	#tag Property, Flags = &h1
+		Protected ControlIndex As Integer
+	#tag EndProperty
+
+
 #tag EndWindowCode
 
 #tag Events PopupMenu1
@@ -212,14 +217,17 @@ End
 #tag Events PaintCanvas1
 	#tag Event
 		Sub Open()
-		  Dim r As New REALbasic.Rect(Me.Width - 15, Me.Height - 15, 15, 15)
+		  Dim r As New REALbasic.Rect(Me.Width - 25, Me.Height - 25, 25, 25)
 		  Me.AddControlItem(r, "ColorSelect")
-		  r = New REALbasic.Rect(Me.Width - 15, 0, 15, 15)
+		  r = New REALbasic.Rect(Me.Width - 25, 0, 25, 25)
 		  Me.AddControlItem(r, "Line")
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub ControlItemPaint(g As Graphics, Index As Integer)
+		  g.ForeColor = &cFFFFFF00
+		  g.FillRect(0, 0, g.Width, g.Height)
+		  
 		  Select Case Me.ControlItemTag(Index)
 		  Case "ColorSelect"
 		    Dim p As New REALbasic.Point(Me.MouseX, Me.MouseY)
@@ -228,11 +236,11 @@ End
 		      Me.ControlItem(Index).Top = Me.Height - 50
 		      Me.ControlItem(Index).Width = 50
 		      Me.ControlItem(Index).Height = 50
-		    ElseIf Me.ControlItem(Index).Width <> 15 And Not Me.ControlItem(Index).Contains(p) Then
-		      Me.ControlItem(Index).Left = Me.Width - 15
-		      Me.ControlItem(Index).Top = Me.Height - 15
-		      Me.ControlItem(Index).Width = 15
-		      Me.ControlItem(Index).Height = 15
+		    ElseIf Me.ControlItem(Index).Width <> 25 And Not Me.ControlItem(Index).Contains(p) Then
+		      Me.ControlItem(Index).Left = Me.Width - 25
+		      Me.ControlItem(Index).Top = Me.Height - 25
+		      Me.ControlItem(Index).Width = 25
+		      Me.ControlItem(Index).Height = 25
 		    Else
 		      Me.ControlItem(Index).Left = Me.Width - Me.ControlItem(Index).Width
 		      Me.ControlItem(Index).Top = Me.Height - Me.ControlItem(Index).Height
@@ -249,24 +257,26 @@ End
 		      Me.ControlItem(Index).Left = Me.Width - 50
 		      Me.ControlItem(Index).Width = 50
 		      Me.ControlItem(Index).Height = 50
-		    ElseIf Me.ControlItem(Index).Width <> 15 And Not Me.ControlItem(Index).Contains(p) Then
-		      Me.ControlItem(Index).Left = Me.Width - 15
-		      Me.ControlItem(Index).Width = 15
-		      Me.ControlItem(Index).Height = 15
+		    ElseIf Me.ControlItem(Index).Width <> 25 And Not Me.ControlItem(Index).Contains(p) Then
+		      Me.ControlItem(Index).Left = Me.Width - 25
+		      Me.ControlItem(Index).Width = 25
+		      Me.ControlItem(Index).Height = 25
 		    Else
 		      Me.ControlItem(Index).Left = Me.Width - Me.ControlItem(Index).Width
-		      'Me.ControlItem(Index).Top = Me.Height - Me.ControlItem(Index).Height
 		    End If
-		    g.ForeColor = &cFFFFFF00
-		    g.FillRect(0, 0, g.Width, g.Height)
-		    'If Me.ControlItem(Index).Width = 50 Then
 		    g.DrawPicture(pen_icon, 0, 0, g.Width, g.Height, 0, 0, pen_icon.Width, pen_icon.Height)
-		    'End If
 		  End Select
 		  
-		  g.ForeColor = &c00000000
-		  g.PenHeight = 1
-		  g.PenWidth = 1
+		  
+		  If Index = ControlIndex Then
+		    g.ForeColor = &c0000FF00
+		    g.PenHeight = 3
+		    g.PenWidth = 3
+		  Else
+		    g.ForeColor = &c00000000
+		    g.PenHeight = 1
+		    g.PenWidth = 1
+		  End If
 		  g.DrawRect(0, 0, g.Width, g.Height)
 		End Sub
 	#tag EndEvent
@@ -281,6 +291,7 @@ End
 		  Case "Line"
 		    Me.LastMode = PaintCanvas.DrawingModes.Point
 		  End Select
+		  ControlIndex = Index
 		End Sub
 	#tag EndEvent
 #tag EndEvents
