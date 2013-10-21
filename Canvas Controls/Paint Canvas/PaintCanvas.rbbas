@@ -4,11 +4,12 @@ Inherits Canvas
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
 		  'Check if we're dragging the resize thumb
-		  X = X + 1
-		  Y = Y + 1
+		  X = X - ViewOffset.X
+		  Y = Y - ViewOffset.Y
 		  Dim p As New REALbasic.Point(X, Y)
 		  Dim view As New REALbasic.Rect(ViewOffset.X, ViewOffset.Y, DrawingBuffer.Width, DrawingBuffer.Height)
 		  Dim thumb As New REALbasic.Rect(DrawingBuffer.Width + ViewOffset.X, DrawingBuffer.Height + ViewOffset.Y, 5, 5)  //Resize thumb
+		  
 		  If thumb.Contains(p) Then
 		    ' mouse is over the resize thumb
 		    Me.LastMode = Me.Mode
@@ -34,8 +35,8 @@ Inherits Canvas
 
 	#tag Event
 		Sub MouseDrag(X As Integer, Y As Integer)
-		  X = X + 1
-		  Y = Y + 1
+		  X = X - ViewOffset.X
+		  Y = Y - ViewOffset.Y
 		  Dim p As New REALbasic.Point(X, Y)
 		  Dim rect As New REALbasic.Rect(DragStart.X, DragStart.Y, X - DragStart.X, Y - DragStart.Y)
 		  
@@ -68,17 +69,35 @@ Inherits Canvas
 
 	#tag Event
 		Sub MouseMove(X As Integer, Y As Integer)
-		  X = X + 1
-		  Y = Y + 1
+		  X = X - ViewOffset.X
+		  Y = Y - ViewOffset.Y
 		  Select Case Me.Mode
 		  Case DrawingModes.Resizing
 		    ' The user is dragging the resizing thumb to resize the picture
 		    DragStart.X = X
 		    DragStart.Y = Y
-		    Me.Invalidate(False)
 		  Else
+		    Dim p As New REALbasic.Point(X, Y)
+		    Dim rect As New REALbasic.Rect(DragStart.X, DragStart.Y, X - DragStart.X, Y - DragStart.Y)
+		    If Me.Mode <> DrawingModes.ModeSelect Then LastMode = Me.Mode
+		    For i As Integer = 0 To UBound(ControlRects)
+		      Dim crect As REALbasic.Rect = ControlRects(i)
+		      If crect.Contains(p) Then
+		        Me.Mode = DrawingModes.ModeSelect
+		        Exit For
+		      Else
+		        Me.Mode = LastMode
+		      End If
+		    Next
+		    
+		    'ColorSelectRect = New REALbasic.Rect(Me.Width - 50, Me.Height - 50, 50, 50)
+		    'Me.MouseCursor = System.Cursors.FingerPointer
+		    'Else'If ColorSelectRect <> Nil Then
+		    'ColorSelectRect = New REALbasic.Rect(Me.Width - 15, Me.Height - 15, 15, 15)
+		    'Me.MouseCursor = System.Cursors.StandardPointer
+		    'End If
 		    ' check to see whether we're hovering over the resizing thumb
-		    If X >= DrawingBuffer.Width + ViewOffset.X And X <= DrawingBuffer.Width + ViewOffset.X + 5 And Y >= DrawingBuffer.Height + ViewOffset.Y And Y <= DrawingBuffer.Height + ViewOffset.Y + 5 Then
+		    If rect.Contains(p) Then
 		      ' we are, change the mouse cursor
 		      Me.mousecursor = System.Cursors.ArrowNorthwestSoutheast
 		    Else
@@ -86,7 +105,7 @@ Inherits Canvas
 		      Me.MouseCursor = System.Cursors.StandardPointer
 		    End If
 		  End Select
-		  
+		  Me.Invalidate(False)
 		  ' Raise the event to the subclass
 		  RaiseEvent MouseMove(System.MouseX, System.MouseY)
 		End Sub
@@ -94,11 +113,20 @@ Inherits Canvas
 
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
-		  X = X + 1
-		  Y = Y + 1
+		  X = X - ViewOffset.X
+		  Y = Y - ViewOffset.Y
 		  Dim p As New REALbasic.Point(X, Y)
 		  Dim rect As New REALbasic.Rect(DragStart.X, DragStart.Y, X - DragStart.X, Y - DragStart.Y)
+		  
 		  Select Case Me.Mode
+		  Case DrawingModes.ModeSelect
+		    For i As Integer = 0 To UBound(ControlRects)
+		      Dim crect As REALbasic.Rect = ControlRects(i)
+		      If crect.Contains(p) Then
+		        RaiseEvent ControlItemAction(i)
+		      End If
+		    Next
+		    Me.Mode = LastMode
 		  Case DrawingModes.Line
 		    DrawLine(DrawingBuffer, DragStart, p)
 		  Case DrawingModes.Oval
@@ -137,7 +165,8 @@ Inherits Canvas
 		      OverLay = Nil
 		    End If
 		  End Select
-		  Me.Refresh
+		  
+		  Me.Invalidate(False)
 		  DragStart = New REALbasic.Point(0, 0)
 		  CancelDraw = False
 		  
@@ -150,6 +179,7 @@ Inherits Canvas
 		  Me.AcceptFocus = True
 		  DrawingBuffer = New Picture(500, 500, 32)
 		  App.UseGDIPlus = True
+		  RaiseEvent Open()
 		End Sub
 	#tag EndEvent
 
@@ -163,21 +193,33 @@ Inherits Canvas
 		    g.DrawRect(0, 0, g.Width, g.Height)
 		  End If
 		  
-		  Dim drawable As Graphics = g.Clip(ViewOffset.X + 1, ViewOffset.Y + 1, DrawingBuffer.Width, DrawingBuffer.Height)
+		  Dim drawable As Graphics = g.Clip(ViewOffset.X, ViewOffset.Y, DrawingBuffer.Width, DrawingBuffer.Height)
 		  If Not PaintDrawingBuffer(drawable) Then
-		    g.DrawPicture(DrawingBuffer, ViewOffset.X + 1, ViewOffset.Y + 1)
+		    drawable.DrawPicture(DrawingBuffer, ViewOffset.X, ViewOffset.Y)
+		    
+		    g.ForeColor = &c00000000
+		    g.PenHeight = 1
+		    g.PenWidth = 1
+		    g.DrawRect(ViewOffset.X - 1, ViewOffset.Y - 1, DrawingBuffer.Width + 2, DrawingBuffer.Height + 1) ' buffer border
+		    g.ForeColor = &c494949
+		    g.FillRect(DrawingBuffer.Width + ViewOffset.X, DrawingBuffer.Height + ViewOffset.Y, 5, 5)  //Resize thumb
 		  End If
 		  
 		  If Not PaintOverlay(g) Then
 		    g.DrawPicture(Overlay, 0, 0)
-		    g.ForeColor = &c494949
-		    g.FillRect(DrawingBuffer.Width + ViewOffset.X, DrawingBuffer.Height + ViewOffset.Y, 5, 5)  //Resize thumb
-		    g.ForeColor = Me.DrawingColor
-		    g.FillRect(g.Width - 50, g.Height - 50, 50, 50)
+		    For i As Integer = 0 To UBound(ControlRects)
+		      Dim r As REALbasic.Rect = ControlRects(i)
+		      g.ForeColor = &cFFFFFF00
+		      g.FillRect(r.Left, r.Top, r.Width, r.Height)
+		      RaiseEvent ControlItemPaint(g.Clip(r.Left, r.Top, r.Width, r.Height), i)
+		    Next
 		  End If
 		  
 		  If Mode <> DrawingModes.Point Then Overlay = Nil
-		  
+		  g.ForeColor = &c00000000
+		  g.PenHeight = 1
+		  g.PenWidth = 1
+		  g.DrawRect(0, 0, g.Width, g.Height) ' control border
 		  If Me.Mode = DrawingModes.Resizing Then
 		    g.ForeColor = &c00FF00
 		    g.PenHeight = 3
@@ -190,11 +232,46 @@ Inherits Canvas
 
 
 	#tag Method, Flags = &h0
+		Sub AddControlItem(Dimensions As REALbasic.Rect, Tag As Variant)
+		  If Dimensions <> Nil Then
+		    ControlRects.Append(Dimensions)
+		    ControlTags.Append(Tag)
+		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub Clear()
 		  SaveUndo()
 		  DrawingBuffer = New Picture(DrawingBuffer.Width, DrawingBuffer.Height, 32)
 		  OverLay = Nil
 		  Me.Invalidate(True)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function ControlItem(Index As Integer) As REALbasic.Rect
+		  Return ControlRects(Index)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ControlItem(Index As Integer, Assigns NewRect As REALbasic.Rect)
+		  ControlRects(Index) = NewRect
+		  Me.Invalidate()
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function ControlItemTag(Index As Integer) As Variant
+		  Return ControlTags(Index)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ControlItemTag(Index As Integer, Assigns NewTag As Variant)
+		  ControlTags(Index) = NewTag
+		  Me.Invalidate()
 		End Sub
 	#tag EndMethod
 
@@ -278,7 +355,7 @@ Inherits Canvas
 		    Next
 		  End If
 		  
-		  Me.Refresh(False)
+		  Me.Invalidate(False)
 		End Sub
 	#tag EndMethod
 
@@ -306,7 +383,7 @@ Inherits Canvas
 		    p.Graphics.FillRect(Dimensions.Left, Dimensions.Top, Dimensions.Width, Dimensions.Height)
 		  End If
 		  
-		  Refresh(False)
+		  Me.Invalidate(False)
 		End Sub
 	#tag EndMethod
 
@@ -319,7 +396,17 @@ Inherits Canvas
 		  h = g.StringHeight(Text.Trim, w)
 		  g = g.Clip(Point.X, Point.Y, w, h)
 		  g.DrawString(Text.Trim, 0, g.Height)
-		  Refresh(False)
+		  Me.Invalidate(False)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub InsertControlItem(Index As Integer, Dimensions As REALbasic.Rect, Tag As Variant)
+		  If Dimensions <> Nil Then
+		    ControlRects.Insert(Index, Dimensions)
+		    ControlTags.Insert(Index, Tag)
+		  End If
+		  Me.Invalidate()
 		End Sub
 	#tag EndMethod
 
@@ -329,7 +416,22 @@ Inherits Canvas
 		  DrawingBuffer = p
 		  Overlay = Nil
 		  Me.Invalidate(False)
-		  mViewOffset = Nil
+		  mViewOffset = New REALbasic.Point(0, 0)
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub RemoveControlItem(Tag As Variant)
+		  For i As Integer = UBound(ControlTags) DownTo 0
+		    If Tag <> ControlTags(i) Then
+		      Continue
+		    Else
+		      ControlTags.Remove(i)
+		      ControlRects.Remove(i)
+		    End If
+		  Next
+		  Me.Invalidate()
 		End Sub
 	#tag EndMethod
 
@@ -360,11 +462,23 @@ Inherits Canvas
 
 
 	#tag Hook, Flags = &h0
+		Event ControlItemAction(Index As Integer)
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event ControlItemPaint(g As Graphics, Index As Integer)
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
 		Event MouseDown(X As Integer, Y As Integer) As Boolean
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
 		Event MouseMove(X As Integer, Y As Integer)
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event Open()
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
@@ -388,6 +502,14 @@ Inherits Canvas
 		Protected CancelDraw As Boolean
 	#tag EndProperty
 
+	#tag Property, Flags = &h21
+		Private ControlRects() As REALbasic.Rect
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private ControlTags() As Variant
+	#tag EndProperty
+
 	#tag Property, Flags = &h1
 		Protected DragStart As REALbasic.Point
 	#tag EndProperty
@@ -400,8 +522,8 @@ Inherits Canvas
 		DrawingColor As Color
 	#tag EndProperty
 
-	#tag Property, Flags = &h1
-		Protected LastMode As DrawingModes
+	#tag Property, Flags = &h0
+		LastMode As DrawingModes
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -462,7 +584,8 @@ Inherits Canvas
 		  FloodFill
 		  Magnify
 		  Resizing
-		Polygon
+		  Polygon
+		ModeSelect
 	#tag EndEnum
 
 

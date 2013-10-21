@@ -12,14 +12,14 @@ Begin Window PaintTest
    LiveResize      =   True
    MacProcID       =   0
    MaxHeight       =   32000
-   MaximizeButton  =   False
+   MaximizeButton  =   True
    MaxWidth        =   32000
    MenuBar         =   499095551
    MenuBarVisible  =   True
    MinHeight       =   64
    MinimizeButton  =   True
    MinWidth        =   64
-   Placement       =   1
+   Placement       =   0
    Resizeable      =   True
    Title           =   "Paint Test"
    Visible         =   True
@@ -127,33 +127,6 @@ Begin Window PaintTest
       Visible         =   True
       Width           =   225
    End
-   Begin Canvas Canvas1
-      AcceptFocus     =   ""
-      AcceptTabs      =   ""
-      AutoDeactivate  =   True
-      Backdrop        =   ""
-      DoubleBuffer    =   False
-      Enabled         =   True
-      EraseBackground =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   341
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   ""
-      LockTop         =   False
-      Scope           =   0
-      TabIndex        =   4
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   534
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   23
-   End
    Begin PopupMenu PopupMenu2
       AutoDeactivate  =   True
       Bold            =   ""
@@ -192,22 +165,6 @@ End
 	#tag MenuHandler
 		Function EditClear() As Boolean Handles EditClear.Action
 			PaintCanvas1.Clear
-			Return True
-			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
-		Function EditUndo() As Boolean Handles EditUndo.Action
-			'Call PaintCanvas1.UnDo
-			Return True
-			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
-		Function ReDoItem() As Boolean Handles ReDoItem.Action
-			'Call PaintCanvas1.ReDo
 			Return True
 			
 		End Function
@@ -252,39 +209,78 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events Canvas1
+#tag Events PaintCanvas1
 	#tag Event
-		Sub Paint(g As Graphics)
-		  g.ForeColor = PaintCanvas1.DrawingColor
-		  g.FillRect(2, 2, g.Width - 4, G.Height - 4)
+		Sub Open()
+		  Dim r As New REALbasic.Rect(Me.Width - 15, Me.Height - 15, 15, 15)
+		  Me.AddControlItem(r, "ColorSelect")
+		  r = New REALbasic.Rect(Me.Width - 15, 0, 15, 15)
+		  Me.AddControlItem(r, "Line")
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  #pragma Unused X
-		  #pragma Unused Y
-		  Return True
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub MouseUp(X As Integer, Y As Integer)
-		  #pragma Unused X
-		  #pragma Unused Y
-		  Dim c As Color = PaintCanvas1.DrawingColor
-		  If SelectColor(c, "New brush color") Then
-		    PaintCanvas1.DrawingColor = c
-		    Me.Invalidate
-		  End If
+		Sub ControlItemPaint(g As Graphics, Index As Integer)
+		  Select Case Me.ControlItemTag(Index)
+		  Case "ColorSelect"
+		    Dim p As New REALbasic.Point(Me.MouseX, Me.MouseY)
+		    If Me.ControlItem(Index).Contains(p) And Me.ControlItem(Index).Width <> 50 Then
+		      Me.ControlItem(Index).Left = Me.Width - 50
+		      Me.ControlItem(Index).Top = Me.Height - 50
+		      Me.ControlItem(Index).Width = 50
+		      Me.ControlItem(Index).Height = 50
+		    ElseIf Me.ControlItem(Index).Width <> 15 And Not Me.ControlItem(Index).Contains(p) Then
+		      Me.ControlItem(Index).Left = Me.Width - 15
+		      Me.ControlItem(Index).Top = Me.Height - 15
+		      Me.ControlItem(Index).Width = 15
+		      Me.ControlItem(Index).Height = 15
+		    Else
+		      Me.ControlItem(Index).Left = Me.Width - Me.ControlItem(Index).Width
+		      Me.ControlItem(Index).Top = Me.Height - Me.ControlItem(Index).Height
+		    End If
+		    g.ForeColor = Me.DrawingColor ' color select
+		    g.FillRect(0, 0, g.Width, g.Height)
+		    If Me.ControlItem(Index).Width = 50 Then
+		      g.DrawPicture(Color_palette, 0, 0, g.Width, g.Height, 0, 0, Color_palette.Width, Color_palette.Height)
+		    End If
+		    
+		  Case "Line"
+		    Dim p As New REALbasic.Point(Me.MouseX, Me.MouseY)
+		    If Me.ControlItem(Index).Contains(p) And Me.ControlItem(Index).Width <> 50 Then
+		      Me.ControlItem(Index).Left = Me.Width - 50
+		      Me.ControlItem(Index).Width = 50
+		      Me.ControlItem(Index).Height = 50
+		    ElseIf Me.ControlItem(Index).Width <> 15 And Not Me.ControlItem(Index).Contains(p) Then
+		      Me.ControlItem(Index).Left = Me.Width - 15
+		      Me.ControlItem(Index).Width = 15
+		      Me.ControlItem(Index).Height = 15
+		    Else
+		      Me.ControlItem(Index).Left = Me.Width - Me.ControlItem(Index).Width
+		      'Me.ControlItem(Index).Top = Me.Height - Me.ControlItem(Index).Height
+		    End If
+		    g.ForeColor = &cFFFFFF00
+		    g.FillRect(0, 0, g.Width, g.Height)
+		    'If Me.ControlItem(Index).Width = 50 Then
+		    g.DrawPicture(pen_icon, 0, 0, g.Width, g.Height, 0, 0, pen_icon.Width, pen_icon.Height)
+		    'End If
+		  End Select
+		  
+		  g.ForeColor = &c00000000
+		  g.PenHeight = 1
+		  g.PenWidth = 1
+		  g.DrawRect(0, 0, g.Width, g.Height)
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub MouseEnter()
-		  Me.MouseCursor = System.Cursors.FingerPointer
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseExit()
-		  Me.MouseCursor = System.Cursors.StandardPointer
+		Sub ControlItemAction(Index As Integer)
+		  Select Case Me.ControlItemTag(Index)
+		  Case "ColorSelect"
+		    Dim c As Color = PaintCanvas1.DrawingColor
+		    If SelectColor(c, "") Then
+		      PaintCanvas1.DrawingColor = c
+		    End If
+		  Case "Line"
+		    Me.LastMode = PaintCanvas.DrawingModes.Point
+		  End Select
 		End Sub
 	#tag EndEvent
 #tag EndEvents
