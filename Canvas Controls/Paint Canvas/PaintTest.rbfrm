@@ -230,40 +230,14 @@ End
 		  
 		  Select Case Me.ControlItemTag(Index)
 		  Case "ColorSelect"
-		    Dim p As New REALbasic.Point(Me.MouseX, Me.MouseY)
-		    If Me.ControlItem(Index).Contains(p) And Me.ControlItem(Index).Width <> 50 Then
-		      Me.ControlItem(Index).Left = Me.Width - 50
-		      Me.ControlItem(Index).Top = Me.Height - 50
-		      Me.ControlItem(Index).Width = 50
-		      Me.ControlItem(Index).Height = 50
-		    ElseIf Me.ControlItem(Index).Width <> 25 And Not Me.ControlItem(Index).Contains(p) Then
-		      Me.ControlItem(Index).Left = Me.Width - 25
-		      Me.ControlItem(Index).Top = Me.Height - 25
-		      Me.ControlItem(Index).Width = 25
-		      Me.ControlItem(Index).Height = 25
-		    Else
-		      Me.ControlItem(Index).Left = Me.Width - Me.ControlItem(Index).Width
-		      Me.ControlItem(Index).Top = Me.Height - Me.ControlItem(Index).Height
-		    End If
 		    g.ForeColor = Me.DrawingColor ' color select
 		    g.FillRect(0, 0, g.Width, g.Height)
+		    
 		    If Me.ControlItem(Index).Width = 50 Then
 		      g.DrawPicture(Color_palette, 0, 0, g.Width, g.Height, 0, 0, Color_palette.Width, Color_palette.Height)
 		    End If
 		    
 		  Case "Line"
-		    Dim p As New REALbasic.Point(Me.MouseX, Me.MouseY)
-		    If Me.ControlItem(Index).Contains(p) And Me.ControlItem(Index).Width <> 50 Then
-		      Me.ControlItem(Index).Left = Me.Width - 50
-		      Me.ControlItem(Index).Width = 50
-		      Me.ControlItem(Index).Height = 50
-		    ElseIf Me.ControlItem(Index).Width <> 25 And Not Me.ControlItem(Index).Contains(p) Then
-		      Me.ControlItem(Index).Left = Me.Width - 25
-		      Me.ControlItem(Index).Width = 25
-		      Me.ControlItem(Index).Height = 25
-		    Else
-		      Me.ControlItem(Index).Left = Me.Width - Me.ControlItem(Index).Width
-		    End If
 		    g.DrawPicture(pen_icon, 0, 0, g.Width, g.Height, 0, 0, pen_icon.Width, pen_icon.Height)
 		  End Select
 		  
@@ -292,6 +266,43 @@ End
 		    Me.LastMode = PaintCanvas.DrawingModes.Point
 		  End Select
 		  ControlIndex = Index
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseMove(X As Integer, Y As Integer)
+		  Dim p As New REALbasic.Point(Me.MouseX, Me.MouseY)
+		  Dim ccount As Integer = PaintCanvas1.ControlItemCount - 1
+		  For i As Integer = 0 To ccount
+		    Dim r As REALbasic.Rect = PaintCanvas1.ControlItem(i)
+		    If r.Contains(p) Then
+		      Select Case Me.ControlItemTag(i)
+		      Case "ColorSelect"
+		        r.Top = Me.Height - 50
+		        r.Left = Me.Width - 50
+		        r.Width = 50
+		        r.Height = 50
+		      Case "Line"
+		        r.Top = 0
+		        r.Left = Me.Width - 50
+		        r.Width = 50
+		        r.Height = 50
+		      End Select
+		    Else
+		      Select Case Me.ControlItemTag(i)
+		      Case "ColorSelect"
+		        r.Top = Me.Height - 25
+		        r.Left = Me.Width - 25
+		        r.Width = 25
+		        r.Height = 25
+		      Case "Line"
+		        r.Top = 0
+		        r.Left = Me.Width - 25
+		        r.Width = 25
+		        r.Height = 25
+		      End Select
+		    End If
+		    PaintCanvas1.ControlItem(i) = r
+		  Next
 		End Sub
 	#tag EndEvent
 #tag EndEvents

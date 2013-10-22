@@ -84,18 +84,15 @@ Inherits Canvas
 		      Dim crect As REALbasic.Rect = ControlRects(i)
 		      If crect.Contains(p) Then
 		        Me.Mode = DrawingModes.ModeSelect
+		        Me.Invalidate(False)
 		        Exit For
-		      Else
+		      ElseIf Me.Mode <> LastMode Then
 		        Me.Mode = LastMode
+		        Me.Invalidate(False)
 		      End If
 		    Next
+		    '
 		    
-		    'ColorSelectRect = New REALbasic.Rect(Me.Width - 50, Me.Height - 50, 50, 50)
-		    'Me.MouseCursor = System.Cursors.FingerPointer
-		    'Else'If ColorSelectRect <> Nil Then
-		    'ColorSelectRect = New REALbasic.Rect(Me.Width - 15, Me.Height - 15, 15, 15)
-		    'Me.MouseCursor = System.Cursors.StandardPointer
-		    'End If
 		    ' check to see whether we're hovering over the resizing thumb
 		    If rect.Contains(p) Then
 		      ' we are, change the mouse cursor
@@ -105,7 +102,6 @@ Inherits Canvas
 		      Me.MouseCursor = System.Cursors.StandardPointer
 		    End If
 		  End Select
-		  Me.Invalidate(False)
 		  ' Raise the event to the subclass
 		  RaiseEvent MouseMove(System.MouseX, System.MouseY)
 		End Sub
@@ -258,8 +254,14 @@ Inherits Canvas
 	#tag Method, Flags = &h0
 		Sub ControlItem(Index As Integer, Assigns NewRect As REALbasic.Rect)
 		  ControlRects(Index) = NewRect
-		  Me.Invalidate()
+		  'Me.Invalidate()
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function ControlItemCount() As Integer
+		  Return UBound(ControlRects) + 1
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
