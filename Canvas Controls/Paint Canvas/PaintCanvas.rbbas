@@ -94,7 +94,8 @@ Inherits Canvas
 		    '
 		    
 		    ' check to see whether we're hovering over the resizing thumb
-		    If rect.Contains(p) Then
+		    Dim thumb As New REALbasic.Rect(DrawingBuffer.Width + ViewOffset.X, DrawingBuffer.Height + ViewOffset.Y, 5, 5)
+		    If thumb.Contains(p) Then
 		      ' we are, change the mouse cursor
 		      Me.mousecursor = System.Cursors.ArrowNorthwestSoutheast
 		    Else
@@ -287,7 +288,11 @@ Inherits Canvas
 		  End If
 		  p.Graphics.DrawPicture(DrawingBuffer, 0, 0)
 		  SetGraphicsSettings(p)
-		  p.RGBSurface.FloodFill(Point.X - ViewOffset.X, Point.Y - ViewOffset.Y, DrawingColor)
+		  Dim view As New REALbasic.Rect(ViewOffset.X, ViewOffset.Y, p.Width, p.Height)
+		  
+		  If view.Contains(Point) Then
+		    p.RGBSurface.FloodFill(Point.X - ViewOffset.X, Point.Y - ViewOffset.Y, DrawingColor)
+		  End If
 		  
 		  Me.Invalidate(False)
 		End Sub

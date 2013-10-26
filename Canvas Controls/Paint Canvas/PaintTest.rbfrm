@@ -162,6 +162,13 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Resizing()
+		  PaintCanvas1.Invalidate
+		End Sub
+	#tag EndEvent
+
+
 	#tag MenuHandler
 		Function EditClear() As Boolean Handles EditClear.Action
 			PaintCanvas1.Clear
@@ -217,10 +224,32 @@ End
 #tag Events PaintCanvas1
 	#tag Event
 		Sub Open()
-		  Dim r As New REALbasic.Rect(Me.Width - 25, Me.Height - 25, 25, 25)
-		  Me.AddControlItem(r, "ColorSelect")
-		  r = New REALbasic.Rect(Me.Width - 25, 0, 25, 25)
+		  Dim r As REALbasic.Rect
+		  
+		  r = New REALbasic.Rect(Me.Width - 35, 0, 35, 35)
+		  Me.AddControlItem(r, "Freehand")
+		  
+		  r = New REALbasic.Rect(Me.Width - 35, 35, 35, 35)
+		  Me.AddControlItem(r, "Rect")
+		  
+		  r = New REALbasic.Rect(Me.Width - 35, 70, 35, 35)
+		  Me.AddControlItem(r, "FilledRect")
+		  
+		  r = New REALbasic.Rect(Me.Width - 35, 105, 35, 35)
+		  Me.AddControlItem(r, "Oval")
+		  
+		  r = New REALbasic.Rect(Me.Width - 35, 140, 35, 35)
+		  Me.AddControlItem(r, "FilledOval")
+		  
+		  r = New REALbasic.Rect(Me.Width - 35, 175, 35, 35)
+		  Me.AddControlItem(r, "FloodFill")
+		  
+		  r = New REALbasic.Rect(Me.Width - 35, 210, 35, 35)
 		  Me.AddControlItem(r, "Line")
+		  
+		  
+		  r = New REALbasic.Rect(Me.Width - 35, 245, 35, 35)
+		  Me.AddControlItem(r, "ColorSelect")
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -232,14 +261,31 @@ End
 		  Case "ColorSelect"
 		    g.ForeColor = Me.DrawingColor ' color select
 		    g.FillRect(0, 0, g.Width, g.Height)
+		    g.DrawPicture(Color_palette, 0, 0, g.Width, g.Height, 0, 0, Color_palette.Width, Color_palette.Height)
 		    
-		    If Me.ControlItem(Index).Width = 50 Then
-		      g.DrawPicture(Color_palette, 0, 0, g.Width, g.Height, 0, 0, Color_palette.Width, Color_palette.Height)
-		    End If
+		  Case "Freehand"
+		    g.DrawPicture(pen_icon, 0, 0, g.Width, g.Height, 0, 0, pen_icon.Width, pen_icon.Height)
+		    
+		  Case "FloodFill"
+		    g.DrawPicture(floodfill, 0, 0, g.Width, g.Height, 0, 0, floodfill.Width, floodfill.Height)
 		    
 		  Case "Line"
-		    g.DrawPicture(pen_icon, 0, 0, g.Width, g.Height, 0, 0, pen_icon.Width, pen_icon.Height)
+		    g.DrawPicture(drawline, 0, 0, g.Width, g.Height, 0, 0, drawline.Width, drawline.Height)
+		    
+		  Case "Rect"
+		    g.DrawPicture(square, 0, 0, g.Width, g.Height, 0, 0, square.Width, square.Height)
+		    
+		  Case "FilledRect"
+		    g.DrawPicture(filledsquare, 0, 0, g.Width, g.Height, 0, 0, filledsquare.Width, filledsquare.Height)
+		    
+		  Case "Oval"
+		    g.DrawPicture(circle, 0, 0, g.Width, g.Height, 0, 0, circle.Width, circle.Height)
+		    
+		  Case "FilledOval"
+		    g.DrawPicture(filledcircle, 0, 0, g.Width, g.Height, 0, 0, filledcircle.Width, filledcircle.Height)
+		    
 		  End Select
+		  
 		  
 		  
 		  If Index = ControlIndex Then
@@ -262,8 +308,29 @@ End
 		    If SelectColor(c, "") Then
 		      PaintCanvas1.DrawingColor = c
 		    End If
-		  Case "Line"
+		    Return
+		    
+		  Case "Freehand"
 		    Me.LastMode = PaintCanvas.DrawingModes.Point
+		    
+		  Case "Rect"
+		    Me.LastMode = PaintCanvas.DrawingModes.Rect
+		    
+		  Case "FilledRect"
+		    Me.LastMode = PaintCanvas.DrawingModes.FilledRect
+		    
+		  Case "Oval"
+		    Me.LastMode = PaintCanvas.DrawingModes.Oval
+		    
+		  Case "FilledOval"
+		    Me.LastMode = PaintCanvas.DrawingModes.FilledOval
+		    
+		  Case "Line"
+		    Me.LastMode = PaintCanvas.DrawingModes.Line
+		    
+		  Case "FloodFill"
+		    Me.LastMode = PaintCanvas.DrawingModes.FloodFill
+		    
 		  End Select
 		  ControlIndex = Index
 		End Sub
@@ -272,37 +339,40 @@ End
 		Sub MouseMove(X As Integer, Y As Integer)
 		  Dim p As New REALbasic.Point(Me.MouseX, Me.MouseY)
 		  Dim ccount As Integer = PaintCanvas1.ControlItemCount - 1
+		  Dim pos As Integer
 		  For i As Integer = 0 To ccount
 		    Dim r As REALbasic.Rect = PaintCanvas1.ControlItem(i)
+		    
+		    r.Top = pos
 		    If r.Contains(p) Then
-		      Select Case Me.ControlItemTag(i)
-		      Case "ColorSelect"
-		        r.Top = Me.Height - 50
-		        r.Left = Me.Width - 50
-		        r.Width = 50
-		        r.Height = 50
-		      Case "Line"
-		        r.Top = 0
-		        r.Left = Me.Width - 50
-		        r.Width = 50
-		        r.Height = 50
-		      End Select
+		      r.Left = Me.Width - 45
+		      r.Width = 45
+		      r.Height = 45
 		    Else
-		      Select Case Me.ControlItemTag(i)
-		      Case "ColorSelect"
-		        r.Top = Me.Height - 25
-		        r.Left = Me.Width - 25
-		        r.Width = 25
-		        r.Height = 25
-		      Case "Line"
-		        r.Top = 0
-		        r.Left = Me.Width - 25
-		        r.Width = 25
-		        r.Height = 25
-		      End Select
+		      r.Left = Me.Width - 35
+		      r.Width = 35
+		      r.Height = 35
 		    End If
+		    pos = r.Bottom
 		    PaintCanvas1.ControlItem(i) = r
 		  Next
+		  Me.Invalidate
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseExit()
+		  Dim ccount As Integer = PaintCanvas1.ControlItemCount - 1
+		  Dim pos As Integer
+		  For i As Integer = 0 To ccount
+		    Dim r As REALbasic.Rect = PaintCanvas1.ControlItem(i)
+		    r.Top = pos
+		    r.Left = Me.Width - 35
+		    r.Width = 35
+		    r.Height = 35
+		    pos = r.Bottom
+		    PaintCanvas1.ControlItem(i) = r
+		  Next
+		  Me.Invalidate
 		End Sub
 	#tag EndEvent
 #tag EndEvents
