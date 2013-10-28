@@ -96,6 +96,9 @@ Inherits BoolCanvas
 
 	#tag Event
 		Sub Paint	(g As Graphics)
+		  #If TargetWin32 Then
+		    App.UseGDIPlus = True
+		  #endif
 		  g.AntiAlias = True
 		  g.TextSize = Me.TextSize
 		  g.TextFont = Me.TextFont
