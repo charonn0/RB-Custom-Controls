@@ -41,18 +41,19 @@ Inherits Canvas
 		  Y = Y - ViewOffset.Y
 		  Dim p As New REALbasic.Point(X, Y)
 		  Dim rect As New REALbasic.Rect(DragStart.X, DragStart.Y, X - DragStart.X, Y - DragStart.Y)
+		  Dim view As New REALbasic.Rect(ViewOffset.X, ViewOffset.Y, DrawingBuffer.Width, DrawingBuffer.Height)
 		  
 		  Select Case Mode
 		  Case DrawingModes.Line
-		    DrawLine(Overlay, DragStart, p)
+		    If DragStart.X > -1 Then DrawLine(Overlay, DragStart, p)
 		  Case DrawingModes.Oval
-		    DrawOval(Overlay, rect, False)
+		    If DragStart.X > -1 Then DrawOval(Overlay, rect, False)
 		  Case DrawingModes.Rect
-		    DrawRect(Overlay, rect, False)
+		    If DragStart.X > -1 Then DrawRect(Overlay, rect, False)
 		  Case DrawingModes.FilledRect
-		    DrawRect(Overlay, rect, True)
+		    If DragStart.X > -1 Then DrawRect(Overlay, rect, True)
 		  Case DrawingModes.FilledOval
-		    DrawOval(Overlay, rect, True)
+		    If DragStart.X > -1 Then DrawOval(Overlay, rect, True)
 		  Case DrawingModes.Point
 		    If DragStart.X <> X Or DragStart.Y <> Y Then
 		      DrawLine(OverLay, DragStart, p)
@@ -127,15 +128,15 @@ Inherits Canvas
 		    Next
 		    Me.Mode = LastMode
 		  Case DrawingModes.Line
-		    DrawLine(DrawingBuffer, DragStart, p)
+		    If DragStart.X > -1 Then DrawLine(DrawingBuffer, DragStart, p)
 		  Case DrawingModes.Oval
-		    DrawOval(DrawingBuffer, rect, False)
+		    If DragStart.X > -1 Then DrawOval(DrawingBuffer, rect, False)
 		  Case DrawingModes.Rect
-		    DrawRect(DrawingBuffer, rect, False)
+		    If DragStart.X > -1 Then DrawRect(DrawingBuffer, rect, False)
 		  Case DrawingModes.FilledRect
-		    DrawRect(DrawingBuffer, rect, True)
+		    If DragStart.X > -1 Then DrawRect(DrawingBuffer, rect, True)
 		  Case DrawingModes.FilledOval
-		    DrawOval(DrawingBuffer, rect, True)
+		    If DragStart.X > -1 Then DrawOval(DrawingBuffer, rect, True)
 		  Case DrawingModes.FloodFill
 		    DrawFill(DrawingBuffer, p)
 		  Case DrawingModes.Point
@@ -166,7 +167,7 @@ Inherits Canvas
 		  End Select
 		  
 		  Me.Invalidate(False)
-		  DragStart = New REALbasic.Point(0, 0)
+		  DragStart = New REALbasic.Point(-1, -1)
 		  CancelDraw = False
 		  
 		End Sub
