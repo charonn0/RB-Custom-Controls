@@ -71,6 +71,7 @@ Class=PaintCanvas;Canvas Controls/Paint Canvas/PaintCanvas.rbbas;&h6B23BFFF;&h72
 Picture=Color_palette;Canvas Controls/Paint Canvas/Color_palette.png;&h17A877FF;&h72EFFFFF;false;0;&h0
 Picture=pen_icon;Canvas Controls/Paint Canvas/pen_icon.png;&h208857FF;&h72EFFFFF;false;0;&h0
 Picture=floodfill;Canvas Controls/Paint Canvas/floodfill.png;&h144DD7FF;&h72EFFFFF;false;0;&h0
+Picture=eye_dropper;Canvas Controls/Paint Canvas/eye_dropper.png;&h18650FFF;&h72EFFFFF;false;0;&h0
 DefaultWindow=TestSelect
 MajorVersion=1
 MinorVersion=0

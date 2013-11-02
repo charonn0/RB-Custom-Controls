@@ -3,33 +3,35 @@ Protected Class PaintCanvas
 Inherits Canvas
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  'Check if we're dragging the resize thumb
-		  X = X - ViewOffset.X
-		  Y = Y - ViewOffset.Y
-		  Dim p As New REALbasic.Point(X, Y)
-		  Dim view As New REALbasic.Rect(ViewOffset.X, ViewOffset.Y, DrawingBuffer.Width, DrawingBuffer.Height)
-		  Dim thumb As New REALbasic.Rect(DrawingBuffer.Width + ViewOffset.X, DrawingBuffer.Height + ViewOffset.Y, 5, 5)  //Resize thumb
-		  
-		  If thumb.Contains(p) Then
-		    ' mouse is over the resize thumb
-		    Me.LastMode = Me.Mode
-		    Me.Mode = DrawingModes.Resizing
-		    Me.MouseCursor = System.Cursors.ArrowNorthwestSoutheast
+		  If Not RaiseEvent MouseDown(X, Y) Then
+		    'Check if we're dragging the resize thumb
+		    X = X - ViewOffset.X
+		    Y = Y - ViewOffset.Y
+		    Dim p As New REALbasic.Point(X, Y)
+		    Dim view As New REALbasic.Rect(ViewOffset.X, ViewOffset.Y, DrawingBuffer.Width, DrawingBuffer.Height)
+		    Dim thumb As New REALbasic.Rect(DrawingBuffer.Width + ViewOffset.X, DrawingBuffer.Height + ViewOffset.Y, 5, 5)  //Resize thumb
+		    
+		    If thumb.Contains(p) Then
+		      ' mouse is over the resize thumb
+		      Me.LastMode = Me.Mode
+		      Me.Mode = DrawingModes.Resizing
+		      Me.MouseCursor = System.Cursors.ArrowNorthwestSoutheast
+		      Return True
+		    ElseIf view.Contains(p) Then
+		      ' mouse is inside the picture
+		      Select Case Me.Mode
+		      Case DrawingModes.Line, DrawingModes.Oval, DrawingModes.Rect, DrawingModes.Point, DrawingModes.FilledRect, DrawingModes.FilledOval
+		        DragStart = p
+		      Case DrawingModes.FloodFill
+		        DrawFill(Overlay, p)
+		      Case DrawingModes.Polygon
+		        PolygonPoints.Append(p)
+		        DrawPolygon(OverLay, PolygonPoints, True)
+		      End Select
+		    End If
+		    Me.Invalidate(False)
 		    Return True
-		  ElseIf view.Contains(p) Then
-		    ' mouse is inside the picture
-		    Select Case Me.Mode
-		    Case DrawingModes.Line, DrawingModes.Oval, DrawingModes.Rect, DrawingModes.Point, DrawingModes.FilledRect, DrawingModes.FilledOval
-		      DragStart = p
-		    Case DrawingModes.FloodFill
-		      DrawFill(Overlay, p)
-		    Case DrawingModes.Polygon
-		      PolygonPoints.Append(p)
-		      DrawPolygon(OverLay, PolygonPoints, True)
-		    End Select
 		  End If
-		  Me.Invalidate(False)
-		  Return RaiseEvent MouseDown(X, Y) <> True
 		End Function
 	#tag EndEvent
 
@@ -298,6 +300,19 @@ Inherits Canvas
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Function DrawingBuffer() As Picture
+		  Return mDrawingBuffer
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub DrawingBuffer(Assigns NewBuffer As Picture)
+		  mDrawingBuffer = NewBuffer
+		  Me.Invalidate()
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h1
 		Protected Sub DrawLine(p As Picture, Point1 As REALbasic.Point, Point2 As REALbasic.Point)
 		  If CancelDraw Then
@@ -521,16 +536,16 @@ Inherits Canvas
 		Protected DragStart As REALbasic.Point
 	#tag EndProperty
 
-	#tag Property, Flags = &h1
-		Protected DrawingBuffer As Picture
-	#tag EndProperty
-
 	#tag Property, Flags = &h0
 		DrawingColor As Color
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		LastMode As DrawingModes
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mDrawingBuffer As Picture
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

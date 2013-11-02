@@ -182,6 +182,14 @@ End
 		Protected ControlIndex As Integer
 	#tag EndProperty
 
+	#tag Property, Flags = &h1
+		Protected EyeDropColor As Color
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected EyeDropMode As Boolean
+	#tag EndProperty
+
 
 #tag EndWindowCode
 
@@ -247,8 +255,10 @@ End
 		  r = New REALbasic.Rect(Me.Width - 35, 210, 35, 35)
 		  Me.AddControlItem(r, "Line")
 		  
+		  'r = New REALbasic.Rect(Me.Width - 35, 245, 35, 35)
+		  'Me.AddControlItem(r, "EyeDropper")
 		  
-		  r = New REALbasic.Rect(Me.Width - 35, 245, 35, 35)
+		  r = New REALbasic.Rect(Me.Width - 35, 280, 35, 35)
 		  Me.AddControlItem(r, "ColorSelect")
 		End Sub
 	#tag EndEvent
@@ -283,6 +293,9 @@ End
 		    
 		  Case "FilledOval"
 		    g.DrawPicture(filledcircle, 0, 0, g.Width, g.Height, 0, 0, filledcircle.Width, filledcircle.Height)
+		    
+		  Case "EyeDropper"
+		    g.DrawPicture(eye_dropper, 0, 0, g.Width, g.Height, 0, 0, eye_dropper.Width, eye_dropper.Height)
 		    
 		  End Select
 		  
@@ -331,6 +344,10 @@ End
 		  Case "FloodFill"
 		    Me.LastMode = PaintCanvas.DrawingModes.FloodFill
 		    
+		  Case "EyeDropper"
+		    'Me.LastMode = PaintCanvas.DrawingModes.FloodFill
+		    EyeDropMode = True
+		    
 		  End Select
 		  ControlIndex = Index
 		End Sub
@@ -374,6 +391,15 @@ End
 		  Next
 		  Me.Invalidate
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  If EyeDropMode Then
+		    Me.DrawingColor = Me.DrawingBuffer.Graphics.Pixel(X, Y)
+		    Me.Invalidate(False)
+		    Return True
+		  End If
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events PopupMenu2
