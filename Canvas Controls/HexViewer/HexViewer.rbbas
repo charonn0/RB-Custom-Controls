@@ -1,6 +1,6 @@
 #tag Class
 Protected Class HexViewer
-Inherits BaseCanvas
+Inherits Canvas
 	#tag Event
 		Function KeyDown(Key As String) As Boolean
 		  If Asc(key) = &h1F Then ' up arrow
@@ -41,13 +41,6 @@ Inherits BaseCanvas
 		  #pragma Unused X
 		  #pragma Unused Y
 		  If Stream = Nil Then Return False
-		  Dim data As String
-		  Stream.Position = Offset
-		  Do Until BinGraphics.StringWidth(data) >= BinGraphics.Width - BinGraphics.StringWidth(" 00")
-		    Dim bt As Byte = Stream.ReadByte
-		    data = data + " " + Hex(bt, 2, LineNumbersLittleEndian) + " "
-		  Loop
-		  
 		  Dim linedelta, bytesdelta As Integer
 		  If Sign(deltaY) = 1 Then ' scroll down
 		    For i As Integer = 1 To deltaY
@@ -74,32 +67,36 @@ Inherits BaseCanvas
 	#tag EndEvent
 
 	#tag Event
-		Sub Paint	(g As Graphics)
-		  g.AntiAlias = True
-		  #If TargetWin32 Then
-		    App.UseGDIPlus = False ' UseGDIPlus makes the text blurry
-		  #endif
-		  
-		  Dim TextHeight, row As Integer
-		  CreateGraphics(g)
-		  
-		  row = LineFromOffset(Offset)
-		  If Stream = Nil Then
-		    DrawBlank(TextHeight)
-		  Else
-		    'DrawSelection()
-		    DrawMain(TextHeight)
+		Sub Paint(g As Graphics)
+		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Or LastPaintedOffset <> mOffset Then 'redraw needed
+		    #If TargetWin32 Then
+		      App.UseGDIPlus = False ' UseGDIPlus makes the text blurry
+		    #endif
+		    Buffer = New Picture(g.Width, g.Height, 32)
+		    Dim gg As Graphics = Buffer.Graphics
+		    gg.AntiAlias = True
+		    Dim TextHeight As Integer
+		    CreateGraphics(gg)
+		    
+		    If Stream = Nil Then
+		      DrawBlank(TextHeight)
+		    Else
+		      'DrawSelection()
+		      DrawMain(TextHeight)
+		    End If
+		    
+		    ' draw the borders
+		    gg.ForeColor = GutterColor
+		    gg.FillRect(0, TextHeight, gg.Width, gg.Height - TextHeight)
+		    gg.ForeColor = Me.BorderColor
+		    gg.DrawLine(BinGraphics.Width + GutterGraphics.Width - 1, 0, BinGraphics.Width + GutterGraphics.Width - 1, BinGraphics.Height)
+		    gg.DrawLine(GutterGraphics.Width - 1, 0, GutterGraphics.Width - 1, BinGraphics.Height)
+		    If Me.Border Then
+		      gg.DrawRect(0, 0, gg.Width, gg.Height)
+		    End If
 		  End If
-		  
-		  ' draw the borders
-		  g.ForeColor = GutterColor
-		  g.FillRect(0, TextHeight, g.Width, g.Height - TextHeight)
-		  g.ForeColor = Me.BorderColor
-		  g.DrawLine(BinGraphics.Width + GutterGraphics.Width - 1, 0, BinGraphics.Width + GutterGraphics.Width - 1, BinGraphics.Height)
-		  g.DrawLine(GutterGraphics.Width - 1, 0, GutterGraphics.Width - 1, BinGraphics.Height)
-		  If Me.Border Then
-		    g.DrawRect(0, 0, g.Width, g.Height)
-		  End If
+		  g.DrawPicture(Buffer, 0, 0)
+		  LastPaintedOffset = mOffset
 		End Sub
 	#tag EndEvent
 
@@ -144,6 +141,10 @@ Inherits BaseCanvas
 		  ' TextGraphics represents the right-hand ASCII text column
 		  TextGraphics = g.Clip(BinGraphics.Width + GutterGraphics.Width, 0, Me.Width - BinGraphics.Width - GutterGraphics.Width, Buffer.Height)
 		  ' end Graphics' construct
+		  
+		  BinGraphics.TextFont = Me.TextFont
+		  TextGraphics.TextFont = Me.TextFont
+		  GutterGraphics.TextFont = Me.TextFont
 		End Sub
 	#tag EndMethod
 
@@ -300,10 +301,11 @@ Inherits BaseCanvas
 
 	#tag Method, Flags = &h1
 		Protected Function LineFromOffset(BytesOffset As UInt64) As Integer
-		  If BytesOffset Mod BytesPerLine = 0 Then
-		    Return BytesOffset \ BytesPerLine
+		  Dim bpl As Integer = BytesPerLine
+		  If BytesOffset Mod bpl = 0 Then
+		    Return BytesOffset \ bpl
 		  Else
-		    Return (BytesOffset \ BytesPerLine) + 1
+		    Return (BytesOffset \ bpl) + 1
 		  End If
 		End Function
 	#tag EndMethod
@@ -383,6 +385,7 @@ Inherits BaseCanvas
 		Sub ShowData(DataStream As BinaryStream)
 		  Me.Stream = DataStream
 		  Me.Stream.Position = 0
+		  LastPaintedOffset = -1
 		  Offset = 0
 		  'Me.Refresh(False)
 		End Sub
@@ -396,6 +399,13 @@ Inherits BaseCanvas
 		  Next
 		  Return output
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Sub Update()
+		  LastPaintedOffset = -1
+		  Invalidate(False)
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -418,13 +428,51 @@ Inherits BaseCanvas
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
+			  return mBorder
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mBorder = value
+			  Me.Update
+			End Set
+		#tag EndSetter
+		Border As Boolean
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mBorderColor
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mBorderColor = value
+			  Me.Update
+			End Set
+		#tag EndSetter
+		BorderColor As Color
+	#tag EndComputedProperty
+
+	#tag Property, Flags = &h21
+		Private Buffer As Picture
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected Buffer1 As Picture
+	#tag EndProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
 			  return mByteBackgroundColor
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
 			  mByteBackgroundColor = value
-			  Update()
+			  Me.Update
 			End Set
 		#tag EndSetter
 		ByteBackgroundColor As Color
@@ -439,7 +487,7 @@ Inherits BaseCanvas
 		#tag Setter
 			Set
 			  mByteBackgroundColorAlt = value
-			  Update()
+			  Me.Update
 			End Set
 		#tag EndSetter
 		ByteBackgroundColorAlt As Color
@@ -454,7 +502,7 @@ Inherits BaseCanvas
 		#tag Setter
 			Set
 			  mByteColor = value
-			  Update()
+			  Me.Update
 			End Set
 		#tag EndSetter
 		ByteColor As Color
@@ -469,7 +517,7 @@ Inherits BaseCanvas
 		#tag Setter
 			Set
 			  mBytesLittleEndian = value
-			  Update
+			  Me.Update
 			End Set
 		#tag EndSetter
 		BytesLittleEndian As Boolean
@@ -484,7 +532,7 @@ Inherits BaseCanvas
 		#tag Setter
 			Set
 			  mEncoding = value
-			  Update()
+			  Me.Update
 			End Set
 		#tag EndSetter
 		Encoding As TextEncoding
@@ -499,7 +547,7 @@ Inherits BaseCanvas
 		#tag Setter
 			Set
 			  mGutterColor = value
-			  Update()
+			  Me.Update
 			End Set
 		#tag EndSetter
 		GutterColor As Color
@@ -514,7 +562,7 @@ Inherits BaseCanvas
 		#tag Setter
 			Set
 			  mGutterColorAlt = value
-			  Update()
+			  Me.Update
 			End Set
 		#tag EndSetter
 		GutterColorAlt As Color
@@ -522,6 +570,10 @@ Inherits BaseCanvas
 
 	#tag Property, Flags = &h21
 		Private GutterGraphics As Graphics
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private LastPaintedOffset As Integer = -1
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -533,7 +585,7 @@ Inherits BaseCanvas
 		#tag Setter
 			Set
 			  mLineNumbersColor = value
-			  Update()
+			  Me.Update
 			End Set
 		#tag EndSetter
 		LineNumbersColor As Color
@@ -548,11 +600,19 @@ Inherits BaseCanvas
 		#tag Setter
 			Set
 			  mLineNumbersLittleEndian = value
-			  Update()
+			  Me.Update
 			End Set
 		#tag EndSetter
 		LineNumbersLittleEndian As Boolean
 	#tag EndComputedProperty
+
+	#tag Property, Flags = &h21
+		Private mBorder As Boolean = True
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mBorderColor As Color = &c808080
+	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private mByteBackgroundColor As Color = &cFFFFFF00
@@ -618,6 +678,14 @@ Inherits BaseCanvas
 		Private mTextBackGroundColorAlt As Color = &cEAFFFF00
 	#tag EndProperty
 
+	#tag Property, Flags = &h21
+		Private mtextColor As Color = &c000000
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mtextFont As String
+	#tag EndProperty
+
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
@@ -628,8 +696,7 @@ Inherits BaseCanvas
 			Set
 			  If Stream = Nil Or value >= Stream.Length Then Return
 			  mOffset = value
-			  Update()
-			  
+			  Me.Update
 			End Set
 		#tag EndSetter
 		Offset As UInt64
@@ -644,7 +711,7 @@ Inherits BaseCanvas
 		#tag Setter
 			Set
 			  mSelectionEnd = value
-			  Update()
+			  Me.Update
 			End Set
 		#tag EndSetter
 		SelectionEnd As Int64
@@ -659,7 +726,7 @@ Inherits BaseCanvas
 		#tag Setter
 			Set
 			  mSelectionStart = value
-			  Update()
+			  Me.Update
 			End Set
 		#tag EndSetter
 		SelectionStart As Int64
@@ -674,7 +741,7 @@ Inherits BaseCanvas
 		#tag Setter
 			Set
 			  mShowOffsets = value
-			  Update()
+			  Me.Update
 			End Set
 		#tag EndSetter
 		ShowOffsets As Boolean
@@ -693,7 +760,7 @@ Inherits BaseCanvas
 		#tag Setter
 			Set
 			  Stream.Length = value
-			  Update()
+			  Me.Update
 			End Set
 		#tag EndSetter
 		StreamLen As UInt64
@@ -708,7 +775,7 @@ Inherits BaseCanvas
 		#tag Setter
 			Set
 			  mTextBackGroundColor = value
-			  Update()
+			  Me.Update
 			End Set
 		#tag EndSetter
 		TextBackGroundColor As Color
@@ -723,10 +790,25 @@ Inherits BaseCanvas
 		#tag Setter
 			Set
 			  mTextBackGroundColorAlt = value
-			  Update()
+			  Me.Update
 			End Set
 		#tag EndSetter
 		TextBackGroundColorAlt As Color
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mtextFont
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mtextFont = value
+			  Me.Update
+			End Set
+		#tag EndSetter
+		TextFont As String
 	#tag EndComputedProperty
 
 	#tag Property, Flags = &h21
