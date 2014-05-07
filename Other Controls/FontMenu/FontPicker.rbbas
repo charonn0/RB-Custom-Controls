@@ -11,14 +11,16 @@ Inherits PopupMenu
 		Sub Open()
 		  Me.AddRow("Font")
 		  Me.ListIndex = 0
-		  Dim fonts() As String
-		  For i As Integer = 1 To FontCount - 1
-		    Dim textfont As String = Font(i)
-		    If Left(textfont, 1) <> "@" Then
-		      fonts.Append(textfont)
-		    End If
-		  Next
-		  fonts.Sort
+		  Static fonts() As String
+		  If UBound(fonts) = -1 Then
+		    For i As Integer = 1 To FontCount - 1
+		      Dim textfont As String = Font(i)
+		      If Left(textfont, 1) <> "@" Then
+		        fonts.Append(textfont)
+		      End If
+		    Next
+		    fonts.Sort
+		  End If
 		  For i As Integer = 0 To fonts.Ubound
 		    Me.AddRow(fonts(i))
 		  Next
