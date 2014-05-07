@@ -179,7 +179,7 @@ Inherits Canvas
 		Private Sub DrawMain(ByRef TextHeight As Integer)
 		  Dim rowOffset As UInt64
 		  Dim data, txt, hx As String
-		  Dim alt As Boolean
+		  Dim alt As Boolean = (Offset Mod (BytesPerLine * 2) = 0) And ScrollBackground
 		  Dim row, column, bytewidth As Integer
 		  bytewidth = BinGraphics.StringWidth(".00")
 		  Stream.Position = Offset
@@ -701,6 +701,10 @@ Inherits Canvas
 		#tag EndSetter
 		Offset As UInt64
 	#tag EndComputedProperty
+
+	#tag Property, Flags = &h0
+		ScrollBackground As Boolean
+	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
