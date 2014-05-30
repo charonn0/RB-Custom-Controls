@@ -1,7 +1,7 @@
 #tag FileTypeSet
 	#tag FileType
 		CodeName=ImageFile
-		Extension=.jpg;.png;.bmp;.bsi
+		Extension=.jpg;.png;.bmp
 		Flags=&h0
 		MacCreator=
 		MacType=

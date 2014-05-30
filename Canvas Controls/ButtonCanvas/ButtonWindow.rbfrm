@@ -34,11 +34,9 @@ Begin Window ButtonWindow
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
-      Font            =   "System"
-      FontColor       =   "&c0000FF00"
-      FontSize        =   30
       Height          =   58
       HelpTag         =   ""
+      Hilight         =   ""
       hilightBorder   =   True
       hilightColor    =   "&c80FFFF00"
       Index           =   -2147483648
@@ -54,8 +52,8 @@ Begin Window ButtonWindow
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
+      TextSize        =   ""
       Top             =   14
-      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Value           =   False
@@ -209,7 +207,6 @@ Begin Window ButtonWindow
       Scope           =   0
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   183
       Visible         =   True
       Width           =   24
@@ -245,7 +242,7 @@ Begin Window ButtonWindow
       Visible         =   True
       Width           =   46
    End
-   Begin PopupMenu textFont
+   Begin FontPicker textFont
       AutoDeactivate  =   True
       Bold            =   False
       DataField       =   ""
@@ -327,7 +324,6 @@ Begin Window ButtonWindow
       Scope           =   0
       TabIndex        =   10
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   88
       Visible         =   True
       Width           =   24
@@ -453,24 +449,8 @@ End
 #tag EndEvents
 #tag Events textFont
 	#tag Event
-		Sub Open()
-		  Me.AddRow("Font")
-		  Me.ListIndex = 0
-		  Dim fonts() As String
-		  For i As Integer = 1 To FontCount - 1
-		    Dim textfont As String = Font(i)
-		    fonts.Append(textfont)
-		  Next
-		  fonts.Sort
-		  For i As Integer = 0 To fonts.Ubound
-		    Me.AddRow(fonts(i))
-		    If ButtonCanvas1.TextFont = fonts(i) Then Me.ListIndex = i
-		  Next
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Change()
-		  If Me.ListIndex <> 0 Then ButtonCanvas1.TextFont = Me.Text
+		Sub FontSelected(FontName As String)
+		  ButtonCanvas1.TextFont = FontName
 		End Sub
 	#tag EndEvent
 #tag EndEvents

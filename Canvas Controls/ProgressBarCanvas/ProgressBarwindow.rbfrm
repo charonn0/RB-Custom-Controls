@@ -25,7 +25,6 @@ Begin Window ProgressBarwindow
    Visible         =   True
    Width           =   486
    Begin Timer Timer1
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   523
@@ -33,11 +32,8 @@ Begin Window ProgressBarwindow
       Mode            =   0
       Period          =   50
       Scope           =   0
-      TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   60
-      Visible         =   True
       Width           =   32
    End
    Begin Oval BoxColor
@@ -59,7 +55,6 @@ Begin Window ProgressBarwindow
       Scope           =   0
       TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   38
       Visible         =   True
       Width           =   24
@@ -83,7 +78,6 @@ Begin Window ProgressBarwindow
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   38
       Visible         =   True
       Width           =   24
@@ -110,7 +104,6 @@ Begin Window ProgressBarwindow
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Box Color"
       TextAlign       =   0
       TextColor       =   "&c00000000"
@@ -145,7 +138,6 @@ Begin Window ProgressBarwindow
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Bar Color"
       TextAlign       =   0
       TextColor       =   "&c00000000"
@@ -241,7 +233,6 @@ Begin Window ProgressBarwindow
       Scope           =   0
       TabIndex        =   14
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   38
       Visible         =   True
       Width           =   24
@@ -268,7 +259,6 @@ Begin Window ProgressBarwindow
       Selectable      =   False
       TabIndex        =   15
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Barwell"
       TextAlign       =   0
       TextColor       =   "&c00000000"
@@ -332,7 +322,6 @@ Begin Window ProgressBarwindow
       Scope           =   0
       TabIndex        =   30
       TabPanelIndex   =   0
-      TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -421,7 +410,6 @@ Begin Window ProgressBarwindow
          Scope           =   0
          TabIndex        =   4
          TabPanelIndex   =   0
-         TabStop         =   True
          Top             =   124
          Visible         =   True
          Width           =   24
@@ -587,7 +575,6 @@ Begin Window ProgressBarwindow
          Selectable      =   False
          TabIndex        =   9
          TabPanelIndex   =   0
-         TabStop         =   True
          Text            =   "Text Format:"
          TextAlign       =   2
          TextColor       =   "&c00000000"
@@ -620,7 +607,6 @@ Begin Window ProgressBarwindow
       Scope           =   0
       TabIndex        =   32
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   38
       Visible         =   True
       Width           =   24
@@ -647,7 +633,6 @@ Begin Window ProgressBarwindow
       Selectable      =   False
       TabIndex        =   33
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Gradient End"
       TextAlign       =   0
       TextColor       =   "&c00000000"
@@ -679,7 +664,6 @@ Begin Window ProgressBarwindow
       Scope           =   0
       TabIndex        =   34
       TabPanelIndex   =   0
-      TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -752,7 +736,6 @@ Begin Window ProgressBarwindow
          Selectable      =   False
          TabIndex        =   1
          TabPanelIndex   =   0
-         TabStop         =   True
          Text            =   "ProgBar Max:"
          TextAlign       =   0
          TextColor       =   "&c00000000"
@@ -815,7 +798,6 @@ Begin Window ProgressBarwindow
          Selectable      =   False
          TabIndex        =   3
          TabPanelIndex   =   0
-         TabStop         =   True
          Text            =   "Timer Speed:"
          TextAlign       =   0
          TextColor       =   "&c00000000"

@@ -63,7 +63,7 @@ Begin Window PaintTest
       DoubleBuffer    =   True
       DrawingColor    =   16711680
       Enabled         =   True
-      Height          =   530
+      Height          =   503
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -83,7 +83,7 @@ Begin Window PaintTest
       Top             =   0
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   735
+      Width           =   717
    End
    Begin TextField TextField1
       AcceptTabs      =   ""
@@ -158,10 +158,79 @@ Begin Window PaintTest
       Visible         =   True
       Width           =   80
    End
+   Begin ScrollBar VScrollBar
+      AcceptFocus     =   true
+      AutoDeactivate  =   True
+      Enabled         =   False
+      Height          =   503
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   719
+      LineStep        =   5
+      LiveScroll      =   ""
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   True
+      Maximum         =   100
+      Minimum         =   0
+      PageStep        =   20
+      Scope           =   0
+      TabIndex        =   6
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   0
+      Value           =   0
+      Visible         =   True
+      Width           =   16
+   End
+   Begin ScrollBar HScrollBar
+      AcceptFocus     =   true
+      AutoDeactivate  =   True
+      Enabled         =   False
+      Height          =   16
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   0
+      LineStep        =   5
+      LiveScroll      =   ""
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   False
+      Maximum         =   100
+      Minimum         =   0
+      PageStep        =   20
+      Scope           =   0
+      TabIndex        =   7
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   504
+      Value           =   0
+      Visible         =   True
+      Width           =   717
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Resized()
+		  Dim pic As Picture = PaintCanvas1.SaveDrawingBuffer
+		  If pic <> Nil Then
+		    HScrollBar.Maximum = pic.Width - PaintCanvas1.Width
+		    HScrollBar.Enabled = pic.Width > PaintCanvas1.Width
+		    
+		    VScrollBar.Maximum = pic.Height - PaintCanvas1.Height
+		    VScrollBar.Enabled = pic.Height > PaintCanvas1.Height
+		  End If
+		End Sub
+	#tag EndEvent
+
 	#tag Event
 		Sub Resizing()
 		  PaintCanvas1.Invalidate
@@ -255,11 +324,17 @@ End
 		  r = New REALbasic.Rect(Me.Width - 35, 210, 35, 35)
 		  Me.AddControlItem(r, "Line")
 		  
-		  'r = New REALbasic.Rect(Me.Width - 35, 245, 35, 35)
-		  'Me.AddControlItem(r, "EyeDropper")
+		  r = New REALbasic.Rect(Me.Width - 35, 245, 35, 35)
+		  Me.AddControlItem(r, "EyeDropper")
 		  
 		  r = New REALbasic.Rect(Me.Width - 35, 280, 35, 35)
 		  Me.AddControlItem(r, "ColorSelect")
+		  
+		  r = New REALbasic.Rect(Me.Width - 35, 245, 35, 35)
+		  Me.AddControlItem(r, "SavePicture")
+		  
+		  r = New REALbasic.Rect(Me.Width - 35, 245, 35, 35)
+		  Me.AddControlItem(r, "OpenFile")
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -345,9 +420,29 @@ End
 		    Me.LastMode = PaintCanvas.DrawingModes.FloodFill
 		    
 		  Case "EyeDropper"
-		    'Me.LastMode = PaintCanvas.DrawingModes.FloodFill
-		    EyeDropMode = True
+		    Me.LastMode = Me.Mode
+		    Me.Mode = PaintCanvas.DrawingModes.Eyedropper
 		    
+		  Case "SavePicture"
+		    Dim f As FolderItem = GetSaveFolderItem(FileTypes1.ImageFile, "untitled")
+		    If f <> Nil Then
+		      Select Case NthField(f.Name, ".", CountFields(f.Name, "."))
+		      Case "png"
+		        PaintCanvas1.SaveDrawingBuffer.Save(f, Picture.SaveAsPNG)
+		      Case "bmp"
+		        PaintCanvas1.SaveDrawingBuffer.Save(f, Picture.SaveAsWindowsBMP)
+		      Else
+		        PaintCanvas1.SaveDrawingBuffer.Save(f, Picture.SaveAsJPEG)
+		      End Select
+		    End If
+		    Return
+		  Case "OpenFile"
+		    Dim f As FolderItem = GetOpenFolderItem(FileTypes1.ImageFile)
+		    If f <> Nil Then
+		      Dim p As Picture = Picture.Open(f)
+		      If p <> Nil Then PaintCanvas1.Open(p)
+		    End If
+		    Return
 		  End Select
 		  ControlIndex = Index
 		End Sub
@@ -392,15 +487,6 @@ End
 		  Me.Invalidate
 		End Sub
 	#tag EndEvent
-	#tag Event
-		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  If EyeDropMode Then
-		    Me.DrawingColor = Me.DrawingBuffer.Graphics.Pixel(X, Y)
-		    Me.Invalidate(False)
-		    Return True
-		  End If
-		End Function
-	#tag EndEvent
 #tag EndEvents
 #tag Events PopupMenu2
 	#tag Event
@@ -413,6 +499,22 @@ End
 	#tag Event
 		Sub Change()
 		  PaintCanvas1.PenSize = Val(Me.Text)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events VScrollBar
+	#tag Event
+		Sub ValueChanged()
+		  PaintCanvas1.ViewOffset.Y = Me.Value * -1
+		  PaintCanvas1.Invalidate(False)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events HScrollBar
+	#tag Event
+		Sub ValueChanged()
+		  PaintCanvas1.ViewOffset.X = Me.Value * -1
+		  PaintCanvas1.Invalidate(False)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

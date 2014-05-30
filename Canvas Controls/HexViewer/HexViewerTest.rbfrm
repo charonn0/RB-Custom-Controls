@@ -260,6 +260,8 @@ End
 		      Self.Title = "Hex Viewer Test - " + g.AbsolutePath
 		    #endif
 		    SetScrollMax()
+		    HexViewer1.SelectionStart = 3
+		    HexViewer1.SelectionEnd = 7
 		  End If
 		End Sub
 	#tag EndEvent

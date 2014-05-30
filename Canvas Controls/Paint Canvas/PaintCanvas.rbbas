@@ -113,6 +113,7 @@ Inherits Canvas
 
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
+		  RaiseEvent MouseUp(X, Y)
 		  X = X - ViewOffset.X
 		  Y = Y - ViewOffset.Y
 		  Dim p As New REALbasic.Point(X, Y)
@@ -137,6 +138,10 @@ Inherits Canvas
 		    If DragStart.X > -1 Then DrawRect(DrawingBuffer, rect, True)
 		  Case DrawingModes.FilledOval
 		    If DragStart.X > -1 Then DrawOval(DrawingBuffer, rect, True)
+		  Case DrawingModes.Eyedropper
+		    Me.DrawingColor = DrawingBuffer.RGBSurface.Pixel(X, Y)
+		    Me.Invalidate(False)
+		    Me.Mode = LastMode
 		  Case DrawingModes.FloodFill
 		    DrawFill(DrawingBuffer, p)
 		  Case DrawingModes.Point
@@ -150,7 +155,7 @@ Inherits Canvas
 		  Case DrawingModes.Resizing
 		    SaveUndo()
 		    Me.Mode = LastMode
-		    Dim tmp As Picture = New Picture(X - ViewOffset.X, Y - ViewOffset.Y, 32)
+		    Dim tmp As Picture = New Picture(X - ViewOffset.X, Y - ViewOffset.Y, DrawingBuffer.Depth)
 		    SetGraphicsSettings(tmp)
 		    If DrawingBuffer <> Nil Then
 		      tmp.Graphics.DrawPicture(DrawingBuffer, 0, 0)
@@ -186,34 +191,34 @@ Inherits Canvas
 	#tag Event
 		Sub Paint(g As Graphics)
 		  If DrawingBuffer = Nil Then Return
-		  If Not PaintBackdrop(g) Then
-		    g.ForeColor = &c808080  //Dark grey
-		    g.FillRect(0, 0, g.Width, g.Height)
-		    g.ForeColor = &c00000000  //Black
-		    g.DrawRect(0, 0, g.Width, g.Height)
-		  End If
+		  g.ForeColor = &c808080  //Dark grey
+		  g.FillRect(0, 0, g.Width, g.Height)
+		  g.ForeColor = &c00000000  //Black
+		  g.DrawRect(0, 0, g.Width, g.Height)
 		  
 		  Dim drawable As Graphics = g.Clip(ViewOffset.X, ViewOffset.Y, DrawingBuffer.Width, DrawingBuffer.Height)
-		  If Not PaintDrawingBuffer(drawable) Then
-		    drawable.DrawPicture(DrawingBuffer, ViewOffset.X, ViewOffset.Y)
-		    
-		    g.ForeColor = &c00000000
-		    g.PenHeight = 1
-		    g.PenWidth = 1
-		    g.DrawRect(ViewOffset.X - 1, ViewOffset.Y - 1, DrawingBuffer.Width + 2, DrawingBuffer.Height + 1) ' buffer border
-		    g.ForeColor = &c494949
-		    g.FillRect(DrawingBuffer.Width + ViewOffset.X, DrawingBuffer.Height + ViewOffset.Y, 5, 5)  //Resize thumb
-		  End If
-		  
-		  If Not PaintOverlay(g) Then
-		    g.DrawPicture(Overlay, 0, 0)
-		    For i As Integer = 0 To UBound(ControlRects)
-		      Dim r As REALbasic.Rect = ControlRects(i)
-		      g.ForeColor = &cFFFFFF00
-		      g.FillRect(r.Left, r.Top, r.Width, r.Height)
-		      RaiseEvent ControlItemPaint(g.Clip(r.Left, r.Top, r.Width, r.Height), i)
+		  For X As Integer = 0 To drawable.Width Step checker.Width
+		    For Y As Integer = 0 To drawable.Height Step checker.Height
+		      drawable.DrawPicture(checker, X, Y)
 		    Next
-		  End If
+		  Next
+		  
+		  
+		  drawable.DrawPicture(DrawingBuffer, 0, 0)
+		  g.ForeColor = &c00000000
+		  g.PenHeight = 1
+		  g.PenWidth = 1
+		  g.DrawRect(ViewOffset.X - 1, ViewOffset.Y - 1, DrawingBuffer.Width + 2, DrawingBuffer.Height + 2) ' buffer border
+		  g.ForeColor = &c494949
+		  g.FillRect(DrawingBuffer.Width + ViewOffset.X, DrawingBuffer.Height + ViewOffset.Y, 5, 5)  //Resize thumb
+		  
+		  g.DrawPicture(Overlay, 0, 0)
+		  For i As Integer = 0 To UBound(ControlRects)
+		    Dim r As REALbasic.Rect = ControlRects(i)
+		    g.ForeColor = &cFFFFFF00
+		    g.FillRect(r.Left, r.Top, r.Width, r.Height)
+		    RaiseEvent ControlItemPaint(g.Clip(r.Left, r.Top, r.Width, r.Height), i)
+		  Next
 		  
 		  If Mode <> DrawingModes.Point Then Overlay = Nil
 		  g.ForeColor = &c00000000
@@ -301,19 +306,6 @@ Inherits Canvas
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Function DrawingBuffer() As Picture
-		  Return mDrawingBuffer
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub DrawingBuffer(Assigns NewBuffer As Picture)
-		  mDrawingBuffer = NewBuffer
-		  Me.Invalidate()
-		End Sub
-	#tag EndMethod
-
 	#tag Method, Flags = &h1
 		Protected Sub DrawLine(p As Picture, Point1 As REALbasic.Point, Point2 As REALbasic.Point)
 		  If CancelDraw Then
@@ -370,11 +362,12 @@ Inherits Canvas
 		  End If
 		  If UBound(Points) > 0 Then
 		    SetGraphicsSettings(p)
+		    Dim g As Graphics = p.Graphics
 		    For i As Integer = 1 To UBound(Points)
 		      Dim p1, p2 As REALbasic.Point
 		      p1 = Points(i - 1)
 		      p2 = Points(i)
-		      p.Graphics.DrawLine(p1.X, p1.Y, p2.X, p2.Y)
+		      g.DrawLine(p1.X, p1.Y, p2.X, p2.Y)
 		    Next
 		  End If
 		  
@@ -462,6 +455,7 @@ Inherits Canvas
 		Function SaveDrawingBuffer() As Picture
 		  Dim p As New Picture(DrawingBuffer.Width, DrawingBuffer.Height)
 		  p.Graphics.DrawPicture(DrawingBuffer, 0, 0)
+		  Return p
 		End Function
 	#tag EndMethod
 
@@ -501,19 +495,11 @@ Inherits Canvas
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
+		Event MouseUp(X As Integer, Y As Integer)
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
 		Event Open()
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event PaintBackdrop(g As Graphics) As Boolean
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event PaintDrawingBuffer(g As Graphics) As Boolean
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event PaintOverlay(g As Graphics) As Boolean
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
@@ -537,16 +523,16 @@ Inherits Canvas
 		Protected DragStart As REALbasic.Point
 	#tag EndProperty
 
+	#tag Property, Flags = &h1
+		Protected DrawingBuffer As Picture
+	#tag EndProperty
+
 	#tag Property, Flags = &h0
 		DrawingColor As Color
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		LastMode As DrawingModes
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mDrawingBuffer As Picture
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -608,7 +594,8 @@ Inherits Canvas
 		  Magnify
 		  Resizing
 		  Polygon
-		ModeSelect
+		  ModeSelect
+		Eyedropper
 	#tag EndEnum
 
 

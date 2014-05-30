@@ -46,7 +46,6 @@ Begin Window OnOffToggleTest
       Selectable      =   False
       TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Item:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -81,7 +80,6 @@ Begin Window OnOffToggleTest
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Item:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -116,7 +114,6 @@ Begin Window OnOffToggleTest
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Item:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -217,12 +214,17 @@ Begin Window OnOffToggleTest
       Backdrop        =   0
       BackgroundColorFalse=   "&cC0C0C000"
       BackgroundColorTrue=   "&c0080FF00"
+      Bold            =   ""
+      DoubleBuffer    =   ""
       Enabled         =   True
+      EraseBackground =   ""
       FalseText       =   "Off"
       Height          =   30
       HelpTag         =   ""
+      Hilight         =   ""
       Index           =   0
       InitialParent   =   ""
+      Italic          =   ""
       Left            =   58
       LockBottom      =   False
       LockedInPosition=   False
@@ -241,8 +243,8 @@ Begin Window OnOffToggleTest
       ThumbColorFalse =   "&c80808000"
       ThumbColorTrue  =   "&c80808000"
       Top             =   26
-      Transparent     =   True
       TrueText        =   "On"
+      Underline       =   ""
       UseFocusRing    =   True
       Value           =   False
       Visible         =   True
@@ -255,12 +257,17 @@ Begin Window OnOffToggleTest
       Backdrop        =   0
       BackgroundColorFalse=   "&cC0C0C000"
       BackgroundColorTrue=   "&c0080FF00"
+      Bold            =   ""
+      DoubleBuffer    =   ""
       Enabled         =   True
+      EraseBackground =   ""
       FalseText       =   "Off"
       Height          =   30
       HelpTag         =   ""
+      Hilight         =   ""
       Index           =   1
       InitialParent   =   ""
+      Italic          =   ""
       Left            =   58
       LockBottom      =   False
       LockedInPosition=   False
@@ -279,8 +286,8 @@ Begin Window OnOffToggleTest
       ThumbColorFalse =   "&c80808000"
       ThumbColorTrue  =   "&c80808000"
       Top             =   58
-      Transparent     =   True
       TrueText        =   "On"
+      Underline       =   ""
       UseFocusRing    =   True
       Value           =   False
       Visible         =   True
@@ -293,12 +300,17 @@ Begin Window OnOffToggleTest
       Backdrop        =   0
       BackgroundColorFalse=   "&cC0C0C000"
       BackgroundColorTrue=   "&c0080FF00"
+      Bold            =   ""
+      DoubleBuffer    =   ""
       Enabled         =   True
+      EraseBackground =   ""
       FalseText       =   "Off"
       Height          =   30
       HelpTag         =   ""
+      Hilight         =   ""
       Index           =   2
       InitialParent   =   ""
+      Italic          =   ""
       Left            =   58
       LockBottom      =   False
       LockedInPosition=   False
@@ -317,8 +329,8 @@ Begin Window OnOffToggleTest
       ThumbColorFalse =   "&c80808000"
       ThumbColorTrue  =   "&c80808000"
       Top             =   90
-      Transparent     =   True
       TrueText        =   "On"
+      Underline       =   ""
       UseFocusRing    =   True
       Value           =   False
       Visible         =   True
@@ -341,7 +353,7 @@ End
 #tag EndEvents
 #tag Events OnOff
 	#tag Event
-		Sub ValueChanged()
+		Sub ValueChanged(index as Integer)
 		  Listbox1.AddRow("Toggle #" + Str(index) + ": " + Str(Me.Value))
 		  Listbox1.ScrollPosition = Listbox1.LastIndex
 		End Sub

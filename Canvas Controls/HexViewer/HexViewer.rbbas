@@ -19,13 +19,14 @@ Inherits Canvas
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
 		  #pragma Unused X
 		  #pragma Unused Y
+		  Me.SelectionStart = OffsetFromXY(X, Y)
 		  Return True
 		End Function
 	#tag EndEvent
 
 	#tag Event
 		Sub MouseDrag(X As Integer, Y As Integer)
-		  Me.SelectionStart = OffsetFromXY(X, Y)
+		  Me.SelectionEnd = OffsetFromXY(X, Y)
 		End Sub
 	#tag EndEvent
 
@@ -185,6 +186,9 @@ Inherits Canvas
 		  Stream.Position = Offset
 		  Do Until TextHeight > BinGraphics.Height Or Stream.EOF
 		    rowoffset = Stream.Position
+		    Dim selstart, selend As Integer
+		    Dim pos As Integer
+		    selstart = -1
 		    Do Until BinGraphics.StringWidth(data) >= BinGraphics.Width - bytewidth
 		      If Stream.EOF Then
 		        data = data + " "
@@ -206,6 +210,12 @@ Inherits Canvas
 		        End If
 		      End If
 		      column = column + 1
+		      If pos + Offset >= SelectionStart And pos + Offset <= SelectionEnd And selstart > -1 Then
+		        If selstart = -1 Then selstart = pos + Offset
+		      ElseIf selstart > -1 Then
+		        selend = pos + Offset
+		      End If
+		      pos = pos + 1
 		    Loop
 		    
 		    column = 1
@@ -227,6 +237,11 @@ Inherits Canvas
 		    TextGraphics.FillRect(0, TextHeight - LineHeight, TextGraphics.Width, LineHeight)
 		    GutterGraphics.FillRect(0, TextHeight - LineHeight, GutterGraphics.Width, LineHeight)
 		    
+		    If SelStart > -1 Then
+		      BinGraphics.ForeColor = &c0080FF00
+		      BinGraphics.FillRect(selstart * bytewidth, 0, selend * bytewidth, LineHeight)
+		    End If
+		    
 		    ' draw the text
 		    TextGraphics.ForeColor = TextColor
 		    BinGraphics.ForeColor = ByteColor
@@ -235,12 +250,13 @@ Inherits Canvas
 		    
 		    ' line offsets
 		    GutterGraphics.ForeColor = LineNumbersColor
-		    Dim linenumber As String = Hex(rowoffset, 6, LineNumbersLittleEndian)
+		    Dim linenumber As String = Hex(rowoffset, 5, LineNumbersLittleEndian)
 		    GutterGraphics.DrawString(linenumber, 0, TextHeight - 2)
 		    ' done
 		    data = ""
 		    txt = ""
 		    row = row + 1
+		    pos = 0
 		  Loop
 		End Sub
 	#tag EndMethod
@@ -457,10 +473,6 @@ Inherits Canvas
 
 	#tag Property, Flags = &h21
 		Private Buffer As Picture
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected Buffer1 As Picture
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
